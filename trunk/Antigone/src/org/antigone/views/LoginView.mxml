@@ -25,9 +25,6 @@
 			<mx:Button label="Nouvel utilisateur" click="controller.NewUserClicked()"/>
 			<mx:Button id="loginButton" label="S'identifier" click="controller.LoginFormSubmitted()" />
 		</mx:HBox>
-		<mx:Label id="loginErrorLabel" text="Identification incorrecte" color="#AD0101" visible="false" includeInLayout="false" />
-		<mx:Label id="loginSuccessLabel" text="Identification réussie" color="#00AA2C" visible="false" includeInLayout="false" />
-
 	
 	<!-- Validate all stuff -->
 	<mx:Validator source="{username}" property="text" required="true" />

@@ -9,8 +9,9 @@ package org.antigone.controllers
 	public class LoginController
 	{
 		public var view:LoginView;
-		public const kLoginSucceededEvent:String = "loginSucceeded";
-		protected var model:ILoginProvider = new LocalLoginProvider();	
+		protected var model:ILoginProvider = new LocalLoginProvider();
+			
+		public const kLoginErrorMessage:String = "loginErrorMessage";
 		
 		/* Check wether the supplied informations represents a valid user */
 		public function LoginFormSubmitted():void
@@ -22,7 +23,7 @@ package org.antigone.controllers
 			if (isLoginCorrect) {
 				view.dispatchEvent(new Event("loginSucceeded", true));
 			} else {
-				this.displayLoginMessage(isLoginCorrect);
+				this.displayErrorMessage(kLoginErrorMessage);
 			}
 		}
 		
@@ -33,13 +34,18 @@ package org.antigone.controllers
 		}
 		
 		/* Display hints about the success of the login attemp */
-		public function displayLoginMessage(isLoginCorrect:Boolean):void
-		{		
-			view.loginSuccessLabel.visible = isLoginCorrect;
-			view.loginSuccessLabel.includeInLayout = isLoginCorrect;
+		public function displayErrorMessage(messageType:String):void
+		{
+			view.loginButton.errorString = "";
 			
-			view.loginErrorLabel.visible = !isLoginCorrect;
-			view.loginErrorLabel.includeInLayout = !isLoginCorrect;	
+			switch (messageType) {
+				case kLoginErrorMessage:
+					view.loginButton.errorString = "Non d'utilisateur ou mot de passe incorrect. " +
+						" Veuillez réessayer.";
+					break;
+				default:
+					trace("Message '" + messageType + "' is not defined.");
+			}
 		}
 	}
 }
