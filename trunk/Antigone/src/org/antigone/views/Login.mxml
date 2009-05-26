@@ -11,14 +11,22 @@
 			[Bindable]
 			public var user:User = new User();
 			
-			public var controller:LoginController = new LoginController();
+			public var controller:LoginController = new LoginController(this as Login);
+			
+			public function validateLogin(isLoginCorrect:Boolean):void
+			{		
+				this.loginSuccessLabel.visible = isLoginCorrect;
+				this.loginSuccessLabel.includeInLayout = isLoginCorrect;
+				
+				this.loginErrorLabel.visible = !isLoginCorrect;
+				this.loginErrorLabel.includeInLayout = !isLoginCorrect;	
+			}
 		]]>
 	</mx:Script>
 	
 	<mx:Binding source="username.text" destination="user.username"/>
 	<mx:Binding source="password.text " destination="user.password"/>
 	    
-
 	<mx:Form x="57" y="62" defaultButton="{loginButton}">
 	        
 		<mx:FormItem label="Identifiant">
@@ -27,8 +35,10 @@
 		<mx:FormItem label="Mot de passe">
 			<mx:TextInput id="password" displayAsPassword="true"/>
 		</mx:FormItem>
+		<mx:Label id="loginErrorLabel" text="Identification incorrecte" color="#AD0101" visible="false" />
+		<mx:Label id="loginSuccessLabel" text="Identification réussie" color="#00AA2C" visible="false" />
 		<mx:FormItem>
-			<mx:Button id="loginButton" label="Login" click="controller.LoginFormSubmitted(user)" />
+			<mx:Button id="loginButton" label="S'identifier" click="controller.LoginFormSubmitted(user)" />
 		</mx:FormItem>
 	</mx:Form>
 	
