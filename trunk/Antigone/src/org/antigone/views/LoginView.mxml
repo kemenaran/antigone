@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml">
+<mx:Panel
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:controllers="org.antigone.controllers.*">
 	
-	<mx:Script>
-		<![CDATA[
-			import org.antigone.controllers.LoginController;
-			
-			// We must associate the view with a controller
-			public var controller:LoginController = new LoginController(this as LoginView);
-		]]>
-	</mx:Script>
+	<!-- Instance of the View controller -->
+	<controllers:LoginController id="loginController" view="{this}" />
+	
+	<!-- Define published events -->
+	<mx:Metadata>
+        [Event(name="loginSucceeded", type="flash.events.Event")]
+    </mx:Metadata>
+
 	
 	<!-- The main form goes here -->
 	<mx:Form x="57" y="62" defaultButton="{loginButton}">
@@ -21,7 +23,7 @@
 			<mx:TextInput id="password" displayAsPassword="true"/>
 		</mx:FormItem>
 		<mx:FormItem>
-			<mx:Button id="loginButton" label="S'identifier" click="controller.LoginFormSubmitted()" />
+			<mx:Button id="loginButton" label="S'identifier" click="loginController.LoginFormSubmitted()" />
 		</mx:FormItem>
 		<mx:Label id="loginErrorLabel" text="Identification incorrecte" color="#AD0101" visible="false" includeInLayout="false" />
 		<mx:Label id="loginSuccessLabel" text="Identification réussie" color="#00AA2C" visible="false" includeInLayout="false" />

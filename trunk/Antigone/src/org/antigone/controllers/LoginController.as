@@ -1,20 +1,15 @@
 // ActionScript file
 package org.antigone.controllers
 {
+	import flash.events.Event;
+	
 	import org.antigone.views.LoginView;
 	
 	public class LoginController
 	{
-		protected var view:LoginView;
-		protected var model:ILoginProvider = new LocalLoginProvider();
-		
-		/* Controller constructor
-		 * Intended to be called from LoginView.
-		 */
-		public function LoginController(view:LoginView)
-		{
-			this.view = view;
-		}		
+		public var view:LoginView;
+		public const kLoginSucceededEvent:String = "loginSucceeded";
+		protected var model:ILoginProvider = new LocalLoginProvider();	
 		
 		/* Check wether the supplied informations represents a valid user */
 		public function LoginFormSubmitted():void
@@ -23,7 +18,11 @@ package org.antigone.controllers
 			
 			isLoginCorrect = this.model.ValidateUser(this.view.username.text, this.view.password.text);
 			
-			this.displayLoginMessage(isLoginCorrect);	
+			if (isLoginCorrect) {
+				view.dispatchEvent(new Event("loginSucceeded"));
+			} else {
+				this.displayLoginMessage(isLoginCorrect);
+			}
 		}
 		
 		/* Display hints about the success of the login attemp */
