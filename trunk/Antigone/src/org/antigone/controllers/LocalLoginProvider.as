@@ -7,6 +7,13 @@ package org.antigone.controllers
 	/* A Login Provider whose datasource are XML files on the local filesystem. */
 	public class LocalLoginProvider implements ILoginProvider
 	{	
+		/* Check whether an user file already exists. */
+		public function UserExists(username:String):Boolean
+		{
+			var userFile:File = this.GetFileForUser(username);
+			return userFile.exists;	
+		}
+		
 		/* Check wether user credentials are valid. */
 		public function ValidateUser(username:String, password:String):Boolean
 		{
@@ -25,12 +32,7 @@ package org.antigone.controllers
 		public function GetUser(username:String):User
 		{
 			var userData:XML;
-			var userFile:File = new File();
-			
-			// Create a file reference to the file
-			var path:String = File.applicationStorageDirectory.nativePath + "/Users/" + username + ".xml";
-			userFile = new File();
-			userFile = userFile.resolvePath(path);
+			var userFile:File = this.GetFileForUser(username);
 			
 			// If the file doesn't even exists, the user is invalid
 			if (!userFile.exists)
@@ -43,7 +45,38 @@ package org.antigone.controllers
 			return User.decodeFromXML(userData);			
 		}
 		
-		public function CreateUser(username:String, password:String):void {}
+		public function CreateUser(username:String, password:String):Boolean
+		{
+			var user:User = new User();
+			var userFile:File = this.GetFileForUser(username);
+			
+			// We will not overwrite an existing user
+			if (userFile.exists)
+				return false;
+				
+			// Empty username or passwords are not allowed
+			if (username == null || username == "" || password == null || password == "")
+				return false;
+			
+			// Store properties in a User object
+			user.username = username;
+			user.password = password;
+			
+			// Prepare XML content
+			var userData:XML = user.encodeToXML();
+			var newXMLStr:String = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+				+ File.lineEnding
+				+ userData.toXMLString();
+
+			// Write XML to the file
+			var fs:FileStream = new FileStream();
+			fs.open(userFile, FileMode.WRITE);
+			fs.writeUTFBytes(newXMLStr);
+			fs.close(); 
+			
+			return true;
+		}
+		
 		public function UpdateUser(user:User):void {}
 		public function DeleteUser(username:String):void {}
 		
@@ -62,6 +95,19 @@ package org.antigone.controllers
 			}
 			
 			return userFile;
+		}
+		
+		/* Return a File poiting to the location of the user XML file 
+		 * for a given user.
+		 * The file itself is not guaranteed to exist.
+		 */
+		private function GetFileForUser(username:String):File
+		{
+			var path:String;
+			var userFile:File = new File();
+			
+			path = File.applicationStorageDirectory.nativePath + "/Users/" + username + ".xml";
+			return userFile.resolvePath(path);
 		}
 	}
 }

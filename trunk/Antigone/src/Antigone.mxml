@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml"
-	xmlns:AG="org.antigone.views.*"
+	xmlns:views="org.antigone.views.*"
 	xmlns:controllers="org.antigone.controllers.*"
 	layout="vertical" >
 	
@@ -8,9 +8,9 @@
 	<controllers:AppController id="appController" />
 	
 	<!-- Views stacked -->
-	<mx:ViewStack id="viewstack" width="392" height="246">
-		<AG:LoginView id="loginView" horizontalAlign="center" loginSucceeded="appController.loginSucceeded()" />
-		<AG:DashboardView id="dashboardView" width="100%" height="100%" />
+	<mx:ViewStack id="viewstack">
+		<views:UserFormsView id="loginView" loginSucceeded="appController.loginSucceeded()" />
+		<views:DashboardView id="dashboardView" width="100%" height="100%" />
 	</mx:ViewStack>
 	
 </mx:WindowedApplication>

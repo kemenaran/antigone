@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Form xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:controllers="org.antigone.controllers.*">
+		
+	<controllers:NewUserController id="newUserController" view="{this}" />
+	
+	<!-- Define published events -->
+	<mx:Metadata>
+		[Event(name="newUserCreated", type="flash.events.Event")]
+        [Event(name="newUserCancel", type="flash.events.Event")]
+    </mx:Metadata>
+	
+	<mx:FormItem label="Identifiant" required="true">
+		<mx:TextInput id="username"/>
+	</mx:FormItem>
+	<mx:FormItem label="Mot de passe" required="true">
+		<mx:TextInput id="password" displayAsPassword="true"/>
+	</mx:FormItem>
+	<mx:FormItem label="Adresse courriel">
+		<mx:TextInput id="email"/>
+	</mx:FormItem>
+	
+	<mx:HRule width="100%"/>
+	
+	<mx:FormItem label="Prénom">
+		<mx:TextInput id="firstName"/>
+	</mx:FormItem>
+	<mx:FormItem label="Nom">
+		<mx:TextInput id="surname"/>
+	</mx:FormItem>
+	<mx:FormItem label="Etablissement">
+		<mx:TextInput id="school"/>
+	</mx:FormItem>
+	
+	<mx:HBox horizontalAlign="center" width="100%">
+		<mx:Button id="cancelButton" label="Annuler" click="newUserController.cancelClicked()"/>
+		<mx:Button id="createButton" label="Créer l'utilisateur" click="newUserController.createUserClicked()"/>
+	</mx:HBox>
+	
+	<mx:Validator source="{username}" property="text" required="true" />
+	<mx:Validator source="{password}" property="text" required="true" />
+	
+</mx:Form>

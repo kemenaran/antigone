@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:ViewStack
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:controllers="org.antigone.controllers.*"
+	xmlns:views="org.antigone.views.*" height="291">
+	
+	<controllers:UserFormsController id="userFormsController" view="{this}" />
+	
+	<mx:Metadata>
+		// Bubble from LoginView
+		[Event(name="newUserClicked", type="flash.events.Event")]
+        [Event(name="loginSucceeded", type="flash.events.Event")]
+        // Bubble from NewUserView
+        [Event(name="newUserCreated", type="flash.events.Event")]
+        [Event(name="newUserCancel", type="flash.events.Event")]
+    </mx:Metadata>
+    
+    <mx:Panel id="loginView" title="Identification">
+		<views:LoginView newUserClicked="userFormsController.NewUserClicked()"/>
+	</mx:Panel>
+	
+	<mx:Panel id="newUserView" title="Nouvel utilisateur">
+		<views:NewUserView
+			newUserCreated="userFormsController.NewUserCreated()"
+			newUserCancel="userFormsController.NewUserCancel()"/>
+	</mx:Panel>
+	
+</mx:ViewStack>
