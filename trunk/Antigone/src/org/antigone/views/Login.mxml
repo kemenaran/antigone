@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	width="400" height="300">
+	
+	<mx:Script>
+		<![CDATA[
+			import org.antigone.controllers.LoginController;
+			import org.antigone.models.User;
+			
+			[Bindable]
+			public var user:User = new User();
+			
+			public var controller:LoginController = new LoginController();
+		]]>
+	</mx:Script>
+	
+	<mx:Binding source="username.text" destination="user.username"/>
+	<mx:Binding source="password.text " destination="user.password"/>
+	    
+
+	<mx:Form x="57" y="62" defaultButton="{loginButton}">
+	        
+		<mx:FormItem label="Identifiant">
+			<mx:TextInput id="username" />
+		</mx:FormItem>
+		<mx:FormItem label="Mot de passe">
+			<mx:TextInput id="password" displayAsPassword="true"/>
+		</mx:FormItem>
+		<mx:FormItem>
+			<mx:Button id="loginButton" label="Login" click="controller.LoginFormSubmitted(user)" />
+		</mx:FormItem>
+	</mx:Form>
+	
+</mx:Canvas>

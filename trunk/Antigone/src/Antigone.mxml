@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:AG="org.antigone.views.*"
+	layout="vertical">
+	
+	<AG:Login/>
+	
+</mx:WindowedApplication>
