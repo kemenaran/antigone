@@ -1,6 +1,7 @@
 package org.antigone.controllers
 {
 	import flash.filesystem.*;
+	
 	import org.antigone.models.User;
 	
 	/* A Login Provider whose datasource are XML files on the local filesystem. */
@@ -8,6 +9,20 @@ package org.antigone.controllers
 	{	
 		/* Check wether user credentials are valid. */
 		public function ValidateUser(username:String, password:String):Boolean
+		{
+			// Attempt to retrieve the User object from the XML file
+			var user:User = this.GetUser(username);
+			
+			// Check that username and password match
+			return (user != null
+			    && user.username == username
+			    && user.password == password);
+		}	
+		
+		/* Read an user's XML file and return the matching User object.
+		 * Returns null if the file doesn't exist or if there is an error.
+		 */
+		public function GetUser(username:String):User
 		{
 			var userData:XML;
 			var userFile:File = new File();
@@ -19,22 +34,13 @@ package org.antigone.controllers
 			
 			// If the file doesn't even exists, the user is invalid
 			if (!userFile.exists)
-				return false;
+				return null;
 			
 			// Now read the data from the file
 			userData = this.ReadUserFile(userFile);
 			
-			// Check that username and password match
-			var tmp:String = userData.name;
-			return (userData != null
-			    && userData.name == username
-			    && userData.password == password);
-		}
-		
-		
-		public function GetUser(username:String):User
-		{
-			return new User();
+			// … and convert it to a User object
+			return User.decodeFromXML(userData);			
 		}
 		
 		public function CreateUser(username:String, password:String):void {}
