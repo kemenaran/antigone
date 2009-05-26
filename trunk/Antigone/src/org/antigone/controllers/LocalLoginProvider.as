@@ -1,11 +1,12 @@
 package org.antigone.controllers
 {
 	import flash.filesystem.*;
-	
 	import org.antigone.models.User;
 	
+	/* A Login Provider whose datasource are XML files on the local filesystem. */
 	public class LocalLoginProvider implements ILoginProvider
 	{	
+		/* Check wether user credentials are valid. */
 		public function ValidateUser(username:String, password:String):Boolean
 		{
 			var userData:XML;
@@ -30,6 +31,7 @@ package org.antigone.controllers
 			    && userData.password == password);
 		}
 		
+		
 		public function GetUser(username:String):User
 		{
 			return new User();
@@ -39,6 +41,9 @@ package org.antigone.controllers
 		public function UpdateUser(user:User):void {}
 		public function DeleteUser(username:String):void {}
 		
+		/* Read the XML fragment that contains user data.
+		 * Returns null if the file doesn't exist or if there is an error.
+		 */
 		private function ReadUserFile(userFilePath:File):XML
 		{
 			var userFile:XML = null;

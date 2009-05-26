@@ -2,6 +2,7 @@ package org.antigone.controllers
 {
 	import org.antigone.models.User;
 	
+	/* Interface for generic login providers */
 	public interface ILoginProvider
 	{
 		function CreateUser(username:String, password:String):void;

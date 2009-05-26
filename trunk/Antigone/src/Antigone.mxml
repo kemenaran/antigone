@@ -3,6 +3,6 @@
 	xmlns:AG="org.antigone.views.*"
 	layout="vertical">
 	
-	<AG:Login/>
+	<AG:LoginView/>
 	
 </mx:WindowedApplication>
