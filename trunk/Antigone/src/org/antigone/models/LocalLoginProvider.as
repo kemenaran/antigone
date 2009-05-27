@@ -1,7 +1,7 @@
 package org.antigone.models
 {
 	import flash.filesystem.*;
-	import org.antigone.models.User;
+	import flash.utils.*;
 	
 	/* A Login Provider whose datasource are XML files on the local filesystem. */
 	public class LocalLoginProvider implements ILoginProvider
@@ -50,45 +50,85 @@ package org.antigone.models
 		public function CreateUser(username:String, password:String):Boolean
 		{
 			var user:User = new User();
-			var userFile:File;
-			
+
 			// We will not overwrite an existing user
 			if (this.UserExists(username))
-				return false;
-			
-			// Retrieve the user infos
-			userFile = this.GetFileForUser(username);			
-				
-			// Empty username or passwords are not allowed
-			if (username == null || username == "" || password == null || password == "")
-				return false;
+				return false;	
 			
 			// Store properties in a User object
 			user.username = username;
-			user.password = password;
+			user.password = password;	
 			
-			// Prepare XML content
-			var userData:XML = user.encodeToXML();
-			var newXMLStr:String = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-				+ File.lineEnding
-				+ userData.toXMLString();
-
-			// Write XML to the file
-			var fs:FileStream = new FileStream();
-			fs.open(userFile, FileMode.WRITE);
-			fs.writeUTFBytes(newXMLStr);
-			fs.close(); 
+			// Empty username or passwords are not allowed
+			if (!user.IsValidUser())
+				return false;
 			
-			return true;
+			// Write the XML file
+			return this.WriteUserFile(user);
 		}
 		
-		public function UpdateUser(user:User):void {}
-		public function DeleteUser(username:String):void {}
+		/* Update the data of an User.
+		 * All non-null fields will be updated. The User object must be valid.
+		 * 
+		 * Returns true in case of success, false else (for instance if
+		 * the user does not exist).*/
+		public function UpdateUser(newUserData:User):Boolean
+		{
+			var user:User;
+			
+			// Check that all required fields are here
+			if (!newUserData.IsValidUser())
+				return false;
+			
+			// Do not update a user that doesn't exists
+			if (!this.UserExists(newUserData.username))
+				return false;
+			
+			// Retrieve current user data
+			user = this.GetUser(newUserData.username);
+			
+			// Describe User type
+			var userType:XML = describeType(User);
+			
+			// Enumerate through User properties
+			for each(var property:String in userType.factory.accessor.@name) {
+				if (newUserData[property] != null)
+					user[property] = newUserData[property];
+			}
+			
+			// Write the updated User
+			return this.WriteUserFile(user);
+		}
+		
+		public function DeleteUser(username:String):Boolean
+		{
+			return false;
+		}
+		
+		/*
+		 --------------------------------------------------
+		  Private methods
+		 --------------------------------------------------
+		 */
+		
+		
+		/* Return a File poiting to the location of the user XML file 
+		 * for a given user.
+		 * The file itself is not guaranteed to exist.
+		 */
+		protected function GetFileForUser(username:String):File
+		{
+			var path:String;
+			var userFile:File = new File();
+			
+			path = File.applicationStorageDirectory.nativePath + "/Users/" + username + ".xml";
+			return userFile.resolvePath(path);
+		}
 		
 		/* Read the XML fragment that contains user data.
 		 * Returns null if the file doesn't exist or if there is an error.
 		 */
-		private function ReadUserFile(userFilePath:File):XML
+		protected function ReadUserFile(userFilePath:File):XML
 		{
 			var userFile:XML = null;
 			var stream:FileStream = new FileStream();
@@ -102,17 +142,36 @@ package org.antigone.models
 			return userFile;
 		}
 		
-		/* Return a File poiting to the location of the user XML file 
-		 * for a given user.
-		 * The file itself is not guaranteed to exist.
-		 */
-		private function GetFileForUser(username:String):File
+		/* Build an XML fragment from the User object, and write it
+		 * to the file specified by GetFileForUser.
+		 * The file is created if it does not exists. */
+		protected function WriteUserFile(user:User):Boolean
 		{
-			var path:String;
-			var userFile:File = new File();
+			var coder:XML;
+			var userFile:File = this.GetFileForUser(user.username);
 			
-			path = File.applicationStorageDirectory.nativePath + "/Users/" + username + ".xml";
-			return userFile.resolvePath(path);
+			// Add user infos to the XML file
+			coder = new XML("<userProfile></userProfile>");
+			coder = user.encodeToXML(coder);
+			
+			// Build up the full XML data as a string
+			var newXMLStr:String = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+				+ File.lineEnding
+				+ coder.toXMLString();
+				
+			// Write XML to the file
+			var fs:FileStream = new FileStream();
+			try {
+				fs.open(userFile, FileMode.WRITE);
+				fs.writeUTFBytes(newXMLStr);
+			} catch(error:Error) {
+				return false;
+			} finally {
+				fs.close();
+			}
+			
+			return true;
 		}
+		
 	}
 }

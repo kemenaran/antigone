@@ -2,46 +2,63 @@ package org.antigone.controllers
 {
 	import flash.events.Event;
 	import flash.filesystem.*;
+	
 	import org.antigone.models.*;
 	import org.antigone.views.NewUserView;
 	
+	/* Controller for the NewUserView form. */
 	public class NewUserController
 	{
+		[Bindable]
 		public var view:NewUserView;
-		protected var model:ILoginProvider = new LocalLoginProvider();
 		
-		public const kUserExistsMessage:String = "userExistMessage";
-		public const kUserErrorMessage:String = "userErrorMessage";
+		protected var loginProvider:ILoginProvider = new LocalLoginProvider();
 		
+		protected const kUserExistsMessage:String = "userExistMessage";
+		protected const kUserErrorMessage:String = "userErrorMessage";
+		
+		/* Convenience getter for the bound model defined in NewUserView. */
+		public function get userModel():User
+		{
+			return this.view.userModel;
+		}
+		
+		/* When the "Create User" button is clicked, try to register the
+		 * user, and display any error message. */
 		public function createUserClicked():void
 		{	
 			var success:Boolean;
 			
-			if (model.UserExists(view.username.text)) {
-				
-				// Aouch - the user already exists
+			// If the user already exists, give up
+			if (loginProvider.UserExists(view.username.text)) {
 				this.displayErrorMessage(kUserExistsMessage);
+				return;
+			}
+				
+			// Create the user
+			success = loginProvider.CreateUser(userModel.username, userModel.password);
+			if (success) {
+				
+				// Add all the form informations to the User
+				loginProvider.UpdateUser(userModel);
+				
+				// Notify that user creation is complete
+				view.dispatchEvent(new Event('newUserCreated', true));
 				
 			} else {
-				
-				// The user doesn't exist already, let's create it
-				success = model.CreateUser(view.username.text, view.password.text);
-				if (success) {
-					// TODO : Update user with full infos
-					view.dispatchEvent(new Event('newUserCreated', true));
-				} else {
-					this.displayErrorMessage(kUserErrorMessage);
-				}	
-			}
+				this.displayErrorMessage(kUserErrorMessage);
+			}	
 		}
 		
+		/* When the "Cancel" button is clicked, reset the form and send an event. */
 		public function cancelClicked():void
 		{
 			this.ResetForm();
 			view.dispatchEvent(new Event('newUserCancel', true));
 		}
 		
-		public function displayErrorMessage(messageType:String):void
+		/* Display error messages based on class constants. */
+		protected function displayErrorMessage(messageType:String):void
 		{
 			view.username.errorString = "";
 			view.createButton.errorString = "";
@@ -60,7 +77,8 @@ package org.antigone.controllers
 			}
 		}
 		
-		public function ResetForm():void
+		/* Reset all the form fields. */
+		protected function ResetForm():void
 		{
 			view.username.text = "";
 			view.password.text = "";

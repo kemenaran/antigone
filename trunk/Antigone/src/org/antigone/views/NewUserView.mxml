@@ -1,22 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Form xmlns:mx="http://www.adobe.com/2006/mxml"
-	xmlns:controllers="org.antigone.controllers.*">
-		
-	<controllers:NewUserController id="newUserController" view="{this}" />
+	xmlns:controllers="org.antigone.controllers.*"
+	xmlns:models="org.antigone.models.*"
+	defaultButton="{createButton}" >
 	
-	<!-- Define published events -->
+	<!-- Exposed events -->
 	<mx:Metadata>
 		[Event(name="newUserCreated", type="flash.events.Event")]
         [Event(name="newUserCancel", type="flash.events.Event")]
     </mx:Metadata>
+    
+    <!-- Here is our controller -->
+	<controllers:NewUserController id="newUserController" view="{this}" />
 	
+	<!-- Here is our model, bound to the Form fields -->
+    <models:User id="userModel"
+    	username="{username.text}"
+    	password="{password.text}"
+    	email="{email.text}"
+    	firstName="{firstName.text}"
+    	surname="{surname.text}"
+    	school="{school.text}" />
+	
+	<!-- The Form starts here -->
 	<mx:FormItem label="Identifiant" required="true">
 		<mx:TextInput id="username"/>
 	</mx:FormItem>
 	<mx:FormItem label="Mot de passe" required="true">
 		<mx:TextInput id="password" displayAsPassword="true"/>
 	</mx:FormItem>
-	<mx:FormItem label="Adresse courriel">
+	<mx:FormItem label="Adresse courriel" required="true">
 		<mx:TextInput id="email"/>
 	</mx:FormItem>
 	
@@ -37,7 +50,9 @@
 		<mx:Button id="createButton" label="Créer l'utilisateur" click="newUserController.createUserClicked()"/>
 	</mx:HBox>
 	
+	<!-- Here are the validators -->
 	<mx:Validator source="{username}" property="text" required="true" />
 	<mx:Validator source="{password}" property="text" required="true" />
+	<mx:EmailValidator source="{email}" property="text" required="true" />
 	
 </mx:Form>
