@@ -8,9 +8,12 @@
 	<controllers:AppController id="appController" />
 	
 	<!-- Views stacked -->
-	<mx:ViewStack id="viewstack">
-		<views:UserFormsView id="loginView" loginSucceeded="appController.loginSucceeded()" />
+	
+	<mx:ViewStack id="viewstack" height="100%" width="100%">
+		<mx:HBox horizontalAlign="center">
+			<views:UserFormsView id="loginView" loginSucceeded="appController.loginSucceeded()"/>
+		</mx:HBox>
 		<views:DashboardView id="dashboardView" width="100%" height="100%" />
 	</mx:ViewStack>
-	
+
 </mx:WindowedApplication>

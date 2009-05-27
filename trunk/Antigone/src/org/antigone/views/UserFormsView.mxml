@@ -2,7 +2,7 @@
 <mx:ViewStack
 	xmlns:mx="http://www.adobe.com/2006/mxml"
 	xmlns:controllers="org.antigone.controllers.*"
-	xmlns:views="org.antigone.views.*" height="291">
+	xmlns:views="org.antigone.views.*" height="291" width="363">
 	
 	<controllers:UserFormsController id="userFormsController" view="{this}" />
 	
@@ -15,14 +15,14 @@
         [Event(name="newUserCancel", type="flash.events.Event")]
     </mx:Metadata>
     
-    <mx:Panel id="loginView" title="Identification">
-		<views:LoginView newUserClicked="userFormsController.NewUserClicked()"/>
+    <mx:Panel id="loginView" title="Identification" horizontalAlign="center">
+		<views:LoginView newUserClicked="userFormsController.NewUserClicked()" width="294" height="111"/>
 	</mx:Panel>
 	
-	<mx:Panel id="newUserView" title="Nouvel utilisateur">
+	<mx:Panel id="newUserView" title="Nouvel utilisateur" horizontalAlign="center">
 		<views:NewUserView
 			newUserCreated="userFormsController.NewUserCreated()"
-			newUserCancel="userFormsController.NewUserCancel()"/>
+			newUserCancel="userFormsController.NewUserCancel()" width="317"/>
 	</mx:Panel>
 	
 </mx:ViewStack>

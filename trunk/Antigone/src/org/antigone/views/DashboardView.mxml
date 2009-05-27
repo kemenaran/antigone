@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="horizontal" horizontalAlign="center" verticalAlign="middle">
-	<mx:Label text="Dashboard"/>
-</mx:Panel>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="544" height="382">
+	<mx:HBox width="100%" right="0" top="0" horizontalAlign="right">
+		<mx:Label text="Bonjour, Utilisateur !"/>
+		<mx:Button label="Se déconnecter" fontSize="8" height="18" width="101" id="logoutButton"/>
+	</mx:HBox>
+	<mx:HBox bottom="0" top="30" right="0" left="0">
+		<mx:Panel width="222" height="100%" layout="vertical" title="Résumé">
+		</mx:Panel>
+		<mx:Panel width="100%" height="100%" layout="vertical" title="Mes cours">
+		</mx:Panel>
+	</mx:HBox>
+</mx:Canvas>
