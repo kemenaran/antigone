@@ -4,6 +4,7 @@ package org.antigone.controllers
 	import flash.events.Event;
 	import flash.filesystem.*;
 	
+	import org.antigone.models.*;
 	import org.antigone.views.LoginView;
 	
 	public class LoginController

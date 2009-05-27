@@ -1,7 +1,6 @@
-package org.antigone.controllers
+package org.antigone.models
 {
 	import flash.filesystem.*;
-	
 	import org.antigone.models.User;
 	
 	/* A Login Provider whose datasource are XML files on the local filesystem. */
@@ -45,14 +44,20 @@ package org.antigone.controllers
 			return User.decodeFromXML(userData);			
 		}
 		
+		/* Create a new user.
+		 * Returns true in case of success, and false else (for instance if the
+		 * user already exists). */
 		public function CreateUser(username:String, password:String):Boolean
 		{
 			var user:User = new User();
-			var userFile:File = this.GetFileForUser(username);
+			var userFile:File;
 			
 			// We will not overwrite an existing user
-			if (userFile.exists)
+			if (this.UserExists(username))
 				return false;
+			
+			// Retrieve the user infos
+			userFile = this.GetFileForUser(username);			
 				
 			// Empty username or passwords are not allowed
 			if (username == null || username == "" || password == null || password == "")
