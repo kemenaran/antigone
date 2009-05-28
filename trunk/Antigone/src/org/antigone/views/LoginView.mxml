@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Form defaultButton="{loginButton}"
 	xmlns:mx="http://www.adobe.com/2006/mxml"
-	xmlns:controllers="org.antigone.controllers.*" width="342">
-	
-	<!-- Instance of the View controller -->
-	<controllers:LoginController id="controller" view="{this}" />
+	xmlns:controllers="org.antigone.controllers.*" width="342" xmlns:models="org.antigone.models.*">
 	
 	<!-- Define published events -->
 	<mx:Metadata>
 		[Event(name="newUserClicked", type="flash.events.Event")]
         [Event(name="loginSucceeded", type="flash.events.Event")]
     </mx:Metadata>
+    	
+	<!-- Instance of the View controller -->
+	<controllers:LoginController id="controller" view="{this}" />
+	
+	<!-- Instance of the model, bound to the form fields -->
+	<models:User id="userModel" username="{username.text}" password="{password.text}" />
 	
 	<!-- The main form goes here -->
-  
-		<mx:FormItem label="Identifiant">
-			<mx:TextInput id="username" />
-		</mx:FormItem>
-		
-		<mx:FormItem label="Mot de passe">
-			<mx:TextInput id="password" displayAsPassword="true"/>
-		</mx:FormItem>
-		<mx:HBox horizontalAlign="center" width="100%">		
-			<mx:Button label="Nouvel utilisateur" click="controller.NewUserClicked()"/>
-			<mx:Button id="loginButton" label="S'identifier" click="controller.LoginFormSubmitted()" />
-		</mx:HBox>
+	<mx:FormItem label="Identifiant">
+		<mx:TextInput id="username" />
+	</mx:FormItem>
+	<mx:FormItem label="Mot de passe">
+		<mx:TextInput id="password" displayAsPassword="true"/>
+	</mx:FormItem>
+	<mx:HBox horizontalAlign="center" width="100%">		
+		<mx:Button label="Nouvel utilisateur" click="controller.NewUserClicked()"/>
+		<mx:Button id="loginButton" label="S'identifier" click="controller.LoginFormSubmitted()" />
+	</mx:HBox>
 	
 	<!-- Validate all stuff -->
 	<mx:Validator source="{username}" property="text" required="true" />

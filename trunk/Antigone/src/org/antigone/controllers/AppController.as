@@ -3,7 +3,7 @@ package org.antigone.controllers
 	import mx.core.Application;
 	
 	public class AppController
-	{
+	{		
 		/* Shortcut getter for Application.application */
 		protected function get app():Object
 		{

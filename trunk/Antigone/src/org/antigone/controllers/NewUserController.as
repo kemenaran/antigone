@@ -12,7 +12,7 @@ package org.antigone.controllers
 		[Bindable]
 		public var view:NewUserView;
 		
-		protected var loginProvider:ILoginProvider = new LocalLoginProvider();
+		protected var loginProvider:ILoginProvider = LoginProvider.sharedLoginProvider;
 		
 		protected const kUserExistsMessage:String = "userExistMessage";
 		protected const kUserErrorMessage:String = "userErrorMessage";

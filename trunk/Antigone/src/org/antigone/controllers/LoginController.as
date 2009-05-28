@@ -10,22 +10,39 @@ package org.antigone.controllers
 	public class LoginController
 	{
 		public var view:LoginView;
-		protected var model:ILoginProvider = new LocalLoginProvider();
+		protected var loginProvider:ILoginProvider = LoginProvider.sharedLoginProvider;
 			
 		public const kLoginErrorMessage:String = "loginErrorMessage";
+		
+		/* Convenience getter for the bound model defined in NewUserView. */
+		public function get userModel():User
+		{
+			return this.view.userModel;
+		}
 		
 		/* Check wether the supplied informations represents a valid user */
 		public function LoginFormSubmitted():void
 		{
 			var isLoginCorrect:Boolean;
 			
-			isLoginCorrect = this.model.ValidateUser(this.view.username.text, this.view.password.text);
+			isLoginCorrect = this.loginProvider.ValidateUser(this.userModel.username, this.userModel.password);
 			
 			if (isLoginCorrect) {
-				view.dispatchEvent(new Event("loginSucceeded", true));
+				this.LoginSucceeded();
 			} else {
 				this.displayErrorMessage(kLoginErrorMessage);
 			}
+		}
+		
+		/* Triggered when a Login was successfully performed */
+		protected function LoginSucceeded():void
+		{
+			// Retrieve the logged user and register it
+			var loggedUser:User = this.loginProvider.GetUser(this.userModel.username);
+			UserProfile.loggedUser = loggedUser;
+			
+			// Inform that we successfully logged in
+			view.dispatchEvent(new Event("loginSucceeded", true));
 		}
 		
 		/* Send event when the "New User" button is clicked */
