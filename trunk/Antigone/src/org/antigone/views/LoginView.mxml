@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Form defaultButton="{loginButton}"
 	xmlns:mx="http://www.adobe.com/2006/mxml"
-	xmlns:controllers="org.antigone.controllers.*" width="342" xmlns:models="org.antigone.models.*">
+	xmlns:mediators="org.antigone.mediators.*"
+	xmlns:models="org.antigone.models.*"
+	width="342" >
 	
 	<!-- Define published events -->
 	<mx:Metadata>
@@ -9,8 +11,8 @@
         [Event(name="loginSucceeded", type="flash.events.Event")]
     </mx:Metadata>
     	
-	<!-- Instance of the View controller -->
-	<controllers:LoginController id="controller" view="{this}" />
+	<!-- View mediator -->
+	<mediators:LoginMediator id="mediator" view="{this}" />
 	
 	<!-- Instance of the model, bound to the form fields -->
 	<models:User id="userModel" username="{username.text}" password="{password.text}" />
@@ -23,8 +25,8 @@
 		<mx:TextInput id="password" displayAsPassword="true"/>
 	</mx:FormItem>
 	<mx:HBox horizontalAlign="center" width="100%">		
-		<mx:Button label="Nouvel utilisateur" click="controller.NewUserClicked()"/>
-		<mx:Button id="loginButton" label="S'identifier" click="controller.LoginFormSubmitted()" />
+		<mx:Button label="Nouvel utilisateur" click="mediator.NewUserClicked()"/>
+		<mx:Button id="loginButton" label="S'identifier" click="mediator.LoginFormSubmitted()" />
 	</mx:HBox>
 	
 	<!-- Validate all stuff -->

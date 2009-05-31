@@ -1,4 +1,4 @@
-package org.antigone.models
+package org.antigone.controllers
 {
 	import org.antigone.models.User;
 	

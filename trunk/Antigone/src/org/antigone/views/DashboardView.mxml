@@ -3,14 +3,15 @@
 
 	<mx:Script>
 		<![CDATA[
-			import org.antigone.models.UserProfile;
+			import mx.core.Application;
+			import org.antigone.controllers.LoginProvider;
 		]]>
 	</mx:Script>
 	
 	<formatters:UserNameFormatter id="userNameFormatter" />
 	
 	<mx:HBox width="100%" right="0" top="0" horizontalAlign="right">
-		<mx:Label text="Bonjour, {userNameFormatter.format(UserProfile.loggedUser)} !"/>
+		<mx:Label text="Bonjour, {userNameFormatter.format(Application.application.c.LoginProvider.currentUser)} !"/>
 		<mx:Button label="Se déconnecter" fontSize="8" height="18" width="101" id="logoutButton"/>
 	</mx:HBox>
 	<mx:HBox bottom="0" top="30" right="0" left="0">

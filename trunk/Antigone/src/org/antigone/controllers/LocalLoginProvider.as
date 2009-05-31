@@ -1,11 +1,12 @@
-package org.antigone.models
+package org.antigone.controllers
 {
 	import flash.filesystem.*;
 	import flash.utils.*;
-	
+	import org.antigone.models.User;
+		
 	/* A Login Provider whose datasource are XML files on the local filesystem. */
-	public class LocalLoginProvider implements ILoginProvider
-	{			
+	public class LocalLoginProvider extends Controller implements ILoginProvider
+	{	
 		/* Check whether an user file already exists. */
 		public function UserExists(username:String):Boolean
 		{
@@ -30,10 +31,10 @@ package org.antigone.models
 		 */
 		public function GetUser(username:String):User
 		{
-			var userProfilePath:File = GetFileForUser(username);
+			var userFile:File = GetFileForUser(username);
 			
 			// If the file doesn't even exists, the user is invalid
-			if (!userProfilePath.exists)
+			if (!userFile.exists)
 				return null;
 			
 			// Now read the data from the file
@@ -69,36 +70,36 @@ package org.antigone.models
 		 * WARNING : this method will read the user profile from the file system
 		 * before updating values. Therefore, if you maintain a global instance of a
 		 * user profile, check for conflicts. A good solution is to save (i.e. write
-		 * to the disk) your global user profile pefore using UpdateUser.
+		 * to the disk) your global user profile pbfore using UpdateUser.
 		 * 
 		 * Returns true in case of success, false else (for instance if
 		 * the user does not exist).*/
-		public function UpdateUser(newUserData:User):Boolean
+		public function UpdateUser(user:User):Boolean
 		{
-			var user:User;
+			var oldUser:User;
 			
 			// Check that all required fields are here
-			if (!newUserData.IsValidUser())
+			if (!user.IsValidUser())
 				return false;
 			
 			// Do not update a user that doesn't exists
-			if (!this.UserExists(newUserData.username))
+			if (!this.UserExists(user.username))
 				return false;
 			
 			// Retrieve current user profile
-			user = LocalLoginProvider.ReadUserXML(newUserData.username);
+			oldUser = LocalLoginProvider.ReadUserXML(user.username);
 			
 			// Describe User type
 			var userType:XML = describeType(User);
 			
-			// Enumerate properties and update fields for non-null values
+			// Enumerate properties, and update fields for non-null values
 			for each(var property:String in userType.factory.accessor.@name) {
-				if (newUserData[property] != null)
-					user[property] = newUserData[property];
+				if (user[property] != null)
+					oldUser[property] = user[property];
 			}
 			
 			// Write the updated User Profile
-			return LocalLoginProvider.WriteUserXML(user);
+			return LocalLoginProvider.WriteUserXML(oldUser);
 		}
 		
 		/* Delete a user profile XML file from the file system. */

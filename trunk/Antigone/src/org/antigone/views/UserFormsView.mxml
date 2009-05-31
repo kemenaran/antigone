@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:ViewStack
 	xmlns:mx="http://www.adobe.com/2006/mxml"
-	xmlns:controllers="org.antigone.controllers.*"
+	xmlns:mediators="org.antigone.mediators.*"
 	xmlns:views="org.antigone.views.*" height="291" width="363">
 	
-	<controllers:UserFormsController id="userFormsController" view="{this}" />
+	<mediators:UserFormsMediator id="mediator" view="{this}" />
 	
 	<mx:Metadata>
 		// Bubble from LoginView
@@ -16,13 +16,13 @@
     </mx:Metadata>
     
     <mx:Panel id="loginView" title="Identification" horizontalAlign="center">
-		<views:LoginView newUserClicked="userFormsController.NewUserClicked()" width="294" height="111"/>
+		<views:LoginView newUserClicked="mediator.NewUserClicked()" width="294" height="111"/>
 	</mx:Panel>
 	
 	<mx:Panel id="newUserView" title="Nouvel utilisateur" horizontalAlign="center">
 		<views:NewUserView
-			newUserCreated="userFormsController.NewUserCreated()"
-			newUserCancel="userFormsController.NewUserCancel()" width="317"/>
+			newUserCreated="mediator.NewUserCreated()"
+			newUserCancel="mediator.NewUserCancel()" width="317"/>
 	</mx:Panel>
 	
 </mx:ViewStack>

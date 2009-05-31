@@ -1,6 +1,6 @@
 package org.antigone.models
 {
-	/* Store the progression settings */
+	/* Model class storing the progression settings */
 	public class ProgressionStore
 	{
 		// Stub implementation

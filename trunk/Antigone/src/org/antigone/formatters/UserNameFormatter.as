@@ -6,7 +6,8 @@ package org.antigone.formatters
 	/* Format the name of an User as an human-readable string. */
 	public class UserNameFormatter extends Formatter
 	{
-		/* Call User::GetDisplayName() to get the formatted string. */
+		/* Call User::GetDisplayName() to get the formatted string. 
+		 * Arguments: value must be an User object. */
 		override public function format(value:Object):String
 		{
 			return (value as User).GetDisplayName();

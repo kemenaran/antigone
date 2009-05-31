@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Form xmlns:mx="http://www.adobe.com/2006/mxml"
-	xmlns:controllers="org.antigone.controllers.*"
+	xmlns:mediators="org.antigone.mediators.*"
 	xmlns:models="org.antigone.models.*"
 	defaultButton="{createButton}" >
 	
@@ -11,7 +11,7 @@
     </mx:Metadata>
     
     <!-- Here is our controller -->
-	<controllers:NewUserController id="newUserController" view="{this}" />
+	<mediators:NewUserMediator id="mediator" view="{this}" />
 	
 	<!-- Here is our model, bound to the Form fields -->
     <models:User id="userModel"
@@ -46,8 +46,8 @@
 	</mx:FormItem>
 	
 	<mx:HBox horizontalAlign="center" width="100%">
-		<mx:Button id="cancelButton" label="Annuler" click="newUserController.cancelClicked()"/>
-		<mx:Button id="createButton" label="Créer l'utilisateur" click="newUserController.createUserClicked()"/>
+		<mx:Button id="cancelButton" label="Annuler" click="mediator.cancelClicked()"/>
+		<mx:Button id="createButton" label="Créer l'utilisateur" click="mediator.createUserClicked()"/>
 	</mx:HBox>
 	
 	<!-- Here are the validators -->

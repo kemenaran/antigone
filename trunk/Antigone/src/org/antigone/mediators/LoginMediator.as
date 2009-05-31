@@ -1,16 +1,18 @@
-// ActionScript file
-package org.antigone.controllers
+package org.antigone.mediators
 {
 	import flash.events.Event;
 	import flash.filesystem.*;
+	import mx.core.Application;
 	
 	import org.antigone.models.*;
+	import org.antigone.controllers.*;
 	import org.antigone.views.LoginView;
 	
-	public class LoginController
+	public class LoginMediator extends Mediator
 	{
 		public var view:LoginView;
-		protected var loginProvider:ILoginProvider = LoginProvider.sharedLoginProvider;
+		
+		protected var loginProvider:LoginProvider= Application.application.c.LoginProvider;
 			
 		public const kLoginErrorMessage:String = "loginErrorMessage";
 		
@@ -39,7 +41,7 @@ package org.antigone.controllers
 		{
 			// Retrieve the logged user and register it
 			var loggedUser:User = this.loginProvider.GetUser(this.userModel.username);
-			UserProfile.loggedUser = loggedUser;
+			this.loginProvider.currentUser = loggedUser;
 			
 			// Inform that we successfully logged in
 			view.dispatchEvent(new Event("loginSucceeded", true));

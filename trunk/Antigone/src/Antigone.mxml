@@ -2,18 +2,16 @@
 <mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml"
 	xmlns:views="org.antigone.views.*"
 	xmlns:controllers="org.antigone.controllers.*"
-	layout="vertical" >
+	layout="vertical" xmlns:mediators="org.antigone.mediators.*">
 	
-	<!-- Instance of the AppController -->
-	<controllers:AppController id="appController" />
+	<mx:Script>
+		<![CDATA[
+			// Extends WindowedApplication
+			include "org/antigone/Antigone.as";
+		]]>
+	</mx:Script>
 	
-	<!-- Views stacked -->
+	<!-- Main view -->
+	<views:MainContainerView width="100%" height="100%" />
 	
-	<mx:ViewStack id="viewstack" height="100%" width="100%">
-		<mx:HBox horizontalAlign="center">
-			<views:UserFormsView id="loginView" loginSucceeded="appController.loginSucceeded()"/>
-		</mx:HBox>
-		<views:DashboardView id="dashboardView" width="100%" height="100%" />
-	</mx:ViewStack>
-
 </mx:WindowedApplication>

@@ -1,5 +1,10 @@
 package org.antigone.models
 {
+	import mx.core.Application;
+	
+	import org.antigone.controllers.LoginProvider;
+	
+	/* Model class representing a User. */
 	[Bindable]
 	public class User 
 	{
@@ -68,10 +73,12 @@ package org.antigone.models
 			}
 		}
 		
-		/* Save the user for future use using the shared Login Provider. */
-		public function Save():Boolean
+		/* Call LoginProvider::UpdateUser() to update the current user data.
+		 * Check the related documentation in UpdateUser() to avoid conflicts while saving data. */
+		public function Save():void
 		{
-			return LoginProvider.sharedLoginProvider.UpdateUser(this);
+			var controller:LoginProvider = Application.application.c.LoginProvider;
+			controller.UpdateUser(this);
 		}
 	}
 }

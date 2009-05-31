@@ -1,18 +1,20 @@
-package org.antigone.controllers
+package org.antigone.mediators
 {
 	import flash.events.Event;
 	import flash.filesystem.*;
+	import mx.core.Application;
 	
 	import org.antigone.models.*;
+	import org.antigone.controllers.*;
 	import org.antigone.views.NewUserView;
 	
-	/* Controller for the NewUserView form. */
-	public class NewUserController
+	/* Mediator for the NewUserView form. */
+	public class NewUserMediator extends Mediator
 	{
-		[Bindable]
+		/* A reference to the controlled view. */
 		public var view:NewUserView;
 		
-		protected var loginProvider:ILoginProvider = LoginProvider.sharedLoginProvider;
+		protected var loginProvider:ILoginProvider = Application.application.c.LoginProvider;
 		
 		protected const kUserExistsMessage:String = "userExistMessage";
 		protected const kUserErrorMessage:String = "userErrorMessage";
