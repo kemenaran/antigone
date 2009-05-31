@@ -5,7 +5,7 @@
 	xmlns:models="org.antigone.models.*"
 	width="342" >
 	
-	<!-- Define published events -->
+	<!-- Published events -->
 	<mx:Metadata>
 		[Event(name="newUserClicked", type="flash.events.Event")]
         [Event(name="loginSucceeded", type="flash.events.Event")]

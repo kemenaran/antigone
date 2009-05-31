@@ -14,5 +14,11 @@ package org.antigone.mediators
 		{
 			view.selectedChild = view.dashboardView;
 		}
+		
+		/* When the User disconnects, switch to the LoginView. */
+		public function UserDisconnected():void
+		{
+			view.selectedChild = view.loginView;
+		}
 	}
 }

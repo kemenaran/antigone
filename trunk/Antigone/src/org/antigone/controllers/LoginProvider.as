@@ -9,5 +9,15 @@ package org.antigone.controllers
 	{
 		[Bindable]
 		public var currentUser:User;
+		
+		public function ConnectUser(user:User):void
+		{
+			this.currentUser = user;
+		}
+		
+		public function DisconnectUser():void
+		{
+			this.currentUser = null;
+		}
 	}
 }
