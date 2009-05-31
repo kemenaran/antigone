@@ -14,7 +14,7 @@ package org.antigone.mediators
 		/* A reference to the controlled view. */
 		public var view:LoginView;
 		
-		protected var loginProvider:LoginProvider= Application.application.c.LoginProvider;
+		protected var loginProvider:LoginProvider = Application.application.c.LoginProvider;
 			
 		public const kLoginErrorMessage:String = "loginErrorMessage";
 		
@@ -41,12 +41,12 @@ package org.antigone.mediators
 		/* Triggered when a Login was successfully performed */
 		protected function LoginSucceeded():void
 		{
-			// Clean the form
-			FormHelper.AutoResetForm(this.view);
-			
 			// Retrieve the logged user and register it
 			var loggedUser:User = this.loginProvider.GetUser(this.userModel.username);
 			this.loginProvider.ConnectUser(loggedUser);
+			
+			// Clean the form
+			FormHelper.AutoResetForm(this.view);
 			
 			// Inform that we successfully logged in
 			view.dispatchEvent(new Event("loginSucceeded", true));

@@ -28,6 +28,7 @@ package org.antigone.helpers
 		{
 			var fields:Array = FormHelper.FindFields(form);
 			
+			// For each TextInput field, clear the text and the error message
 			if (fields.length > 0) {
 				for each(var field:TextInput in fields) {
 					field.text = "";

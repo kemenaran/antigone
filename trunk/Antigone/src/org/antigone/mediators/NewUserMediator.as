@@ -41,12 +41,12 @@ package org.antigone.mediators
 			// Create the user
 			success = loginProvider.CreateUser(userModel.username, userModel.password);
 			if (success) {
-				
-				// Clean the form
-				FormHelper.AutoResetForm(this.view);
 								
 				// Add all the form informations to the User
 				loginProvider.UpdateUser(userModel);
+				
+				// Clean the form
+				FormHelper.AutoResetForm(this.view);
 				
 				// Notify that user creation is complete
 				view.dispatchEvent(new Event('newUserCreated', true));
