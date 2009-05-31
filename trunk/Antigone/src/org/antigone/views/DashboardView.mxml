@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="544" height="382" xmlns:formatters="org.antigone.formatters.*" xmlns:views="org.antigone.views.*" xmlns:mediators="org.antigone.mediators.*">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="544" height="382" xmlns:formatters="org.antigone.formatters.*" xmlns:views="org.antigone.views.*" xmlns:mediators="org.antigone.mediators.*" xmlns:helpers="org.antigone.helpers.*">
 
 	<!-- Published events -->
 	<mx:Metadata>

@@ -7,6 +7,7 @@ package org.antigone.mediators
 	import org.antigone.models.*;
 	import org.antigone.controllers.*;
 	import org.antigone.views.NewUserView;
+	import org.antigone.helpers.FormHelper;
 	
 	/* Mediator for the NewUserView form. */
 	public class NewUserMediator extends Mediator
@@ -41,6 +42,9 @@ package org.antigone.mediators
 			success = loginProvider.CreateUser(userModel.username, userModel.password);
 			if (success) {
 				
+				// Clean the form
+				FormHelper.AutoResetForm(this.view);
+								
 				// Add all the form informations to the User
 				loginProvider.UpdateUser(userModel);
 				
@@ -55,7 +59,8 @@ package org.antigone.mediators
 		/* When the "Cancel" button is clicked, reset the form and send an event. */
 		public function cancelClicked():void
 		{
-			this.ResetForm();
+			FormHelper.AutoResetForm(this.view);
+			
 			view.dispatchEvent(new Event('newUserCancel', true));
 		}
 		
@@ -77,17 +82,6 @@ package org.antigone.mediators
 				default:
 					trace("Message '" + messageType.toString() + "' not implemented.");
 			}
-		}
-		
-		/* Reset all the form fields. */
-		protected function ResetForm():void
-		{
-			view.username.text = "";
-			view.password.text = "";
-			view.email.text = "";
-			view.firstName.text = "";
-			view.surname.text = "";
-			view.school.text = "";
 		}
 	}
 }

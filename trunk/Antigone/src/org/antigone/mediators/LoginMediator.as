@@ -7,9 +7,11 @@ package org.antigone.mediators
 	import org.antigone.models.*;
 	import org.antigone.controllers.*;
 	import org.antigone.views.LoginView;
+	import org.antigone.helpers.FormHelper;
 	
 	public class LoginMediator extends Mediator
 	{
+		/* A reference to the controlled view. */
 		public var view:LoginView;
 		
 		protected var loginProvider:LoginProvider= Application.application.c.LoginProvider;
@@ -39,9 +41,12 @@ package org.antigone.mediators
 		/* Triggered when a Login was successfully performed */
 		protected function LoginSucceeded():void
 		{
+			// Clean the form
+			FormHelper.AutoResetForm(this.view);
+			
 			// Retrieve the logged user and register it
 			var loggedUser:User = this.loginProvider.GetUser(this.userModel.username);
-			this.loginProvider.currentUser = loggedUser;
+			this.loginProvider.ConnectUser(loggedUser);
 			
 			// Inform that we successfully logged in
 			view.dispatchEvent(new Event("loginSucceeded", true));
@@ -50,6 +55,7 @@ package org.antigone.mediators
 		/* Send event when the "New User" button is clicked */
 		public function NewUserClicked():void
 		{
+			FormHelper.AutoResetForm(this.view);
 			view.dispatchEvent(new Event("newUserClicked", true));
 		}
 		
