@@ -1,25 +1,45 @@
 package org.antigone.controllers
 {
-	import flash.filesystem.File;
+	import flash.filesystem.*;
+	
 	import org.antigone.models.Lesson;
 	
 	/* Manage multiple lessons stored in XML files. */
-	public class LessonsController extends Controller
+	public class LessonController extends Controller
 	{
-		protected var lessons:Array;
+		protected var __lessons:Array = new Array();
+		
+		[Bindable]
+		public function get lessons():Array
+		{
+			//if (__lessons == null)
+			//	this.LoadAllLessons();
+				
+			return __lessons;
+		}
+		
+		/* Bindings need a setter to work properly. */
+		public function set lessons(lessons:Array):void
+		{
+			this.__lessons = lessons;
+		}
 		
 		/* Load all lessons in the Lessons Array. */
-		public function LoadAllLessons()
+		public function LoadAllLessons():void
 		{
 			var lessonsPath:File = this.GetLessonsPath();
-			
 			var lessonsFiles:Array = lessonsPath.getDirectoryListing();
+			var lessonFile:File;
+			var newLessons:Array = new Array();
 			
-			for (var lessonFile:File in lessonsFiles) {
+			for (var i:uint = 0; i < lessonsFiles.length; i++) {
+				lessonFile = lessonsFiles[i];
 				if (!lessonFile.isDirectory && lessonFile.extension == "xml") {
-					this.lessons[] = LessonsController.ReadLessonXML(lessonFile);
+					newLessons.push(LessonController.ReadLessonXML(lessonFile));
 				}
 			}
+			
+			this.lessons = newLessons;
 		}
 		
 		/* Retrieve a given lesson, specified by its index. */
@@ -32,7 +52,8 @@ package org.antigone.controllers
 		protected function GetLessonsPath():File
 		{
 			var path:File = new File();
-			return path.resolvePath(File.applicationStorageDirectory.toString() + "/Lessons/");
+			var pathString:String = File.applicationStorageDirectory.nativePath + "/Lessons";
+			return path.resolvePath(pathString);
 		}
 		
 		/* Create a Lesson object from an XML file. */

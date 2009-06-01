@@ -1,7 +1,8 @@
 package org.antigone.mediators
 {
-	import mx.core.WindowedApplication;
+	import mx.core.Application;
 	import org.antigone.views.MainContainerView;
+	import org.antigone.controllers.LessonController;
 	
 	/* Mediator for the MainContainer view. */
 	public class MainContainerMediator extends Mediator
@@ -12,6 +13,9 @@ package org.antigone.mediators
 		/* When a Login is successfully performed, switch to the Dashboard. */
 		public function LoginSucceeded():void
 		{
+			var lessonController:LessonController = Application.application.c.LessonController;
+			lessonController.LoadAllLessons();
+			
 			view.selectedChild = view.dashboardView;
 		}
 		

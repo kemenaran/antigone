@@ -23,6 +23,7 @@ package org.antigone.controllers
 		flash_proxy override function getProperty(name:*):*
 		{
 			var controllerType:Class;
+			LessonController;
 			
 			try {
 				controllerType = getDefinitionByName("org.antigone.controllers." + name.toString()) as Class;
