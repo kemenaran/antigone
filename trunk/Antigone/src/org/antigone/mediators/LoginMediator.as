@@ -6,6 +6,7 @@ package org.antigone.mediators
 	
 	import org.antigone.models.*;
 	import org.antigone.controllers.*;
+	import org.antigone.mediators.events.UserEvent;
 	import org.antigone.views.LoginView;
 	import org.antigone.helpers.FormHelper;
 	
@@ -49,14 +50,14 @@ package org.antigone.mediators
 			FormHelper.AutoResetForm(this.view);
 			
 			// Inform that we successfully logged in
-			view.dispatchEvent(new Event("loginSucceeded", true));
+			view.dispatchEvent(new UserEvent(UserEvent.ConnectedEvent, loggedUser));
 		}
 		
 		/* Send event when the "New User" button is clicked */
 		public function NewUserClicked():void
 		{
 			FormHelper.AutoResetForm(this.view);
-			view.dispatchEvent(new Event("newUserClicked", true));
+			view.dispatchEvent(new Event("newUserClicked"));
 		}
 		
 		/* Display hints about the success of the login attemp */

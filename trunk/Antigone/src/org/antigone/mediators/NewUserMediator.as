@@ -2,12 +2,16 @@ package org.antigone.mediators
 {
 	import flash.events.Event;
 	import flash.filesystem.*;
+	
+	import mx.controls.Alert;
 	import mx.core.Application;
 	
-	import org.antigone.models.*;
 	import org.antigone.controllers.*;
-	import org.antigone.views.NewUserView;
 	import org.antigone.helpers.FormHelper;
+	import org.antigone.mediators.events.UserEvent;
+	import org.antigone.models.*;
+	import org.antigone.views.NewUserView;
+	
 	
 	/* Mediator for the NewUserView form. */
 	public class NewUserMediator extends Mediator
@@ -31,6 +35,7 @@ package org.antigone.mediators
 		public function createUserClicked():void
 		{	
 			var success:Boolean;
+			var updatedUser:User;
 			
 			// If the user already exists, give up
 			if (loginProvider.UserExists(view.username.text)) {
@@ -40,16 +45,18 @@ package org.antigone.mediators
 				
 			// Create the user
 			success = loginProvider.CreateUser(userModel.username, userModel.password);
-			if (success) {
-								
-				// Add all the form informations to the User
-				loginProvider.UpdateUser(userModel);
+			if (success
+				&& (updatedUser = loginProvider.UpdateUser(userModel)) != null) {
+				
+				// Display a welcome message				
+				Alert.show("L'utilisateur a été correctement créé.\n\n" +
+					"Bienvenue, " + updatedUser.GetDisplayName() + "!");
 				
 				// Clean the form
 				FormHelper.AutoResetForm(this.view);
 				
-				// Notify that user creation is complete
-				view.dispatchEvent(new Event('newUserCreated', true));
+				// Notify that user creation is complete				
+				view.dispatchEvent(new UserEvent(UserEvent.CreatedEvent, updatedUser));
 				
 			} else {
 				this.displayErrorMessage(kUserErrorMessage);

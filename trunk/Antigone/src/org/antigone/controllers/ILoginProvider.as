@@ -9,7 +9,7 @@ package org.antigone.controllers
 		function CreateUser(username:String, password:String):Boolean;
 		function ValidateUser(username:String, password:String):Boolean;
 		function GetUser(username:String):User;
-		function UpdateUser(user:User):Boolean;
+		function UpdateUser(user:User):User;
 		function DeleteUser(username:String):Boolean;
 	}
 }

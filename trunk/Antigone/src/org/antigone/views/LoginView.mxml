@@ -8,7 +8,7 @@
 	<!-- Published events -->
 	<mx:Metadata>
 		[Event(name="newUserClicked", type="flash.events.Event")]
-        [Event(name="loginSucceeded", type="flash.events.Event")]
+        [Event(name="userConnected", type="org.antigone.mediators.events.UserEvent")]
     </mx:Metadata>
     	
 	<!-- View mediator -->

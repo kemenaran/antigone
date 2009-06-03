@@ -19,5 +19,7 @@ package org.antigone.controllers
 		{
 			this.currentUser = null;
 		}
+		
+		
 	}
 }

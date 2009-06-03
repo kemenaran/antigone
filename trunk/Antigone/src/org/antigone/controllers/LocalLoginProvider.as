@@ -74,20 +74,20 @@ package org.antigone.controllers
 		 * 
 		 * Returns true in case of success, false else (for instance if
 		 * the user does not exist).*/
-		public function UpdateUser(user:User):Boolean
+		public function UpdateUser(user:User):User
 		{
-			var oldUser:User;
+			var newUser:User;
 			
 			// Check that all required fields are here
 			if (!user.IsValidUser())
-				return false;
+				return null;
 			
 			// Do not update a user that doesn't exists
 			if (!this.UserExists(user.username))
-				return false;
+				return null;
 			
 			// Retrieve current user profile
-			oldUser = LocalLoginProvider.ReadUserXML(user.username);
+			newUser = LocalLoginProvider.ReadUserXML(user.username);
 			
 			// Describe User type
 			var userType:XML = describeType(User);
@@ -95,11 +95,14 @@ package org.antigone.controllers
 			// Enumerate properties, and update fields for non-null values
 			for each(var property:String in userType.factory.accessor.@name) {
 				if (user[property] != null)
-					oldUser[property] = user[property];
+					newUser[property] = user[property];
 			}
 			
 			// Write the updated User Profile
-			return LocalLoginProvider.WriteUserXML(oldUser);
+			if (LocalLoginProvider.WriteUserXML(newUser))
+				return newUser;
+			else
+				return null;
 		}
 		
 		/* Delete a user profile XML file from the file system. */
