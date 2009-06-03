@@ -51,9 +51,7 @@ package org.antigone.controllers
 		/* Return the lessons' folder. */
 		protected function GetLessonsPath():File
 		{
-			var path:File = new File();
-			var pathString:String = File.applicationStorageDirectory.nativePath + "/Lessons";
-			return path.resolvePath(pathString);
+			return File.applicationDirectory.resolvePath("Lessons/");
 		}
 		
 		/* Create a Lesson object from an XML file. */
