@@ -1,12 +1,12 @@
 package org.antigone.models
 {
-	public class Exercice
+	public class Exercise
 	{
 		public var title:String;
 		
-		public static function DecodeFromXML(coder:XML):Exercice
+		public static function DecodeFromXML(coder:XML):Exercise
 		{
-			var exercice:Exercice = new Exercice();
+			var exercice:Exercise = new Exercise();
 			
 			if (coder == null)
 				return null;
