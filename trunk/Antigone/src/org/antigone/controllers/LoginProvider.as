@@ -1,5 +1,8 @@
 package org.antigone.controllers
 {
+	import mx.core.Application;
+	
+	import org.antigone.mediators.events.UserEvent;
 	import org.antigone.models.User;
 	
 	/* Used as a placeholder for the concrete ILoginprovider implementation
@@ -10,16 +13,35 @@ package org.antigone.controllers
 		[Bindable]
 		public var currentUser:User;
 		
-		public function ConnectUser(user:User):void
+		public function ConnectUser(user:User):Boolean
 		{
-			this.currentUser = user;
+			// Check user credentials
+			if (this.ValidateUser(user.username, user.password)) {
+				
+				// Retrieve the user and register it
+				this.currentUser = this.GetUser(user.username);
+				
+				return true;
+				
+			} else {
+				
+				// The user's credentials are invalid
+				return false;
+			}
 		}
 		
-		public function DisconnectUser():void
+		public function DisconnectUser():Boolean
 		{
+			// Save the user that was previously connected
+			var previousUser:User = this.currentUser;
+			
+			// Unregister the user
 			this.currentUser = null;
+			
+			// Inform that we successfully disconnected the user
+			Application.application.dispatchEvent(new UserEvent(UserEvent.DisconnectedEvent, previousUser));
+			
+			return true;
 		}
-		
-		
 	}
 }

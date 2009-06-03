@@ -25,7 +25,7 @@ package org.antigone.mediators
 				this.view.loginView.userModel = event.user;
 				(this.view.loginView.mediator as LoginMediator).LoginFormSubmitted();
 			}
-				
+			
 			view.selectedChild = view.loginPanel;
 		}
 		

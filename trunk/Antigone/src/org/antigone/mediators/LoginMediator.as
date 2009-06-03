@@ -2,13 +2,14 @@ package org.antigone.mediators
 {
 	import flash.events.Event;
 	import flash.filesystem.*;
+	
 	import mx.core.Application;
 	
-	import org.antigone.models.*;
 	import org.antigone.controllers.*;
-	import org.antigone.mediators.events.UserEvent;
-	import org.antigone.views.LoginView;
 	import org.antigone.helpers.FormHelper;
+	import org.antigone.mediators.events.UserEvent;
+	import org.antigone.models.*;
+	import org.antigone.views.LoginView;
 	
 	public class LoginMediator extends Mediator
 	{
@@ -27,30 +28,20 @@ package org.antigone.mediators
 		
 		/* Check wether the supplied informations represents a valid user */
 		public function LoginFormSubmitted():void
-		{
-			var isLoginCorrect:Boolean;
+		{	
+			// Try to connect the user.
+			var userConnected:Boolean = this.loginProvider.ConnectUser(this.userModel);
 			
-			isLoginCorrect = this.loginProvider.ValidateUser(this.userModel.username, this.userModel.password);
-			
-			if (isLoginCorrect) {
-				this.LoginSucceeded();
+			if (userConnected) {
+				// Inform that we successfully connected the user
+				this.view.dispatchEvent(new UserEvent(UserEvent.ConnectedEvent, this.loginProvider.currentUser));
+				
+				// Clear the form
+				FormHelper.AutoResetForm(this.view);
 			} else {
+				// Show errors
 				this.displayErrorMessage(kLoginErrorMessage);
 			}
-		}
-		
-		/* Triggered when a Login was successfully performed */
-		protected function LoginSucceeded():void
-		{
-			// Retrieve the logged user and register it
-			var loggedUser:User = this.loginProvider.GetUser(this.userModel.username);
-			this.loginProvider.ConnectUser(loggedUser);
-			
-			// Clean the form
-			FormHelper.AutoResetForm(this.view);
-			
-			// Inform that we successfully logged in
-			view.dispatchEvent(new UserEvent(UserEvent.ConnectedEvent, loggedUser));
 		}
 		
 		/* Send event when the "New User" button is clicked */
