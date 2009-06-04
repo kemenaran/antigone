@@ -44,6 +44,11 @@ package org.antigone.controllers
 			var lesson:Lesson;
 			var newLessons:Array = new Array();
 			
+			// Clear previous lessons
+			this.__lessons = new Array();
+			this.lessonDict = new Dictionary();
+						
+			// Enumerate XML files and load them as lessons
 			for (var i:uint = 0; i < lessonsFiles.length; i++) {
 				lessonFile = lessonsFiles[i];
 				if (!lessonFile.isDirectory && lessonFile.extension == "xml") {
