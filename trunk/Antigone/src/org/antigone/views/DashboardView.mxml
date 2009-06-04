@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="544" height="382" xmlns:formatters="org.antigone.formatters.*" xmlns:views="org.antigone.views.*" xmlns:mediators="org.antigone.mediators.*" xmlns:helpers="org.antigone.helpers.*">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="544" height="382"
+	xmlns:views="org.antigone.views.*" xmlns:mediators="org.antigone.mediators.*" xmlns:helpers="org.antigone.helpers.*">
 
 	<!-- Published events -->
 	<mx:Metadata>
@@ -17,13 +18,8 @@
 	<!-- Mediator -->
 	<mediators:DashboardMediator id="mediator" view="{this}" />
 	
-	<!-- Formatter for the userName binding -->
-	<formatters:UserNameFormatter id="userNameFormatter" />
 	
-	<mx:HBox width="100%" right="0" top="0" horizontalAlign="right">
-		<mx:Label text="Bonjour, {userNameFormatter.format(Application.application.c.LoginProvider.currentUser)} !"/>
-		<mx:Button label="Se déconnecter" fontSize="8" height="18" width="101" id="logoutButton" click="mediator.DisconnectButtonClicked()"/>
-	</mx:HBox>
+	
 	
 	<mx:HBox bottom="0" top="30" right="0" left="0">
 		

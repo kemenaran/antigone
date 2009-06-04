@@ -1,18 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:ViewStack xmlns:mx="http://www.adobe.com/2006/mxml"
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
 	xmlns:mediators="org.antigone.mediators.*"
-	xmlns:views="org.antigone.views.*">
+	xmlns:views="org.antigone.views.*"
+	xmlns:formatters="org.antigone.formatters.*">
+	
+	<mx:Script>
+		<![CDATA[
+			import org.antigone.controllers.LoginProvider;
+			import mx.core.Application;
+			
+			[Bindable]
+			protected var loginProvider:LoginProvider = Application.application.c.LoginProvider;
+		]]>
+	</mx:Script>
 
-	<!-- View Mediator -->
+	<!-- Mediator -->
 	<mediators:MainContainerMediator id="mediator" view="{this}" />
 	
-	<!-- Views -->
-	<mx:HBox id="loginView" horizontalAlign="center">
-		<views:UserFormsView userConnected="mediator.LoginSucceeded()"/>
+	<!-- Disconnect box -->
+	<formatters:UserNameFormatter id="userNameFormatter" />
+	<mx:HBox id="disconnectBox" width="100%" right="0" top="0" horizontalAlign="right"
+		visible="{!(loginProvider.currentUser == null)}"
+		includeInLayout="{!(loginProvider.currentUser == null)}">
+			<mx:Label text="Bonjour, {userNameFormatter.format(loginProvider.currentUser)} !"/>
+			<mx:Button label="Se déconnecter" fontSize="8" height="18" width="101" id="logoutButton" click="mediator.DisconnectButtonClicked()"/>
 	</mx:HBox>
-	<views:DashboardView id="dashboardView" width="100%" height="100%"
-		userDisconnected="mediator.UserDisconnected()"
-		lessonSelected="mediator.LessonSelected(event)" />
-	<views:LessonView id="lessonView" model="{null}" />
+		
+	<!-- Views -->
+	<mx:ViewStack id="mainViewStack" width="100%" height="100%">
+		
+		<mx:HBox id="loginView" horizontalAlign="center">
+			<views:UserFormsView userConnected="mediator.LoginSucceeded()"/>
+		</mx:HBox>
+		
+		<views:DashboardView id="dashboardView" width="100%" height="100%"
+			userDisconnected="mediator.UserDisconnected()"
+			lessonSelected="mediator.LessonSelected(event)" />
+		
+		<views:LessonView id="lessonView" model="{null}"/>
+		
+	</mx:ViewStack>
 	
-</mx:ViewStack>
+</mx:VBox>
