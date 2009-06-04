@@ -10,6 +10,9 @@
 	<mx:HBox id="loginView" horizontalAlign="center">
 		<views:UserFormsView userConnected="mediator.LoginSucceeded()"/>
 	</mx:HBox>
-	<views:DashboardView id="dashboardView" userDisconnected="mediator.UserDisconnected()" width="100%" height="100%" />
+	<views:DashboardView id="dashboardView" width="100%" height="100%"
+		userDisconnected="mediator.UserDisconnected()"
+		lessonSelected="mediator.LessonSelected(event)" />
+	<views:LessonView id="lessonView" model="{null}" />
 	
 </mx:ViewStack>

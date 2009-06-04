@@ -1,27 +1,38 @@
 package org.antigone.controllers
 {
+	import flash.events.Event;
 	import flash.filesystem.*;
+	import flash.utils.Dictionary;
 	
 	import org.antigone.models.Lesson;
 	
 	/* Manage multiple lessons stored in XML files. */
 	public class LessonController extends Controller
 	{
+		/* Simple (and data-providable) lesson array.
+		 * Updated by LoadAllLessons(). */
 		protected var __lessons:Array = new Array();
 		
-		[Bindable]
+		/* Lessons indexed by id - faster for searches and duplicate checks.
+		 * Updated by LoadAllLessons(). */
+		protected var lessonDict:Dictionary = new Dictionary();
+		
+		/* Allow elements to bind to "lessons".
+		 * The property is read-only - change notifications are triggered
+		 * by the protected setter (setLessons).
+		 */
+		[Bindable(event="lessonsArrayUpdated")]
 		public function get lessons():Array
 		{
-			//if (__lessons == null)
-			//	this.LoadAllLessons();
-				
 			return __lessons;
 		}
 		
-		/* Bindings need a setter to work properly. */
-		public function set lessons(lessons:Array):void
+		/* Protected setter for the "lesson" property.
+		 * Dispatch the event required for data-binding. */
+		protected function setLessons(newLessons:Array):void
 		{
-			this.__lessons = lessons;
+			this.__lessons = newLessons;
+			dispatchEvent(new Event("lessonsArrayUpdated"));
 		}
 		
 		/* Load all lessons in the Lessons Array. */
@@ -30,22 +41,37 @@ package org.antigone.controllers
 			var lessonsPath:File = this.GetLessonsPath();
 			var lessonsFiles:Array = lessonsPath.getDirectoryListing();
 			var lessonFile:File;
+			var lesson:Lesson;
 			var newLessons:Array = new Array();
 			
 			for (var i:uint = 0; i < lessonsFiles.length; i++) {
 				lessonFile = lessonsFiles[i];
 				if (!lessonFile.isDirectory && lessonFile.extension == "xml") {
-					newLessons.push(LessonController.ReadLessonXML(lessonFile));
+					// Decode a Lesson from the XML file
+					lesson = LessonController.ReadLessonXML(lessonFile);
+					
+					// Check for id duplicates
+					if (this.lessonDict[lesson.id] != null) {
+						// We've got an id duplicate !
+						throw new Error("The lesson '" + lesson.title + "' has the same id than "
+								+ "the lesson '" + (this.lessonDict[lesson.id] as Lesson).title + "'.");
+					}
+					
+					// Add the lesson to the lesson dictionary
+					this.lessonDict[lesson.id] = lesson;
+					
+					// Append the lesson to the newLessons array
+					newLessons.push(lesson);
 				}
 			}
 			
-			this.lessons = newLessons;
+			this.setLessons(newLessons);
 		}
 		
 		/* Retrieve a given lesson, specified by its index. */
-		public function GetLessonAtIndex(index:int):Lesson
+		public function GetLessonById(lessonId:String):Lesson
 		{
-			return lessons[index] as Lesson;
+			return this.lessonDict[lessonId] as Lesson;
 		}
 		
 		/* Return the lessons' folder. */

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:views="org.antigone.views.*"
+	xmlns:models="org.antigone.models.*">
+	
+	<models:Lesson id="model" />
+	
+	<mx:ViewStack width="100%" height="100%">
+		<mx:Repeater id="coursesRepeater" dataProvider="{model.courses}" >
+			<views:CourseView model="{coursesRepeater.currentItem}" />
+		</mx:Repeater>
+		<views:ExercisesBoardView model="{model.exercises}"/>
+	</mx:ViewStack>
+	
+	<mx:HBox width="100%">
+		<mx:Button label="&lt;&lt;  Leçon"/>
+	</mx:HBox>
+	
+</mx:VBox>

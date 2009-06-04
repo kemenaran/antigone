@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<lesson title="Première lesson">
-	<course title="Voici le premier cours">
+<lesson id="lesson-1" title="Première lesson">
+	<course title="Voici le premier cours" id="lesson-1">
 		<text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi venenatis venenatis
 		blandit. Nam ultrices consectetur sagittis. Maecenas pretium hendrerit venenatis. Donec
 		scelerisque facilisis massa eget consequat. Integer nisl lectus, sagittis consectetur

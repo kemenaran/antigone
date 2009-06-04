@@ -1,4 +1,4 @@
-package org.antigone.mediators.events
+package org.antigone.events
 {
 	import flash.events.Event;
 	

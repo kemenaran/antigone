@@ -8,7 +8,7 @@ package org.antigone.mediators
 	
 	import org.antigone.controllers.*;
 	import org.antigone.helpers.FormHelper;
-	import org.antigone.mediators.events.UserEvent;
+	import org.antigone.events.UserEvent;
 	import org.antigone.models.*;
 	import org.antigone.views.NewUserView;
 	

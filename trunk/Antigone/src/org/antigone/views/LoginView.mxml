@@ -26,7 +26,7 @@
 	</mx:FormItem>
 	<mx:HBox horizontalAlign="center" width="100%">		
 		<mx:Button label="Nouvel utilisateur" click="mediator.NewUserClicked()"/>
-		<mx:Button id="loginButton" label="S'identifier" click="mediator.LoginFormSubmitted()" />
+		<mx:Button id="loginButton" label="S'identifier" click="mediator.PerformLogin()" />
 	</mx:HBox>
 	
 	<!-- Validate all stuff -->

@@ -7,7 +7,7 @@ package org.antigone.mediators
 	
 	import org.antigone.controllers.*;
 	import org.antigone.helpers.FormHelper;
-	import org.antigone.mediators.events.UserEvent;
+	import org.antigone.events.UserEvent;
 	import org.antigone.models.*;
 	import org.antigone.views.LoginView;
 	
@@ -27,7 +27,7 @@ package org.antigone.mediators
 		}
 		
 		/* Check wether the supplied informations represents a valid user */
-		public function LoginFormSubmitted():void
+		public function PerformLogin():void
 		{	
 			// Try to connect the user.
 			var userConnected:Boolean = this.loginProvider.ConnectUser(this.userModel);

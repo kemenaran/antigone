@@ -2,7 +2,7 @@ package org.antigone.controllers
 {
 	import mx.core.Application;
 	
-	import org.antigone.mediators.events.UserEvent;
+	import org.antigone.events.UserEvent;
 	import org.antigone.models.User;
 	
 	/* Used as a placeholder for the concrete ILoginprovider implementation

@@ -9,9 +9,9 @@
 	<mx:Metadata>
 		// Bubble from LoginView
 		[Event(name="newUserClicked", type="flash.events.Event")]
-        [Event(name="userConnected", type="org.antigone.mediators.events.UserEvent")]
+        [Event(name="userConnected", type="org.antigone.events.UserEvent")]
         // Bubble from NewUserView
-        [Event(name="userCreated", type="org.antigone.mediators.events.UserEvent")]
+        [Event(name="userCreated", type="org.antigone.events.UserEvent")]
         [Event(name="newUserCancel", type="flash.events.Event")]
     </mx:Metadata>
     

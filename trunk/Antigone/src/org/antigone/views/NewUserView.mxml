@@ -6,7 +6,7 @@
 	
 	<!-- Exposed events -->
 	<mx:Metadata>
-		[Event(name="userCreated", type="org.antigone.mediators.events.UserEvent")]
+		[Event(name="userCreated", type="org.antigone.events.UserEvent")]
         [Event(name="newUserCancel", type="flash.events.Event")]
     </mx:Metadata>
     

@@ -1,8 +1,10 @@
 package org.antigone.mediators
 {
 	import mx.core.Application;
-	import org.antigone.views.MainContainerView;
+	
 	import org.antigone.controllers.LessonController;
+	import org.antigone.events.LessonEvent;
+	import org.antigone.views.MainContainerView;
 	
 	/* Mediator for the MainContainer view. */
 	public class MainContainerMediator extends Mediator
@@ -17,6 +19,13 @@ package org.antigone.mediators
 			lessonController.LoadAllLessons();
 			
 			view.selectedChild = view.dashboardView;
+		}
+		
+		public function LessonSelected(event:LessonEvent):void
+		{
+			view.lessonView.model = event.lesson;
+			
+			view.selectedChild = view.lessonView;
 		}
 		
 		/* When the User disconnects, switch to the LoginView. */

@@ -2,7 +2,7 @@ package org.antigone.mediators
 {
 	import flash.events.Event;
 	
-	import org.antigone.mediators.events.UserEvent;
+	import org.antigone.events.UserEvent;
 	import org.antigone.views.UserFormsView;
 	
 	/* Mediator for the UserFormsView. */
@@ -23,7 +23,7 @@ package org.antigone.mediators
 			// Try to connect the new user right now
 			if (event.user != null) {
 				this.view.loginView.userModel = event.user;
-				(this.view.loginView.mediator as LoginMediator).LoginFormSubmitted();
+				(this.view.loginView.mediator as LoginMediator).PerformLogin();
 			}
 			
 			view.selectedChild = view.loginPanel;

@@ -4,6 +4,9 @@ package org.antigone.models
 	[Bindable]
 	public class Lesson
 	{
+		/* An unique identifier for the lesson.*/
+		public var id:String;
+		
 		/* The title of the lesson. */
 		public var title:String;
 		
@@ -24,8 +27,12 @@ package org.antigone.models
 			// Sanity check
 			if (coder == null)
 				return null;
-				
+			var id:String = coder.@id;
+			if (coder.@id == undefined)
+				throw new Error("The lesson '" + coder.@title + "' must have an 'id' attribute.");
+			
 			// Decode instance members
+			lesson.id    = coder.@id;
 			lesson.title = coder.@title;
 			
 			// Decode courses

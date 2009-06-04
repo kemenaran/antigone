@@ -1,7 +1,9 @@
 package org.antigone.models
 {
+	[Bindable]
 	public class Exercise
 	{
+		/* The title of the exercise. */
 		public var title:String;
 		
 		public static function DecodeFromXML(coder:XML):Exercise
