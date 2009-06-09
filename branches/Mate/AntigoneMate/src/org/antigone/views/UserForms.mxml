@@ -2,7 +2,8 @@
 <mx:ViewStack
 	xmlns:mx="http://www.adobe.com/2006/mxml"
 	xmlns:mediators="org.antigone.mediators.*"
-	xmlns:views="org.antigone.views.*" xmlns:mate="http://mate.asfusion.com/">
+	xmlns:views="org.antigone.views.*" xmlns:mate="http://mate.asfusion.com/"
+	resizeToContent="true">
 	
 	<mx:Script>
 		<![CDATA[
