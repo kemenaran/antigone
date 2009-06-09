@@ -22,19 +22,19 @@
 				dispatchEvent(new NavigationEvent(NavigationEvent.LOGIN));
 			}
 			
-			private function CheckUserCreationResponse(success:Boolean):void 
+			private function CheckUserCreationResponse(newUser:User):void 
 			{
-				if (success) {
+				if (newUser == null) {
+					//show invalid user creation message
+					//currentState = 'messageState';
+					createButton.errorString = "Identifiants incorrects ; veuillez réessayer.";
+				} else {
 					// Display a welcome message				
 					Alert.show("L'utilisateur a été correctement créé.\n\n" +
-					"Bienvenue, " + "XXXXXX" + "!");
+					"Bienvenue, " + newUser.GetDisplayName() + "!");
 				
 					// Clean the form
 					FormHelper.AutoResetForm(this);
-				} else {
-					//show invalid login message
-					//currentState = 'messageState';
-					createButton.errorString = "Identifiants incorrects ; veuillez réessayer.";
 				}
 			}
 ]]>
@@ -43,7 +43,7 @@
     <!-- Dispatcher for the NEW_USER event
     	(we use an MXML declaration to take advantage of the ResponseHandler feature) -->
     <mate:Dispatcher id="newUserDispatcher" generator="{UserEvent}" type="{UserEvent.NEW_USER}">
-		<mate:ResponseHandler type="newUserResultResponse" response="CheckUserCreationResponse(event.loginResult)" />
+		<mate:ResponseHandler type="newUserResultResponse" response="CheckUserCreationResponse(event.newUser)" />
 		<mate:eventProperties>
 			<mate:EventProperties user="{userModel}" />
 		</mate:eventProperties>

@@ -35,7 +35,7 @@
 		
 		<!-- Because there is no server request, we just send the response right away. -->
 		<ResponseAnnouncer type="newUserResultResponse">
-			<Properties loginResult="{lastReturn}"/>
+			<Properties newUser="{lastReturn}"/>
 		</ResponseAnnouncer>
 	</EventHandlers>
 	

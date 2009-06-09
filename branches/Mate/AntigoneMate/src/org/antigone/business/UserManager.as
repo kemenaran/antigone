@@ -18,14 +18,14 @@ package org.antigone.business
 		
 		/* When the "Create User" button is clicked, try to register the
 		 * user, and display any error message. */
-		public function CreateUser(newUser:User):Boolean
+		public function CreateUser(newUser:User):User
 		{	
 			var success:Boolean;
 			var updatedUser:User;
 			
 			// If the user already exists, give up
 			if (loginProvider.UserExists(newUser.username))
-				return false;
+				return null;
 				
 			// Create the user
 			success = loginProvider.CreateUser(newUser.username, newUser.username);
@@ -37,10 +37,10 @@ package org.antigone.business
 				event.user = updatedUser;
 				dispatcher.dispatchEvent(event);
 				
-				return true;
+				return updatedUser;
 				
 			} else {
-				return false;
+				return null;
 			}				
 		}
 		
