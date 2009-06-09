@@ -4,8 +4,10 @@ package org.antigone.helpers
 	import flash.utils.getQualifiedClassName;
 	
 	import mx.containers.Form;
+	import mx.controls.Button;
 	import mx.controls.TextInput;
 	import mx.core.Container;
+	import mx.core.UIComponent;
 	
 	/* Collection of helper functions for working with Forms. */
 	public class FormHelper
@@ -44,14 +46,34 @@ package org.antigone.helpers
 			
 			for each(var child:DisplayObject in container.getChildren()) {
 				className = getQualifiedClassName(child);
-				if (className.indexOf("TextInput") != -1)
-					results.push(child);
-				else if (className.match(/container/)) {
+				if (className.match(/container/)) {
 					results = results.concat(FindFields(child as Container));
+				} else {
+					ResetField(child as UIComponent);
 				}
 			}
 			
 			return results;
+		}
+		
+		protected static function ResetField(field:UIComponent):void
+		{
+			var className:String;
+			
+			className = getQualifiedClassName(field);
+			
+			switch(className) {
+				case "mx.controls::TextInput":
+					var textInput:TextInput = field as TextInput;
+					textInput.text = "";
+					textInput.errorString = "";
+					break;
+					
+				case "mx.controls::Button":
+					var button:Button = field as Button;
+					button.errorString = "";
+					break;
+			}			
 		}
 	}
 }
