@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
-	 xmlns:mate="http://mate.asfusion.com/"
 	 xmlns:models="org.antigone.models.*"
 	 title="Nouvel utilisateur" horizontalAlign="center">
     
@@ -14,8 +13,11 @@
 			private function CreateNewUser() : void 
 			{
 				// if everything validates, broadcast an event containing the username & password		
-				if (Validator.validateAll(validators).length == 0 )
-					newUserDispatcher.generateEvent();
+				if (Validator.validateAll(validators).length == 0 ) {
+					var event:UserEvent = new UserEvent(UserEvent.NEW_USER);
+					event.user = userModel;
+					dispatchEvent(event);
+				}
 			}
 			
 			private function Cancel() : void
@@ -24,7 +26,7 @@
 				dispatchEvent(new NavigationEvent(NavigationEvent.LOGIN));
 			}
 			
-			private function CheckUserCreationResponse(newUser:User):void 
+			public function CheckUserCreationResponse(newUser:User):void 
 			{
 				if (newUser == null) {
 					//show invalid user creation message
@@ -41,15 +43,6 @@
 			}
 ]]>
     </mx:Script>
-    
-    <!-- Dispatcher for the NEW_USER event
-    	(we use an MXML declaration to take advantage of the ResponseHandler feature) -->
-    <mate:Dispatcher id="newUserDispatcher" generator="{UserEvent}" type="{UserEvent.NEW_USER}">
-		<mate:ResponseHandler type="newUserResultResponse" response="CheckUserCreationResponse(event.newUser)" />
-		<mate:eventProperties>
-			<mate:EventProperties user="{userModel}" />
-		</mate:eventProperties>
-	</mate:Dispatcher>
 	
 	<!-- User model, bound to the Form fields -->
     <models:User id="userModel"

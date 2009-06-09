@@ -17,26 +17,18 @@
 	
 	<!-- UserEvent.LOGIN ________________________________________________________________________ -->
 	
-	<!-- Loging in, normally this would send a server request, but we are making it simple here  -->
+	<!-- Loging in -->
 	<EventHandlers type="{UserEvent.LOGIN}">
 		<MethodInvoker generator="{UserManager}" method="ConnectUser" arguments="{[event.user]}" />
-		
-		<!-- Because there is no server request, we just send the response right away. -->
-		<ResponseAnnouncer type="loginResultResponse">
-			<Properties loginResult="{lastReturn}"/>
-		</ResponseAnnouncer>
+		<CallBack method="CheckLoginResult" arguments="{lastReturn}" />
 	</EventHandlers>
 	
 	<!-- UserEvent.NEW_USER ________________________________________________________________________ -->
 	
-	<!-- Loging in, normally this would send a server request, but we are making it simple here  -->
+	<!-- Create a new User  -->
 	<EventHandlers type="{UserEvent.NEW_USER}">
 		<MethodInvoker generator="{UserManager}" method="CreateUser" arguments="{[event.user]}" />
-		
-		<!-- Because there is no server request, we just send the response right away. -->
-		<ResponseAnnouncer type="newUserResultResponse">
-			<Properties newUser="{lastReturn}"/>
-		</ResponseAnnouncer>
+		<CallBack method="CheckUserCreationResponse" arguments="{lastReturn}" />
 	</EventHandlers>
 	
 	<!-- UserEvent.LOGOUT _________________________________________________________________________ -->

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel
-	xmlns:mx="http://www.adobe.com/2006/mxml"
-	xmlns:mate="http://mate.asfusion.com/"
-	title="Identification" xmlns:models="org.antigone.models.*">
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:models="org.antigone.models.*"
+	title="Identification">
 	
 	<mx:Script>
 		<![CDATA[
@@ -15,8 +14,11 @@
 			private function PerformLogin() : void 
 			{
 				// if everything validates, broadcast an event containing the username & password	
-				if (Validator.validateAll(validators).length == 0 )
-					loginDispatcher.generateEvent();
+				if (Validator.validateAll(validators).length == 0 ) {
+					var event:UserEvent = new UserEvent(UserEvent.LOGIN);
+					event.user = userModel;
+					dispatchEvent(event);
+				}
 			}
 			
 			private function NewUserCreation() : void
@@ -25,7 +27,7 @@
 				dispatchEvent(new NavigationEvent(NavigationEvent.NEW_USER));
 			}
 			
-			private function checkLoginResult(result:Boolean):void 
+			public function CheckLoginResult(result:Boolean):void 
 			{
 				if (!result) {
 					//show invalid login message
@@ -41,15 +43,7 @@
 			}
 		]]>
 	</mx:Script>
-	
-	<!-- Dispatchers -->
-	<mate:Dispatcher id="loginDispatcher" generator="{UserEvent}" type="{UserEvent.LOGIN}">
-		<mate:ResponseHandler type="loginResultResponse" response="checkLoginResult(event.loginResult)" />
-		<mate:eventProperties>
-			<mate:EventProperties user="{userModel}" />
-		</mate:eventProperties>
-	</mate:Dispatcher>
-	
+		
 	<!-- User model, bound to the form fields -->
 	<models:User id="userModel" username="{username.text}" password="{password.text}" />
 
