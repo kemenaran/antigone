@@ -10,10 +10,9 @@
 	    	import org.antigone.events.*;
 	    	import org.antigone.helpers.FormHelper;
 			
-			// mutate the loginBtn's click event into a cairngorm event			
 			private function PerformLogin() : void 
 			{
-				// if everything validates, broadcast an event containing the username & password	
+				// if everything validates, broadcast an event containing the user data
 				if (Validator.validateAll(validators).length == 0 ) {
 					var event:UserEvent = new UserEvent(UserEvent.LOGIN);
 					event.user = userModel;
@@ -31,7 +30,6 @@
 			{
 				if (!result) {
 					//show invalid login message
-					//currentState = 'messageState';
 					loginButton.errorString = "Identifiants incorrects ; veuillez réessayer.";
 				}
 				else 
@@ -66,14 +64,5 @@
 		<mx:StringValidator source="{username}" property="text" required="true" />
 		<mx:StringValidator source="{password}" property="text" required="true" />
 	</mx:Array>
-	
-	<!-- States -->
-	<!-- mx:states>
-		<mx:State name="messageState">
-			<mx:AddChild relativeTo="{loginForm}" position="before">
-				<mx:Text text="Invalid login information, please try again"/>
-			</mx:AddChild>
-		</mx:State>
-	</mx:states -->
 	
 </mx:Panel>

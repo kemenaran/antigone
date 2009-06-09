@@ -41,7 +41,7 @@
 					FormHelper.AutoResetForm(newUserForm);
 				}
 			}
-]]>
+		]]>
     </mx:Script>
 	
 	<!-- User model, bound to the Form fields -->
