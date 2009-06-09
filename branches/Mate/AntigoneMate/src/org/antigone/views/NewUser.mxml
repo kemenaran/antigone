@@ -18,6 +18,7 @@
 			
 			private function Cancel() : void
 			{
+				FormHelper.AutoResetForm(this);
 				dispatchEvent(new NavigationEvent(NavigationEvent.LOGIN));
 			}
 			

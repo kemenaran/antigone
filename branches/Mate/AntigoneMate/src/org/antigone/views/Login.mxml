@@ -8,7 +8,8 @@
 		<![CDATA[
 			import mx.validators.Validator;
 			import mx.events.ValidationResultEvent; 
-	    	import org.antigone.events.*;   	
+	    	import org.antigone.events.*;
+	    	import org.antigone.helpers.FormHelper;
 			
 			// mutate the loginBtn's click event into a cairngorm event			
 			private function PerformLogin() : void 
@@ -20,6 +21,7 @@
 			
 			private function NewUserCreation() : void
 			{
+				FormHelper.AutoResetForm(loginForm);
 				dispatchEvent(new NavigationEvent(NavigationEvent.NEW_USER));
 			}
 			
@@ -34,19 +36,8 @@
 				{
 					//successful login
 					// clear all fields otherwise they'll still be populated whenever the user returns here
-					ClearForm();
+					FormHelper.AutoResetForm(loginForm);
 				}
-			}
-			
-			private function ClearForm():void
-			{
-				currentState = '';
-				username.text ='';
-				username.errorString = '';
-				password.text = '';
-				password.errorString = '';
-				
-				loginButton.errorString = "";
 			}
 		]]>
 	</mx:Script>
