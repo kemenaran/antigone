@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+	xmlns:views="org.antigone.views.*"
+	xmlns:maps="org.antigone.maps.*">
+	
+	<!-- Event map -->
+	<maps:MainEventMap />
+	
+	<!-- Views -->
+	<views:MainUI />
+	
+</mx:WindowedApplication>

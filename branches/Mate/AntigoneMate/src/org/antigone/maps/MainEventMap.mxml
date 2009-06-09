@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EventMap xmlns:mx="http://www.adobe.com/2006/mxml" xmlns="http://mate.asfusion.com/">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.events.*;
+			import org.antigone.events.*;
+			import org.antigone.business.*;
+		]]>
+	</mx:Script>
+	
+	<!-- FlexEvent.PREINITIALIZE -->
+	
+	<EventHandlers type="{FlexEvent.PREINITIALIZE}">
+		<ObjectBuilder generator="{UserManager}" constructorArguments="{scope.dispatcher}" />
+	</EventHandlers>
+	
+	<!-- UserEvent.LOGIN ________________________________________________________________________ -->
+	
+	<!-- Loging in, normally this would send a server request, but we are making it simple here  -->
+	<EventHandlers type="{UserEvent.LOGIN}">
+		<MethodInvoker generator="{UserManager}" method="ConnectUser" arguments="{[event.user]}" />
+		
+		<!-- Because there is no server request, we just send the response right away. -->
+		<ResponseAnnouncer type="loginResultResponse">
+			<Properties loginResult="{lastReturn}"/>
+		</ResponseAnnouncer>
+	</EventHandlers>
+	
+	<!-- UserEvent.NEW_USER ________________________________________________________________________ -->
+	
+	<!-- Loging in, normally this would send a server request, but we are making it simple here  -->
+	<EventHandlers type="{UserEvent.NEW_USER}">
+		<MethodInvoker generator="{UserManager}" method="CreateUser" arguments="{[event.user]}" />
+		
+		<!-- Because there is no server request, we just send the response right away. -->
+		<ResponseAnnouncer type="newUserResultResponse">
+			<Properties loginResult="{lastReturn}"/>
+		</ResponseAnnouncer>
+	</EventHandlers>
+	
+	<!-- UserEvent.LOGOUT _________________________________________________________________________ -->
+	<EventHandlers type="{UserEvent.LOGOUT}">
+		<MethodInvoker generator="{UserManager}" method="DisconnectUser" />
+	</EventHandlers>
+	
+	<!-- Navigation Events _________________________________________________________________________-->
+	
+	<EventHandlers type="{UserEvent.LOGIN_SUCCESSFUL}">
+		<EventAnnouncer generator="{NavigationEvent}" type="{NavigationEvent.DASHBOARD}" />
+	</EventHandlers>
+	
+	<EventHandlers type="{UserEvent.LOGOUT_SUCCESSFUL}">
+		<EventAnnouncer generator="{NavigationEvent}" type="{NavigationEvent.LOGIN}" />
+	</EventHandlers>
+	
+	<EventHandlers type="{UserEvent.NEW_USER_SUCCESSFUL}">
+		<MethodInvoker generator="{UserManager}" method="ConnectUser" arguments="{[event.user]}" />
+	</EventHandlers>
+	
+	<!-- ======================================================================================== -->
+	<!-- Services   Note: you can have an external file if you have more services -->
+	<!-- _________________________________________________________________________________________ -->
+		
+</EventMap>
