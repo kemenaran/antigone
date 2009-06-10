@@ -13,9 +13,11 @@
 	
 	<EventHandlers type="{FlexEvent.PREINITIALIZE}">
 		<ObjectBuilder generator="{UserManager}" constructorArguments="{scope.dispatcher}" />
+		<ObjectBuilder generator="{LessonManager}" constructorArguments="{scope.dispatcher}" />
 	</EventHandlers>
 	
-	<!-- UserEvent.LOGIN ________________________________________________________________________ -->
+	
+	<!-- UserEvents coming from the views _________________________________________________________ -->
 	
 	<!-- Loging in -->
 	<EventHandlers type="{UserEvent.LOGIN}">
@@ -23,35 +25,34 @@
 		<CallBack method="CheckLoginResult" arguments="{lastReturn}" />
 	</EventHandlers>
 	
-	<!-- UserEvent.NEW_USER ________________________________________________________________________ -->
-	
-	<!-- Create a new User  -->
+	<!-- Creating a new User  -->
 	<EventHandlers type="{UserEvent.NEW_USER}">
 		<MethodInvoker generator="{UserManager}" method="CreateUser" arguments="{[event.user]}" />
 		<CallBack method="CheckUserCreationResponse" arguments="{lastReturn}" />
 	</EventHandlers>
 	
-	<!-- UserEvent.LOGOUT _________________________________________________________________________ -->
+	<!-- Loging out -->
 	<EventHandlers type="{UserEvent.LOGOUT}">
 		<MethodInvoker generator="{UserManager}" method="DisconnectUser" />
 	</EventHandlers>
 	
-	<!-- Navigation Events _________________________________________________________________________-->
 	
+	<!-- Application-wide UserEvents _______________________________________________________________-->
+	
+	<!-- User successfully logged in -->
 	<EventHandlers type="{UserEvent.LOGIN_SUCCESSFUL}">
 		<EventAnnouncer generator="{NavigationEvent}" type="{NavigationEvent.DASHBOARD}" />
+		<MethodInvoker generator="{LessonManager}" method="LoadLessons" />
 	</EventHandlers>
 	
+	<!-- User successfully logged out -->
 	<EventHandlers type="{UserEvent.LOGOUT_SUCCESSFUL}">
 		<EventAnnouncer generator="{NavigationEvent}" type="{NavigationEvent.LOGIN}" />
 	</EventHandlers>
 	
+	<!-- New User successfully created -->
 	<EventHandlers type="{UserEvent.NEW_USER_SUCCESSFUL}">
 		<MethodInvoker generator="{UserManager}" method="ConnectUser" arguments="{[event.user]}" />
 	</EventHandlers>
-	
-	<!-- ======================================================================================== -->
-	<!-- Services   Note: you can have an external file if you have more services -->
-	<!-- _________________________________________________________________________________________ -->
 		
 </EventMap>

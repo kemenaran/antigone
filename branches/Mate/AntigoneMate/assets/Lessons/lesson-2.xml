@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lesson id="lesson-2" title="Leçon supplémentaire">
+	<course title="Et voici le second cours">
+		<text>Nous les traitons de barbares alors que c’est nous qui nous accrochons, timorés, à notre Retz, comme les Wisigoths tapis parmi les ruines de la splendeur fanée de Rome, et c’est nous qui nous proclamons civilisés.</text>
+		<audioFile>lesson-2-audio.mp3</audioFile>
+	</course>
+	<exercice title="Exercice 3">
+	</exercice>
+</lesson>
