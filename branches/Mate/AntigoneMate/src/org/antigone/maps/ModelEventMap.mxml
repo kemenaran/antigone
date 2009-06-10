@@ -13,7 +13,7 @@
 	</Injectors>
 	
 	<Injectors target="{UserToolbox}">
-		<PropertyInjector targetKey="username" source="{UserManager}" sourceKey="currentUser.username" />
+		<PropertyInjector targetKey="username" source="{UserManager}" sourceKey="currentUser.displayName" />
 	</Injectors>
 	
 </EventMap>

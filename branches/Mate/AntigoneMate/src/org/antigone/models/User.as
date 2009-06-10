@@ -56,7 +56,16 @@ package org.antigone.models
 		{
 			return !(username == null || username == "" || password == null || password == "");
 		}
-		
+	 
+	 	/* This can be used as a convenient getter for GetDisplayName().
+	 	 * You can bind to it, but beware : the data won't be refreshed automatically
+	 	 * if one of the display name component (like the surname) changes.
+	 	 */
+		public function get displayName():String
+		{
+			return GetDisplayName();
+		}
+		 
 		/* Returns a string suitable for displaying as a name.
 		 * If possible, the firstName is used - or the username by default.
 		 */

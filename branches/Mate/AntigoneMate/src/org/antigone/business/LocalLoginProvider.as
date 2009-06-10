@@ -94,7 +94,7 @@ package org.antigone.business
 			
 			// Enumerate properties, and update fields for non-null values
 			for each(var property:String in userType.factory.accessor.@name) {
-				if (user[property] != null)
+				if (user[property] != null && userType.factory.accessor.@access == "readwrite")
 					newUser[property] = user[property];
 			}
 			
