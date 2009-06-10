@@ -54,7 +54,7 @@
 			<mx:TextInput id="password" displayAsPassword="true"/>
 		</mx:FormItem>
 		<mx:HBox horizontalAlign="center" width="100%">		
-			<mx:Button label="Nouvel utilisateur" click="NewUserCreation()" />
+			<mx:Button label="Nouvel utilisateur" click="NewUserCreation()"  fontWeight="normal"/>
 			<mx:Button id="loginButton" label="S'identifier" click="PerformLogin()" />
 		</mx:HBox>
 	</mx:Form>

@@ -79,7 +79,7 @@
 		</mx:FormItem>
 		
 		<mx:HBox horizontalAlign="center" width="100%">
-			<mx:Button id="cancelButton" label="Annuler" click="Cancel()"/>
+			<mx:Button id="cancelButton" label="Annuler" click="Cancel()" fontWeight="normal"/>
 			<mx:Button id="createButton" label="Créer l'utilisateur" click="CreateNewUser()"/>
 		</mx:HBox>
 	
