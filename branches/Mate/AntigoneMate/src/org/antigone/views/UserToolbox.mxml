@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"
-	width="100%" horizontalAlign="right" verticalAlign="middle">
+	width="100%" horizontalAlign="right" verticalAlign="middle"
+	visible="{adapter.isUserConnected}" includeInLayout="{adapter.isUserConnected}">
 	
 	<mx:Script>
 		<![CDATA[
 			import org.antigone.events.UserEvent;
+			import org.antigone.adapters.UserToolboxAdapter;
 			
 			[Bindable]
-			public var username:String;
+			public var adapter:UserToolboxAdapter;
 			
 			private function DisconnectUser():void
 			{
@@ -16,7 +18,7 @@
 		]]>
 	</mx:Script>
 	
-	<mx:Label text="Bienvenue, {username} !" textAlign="left"/>
+	<mx:Label text="Bienvenue, {adapter.displayName} !" textAlign="left"/>
 	<mx:Button label="Déconnexion" fontWeight="normal" click="DisconnectUser()" height="18"/>
 	
 </mx:HBox>
