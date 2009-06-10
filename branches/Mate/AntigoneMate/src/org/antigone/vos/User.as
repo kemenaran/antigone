@@ -1,4 +1,4 @@
-package org.antigone.models
+package org.antigone.vos
 {
 	/* Model class representing a User. */
 	[Bindable]

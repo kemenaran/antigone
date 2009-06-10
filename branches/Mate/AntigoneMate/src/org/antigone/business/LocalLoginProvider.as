@@ -2,7 +2,7 @@ package org.antigone.business
 {
 	import flash.filesystem.*;
 	import flash.utils.*;
-	import org.antigone.models.User;
+	import org.antigone.vos.User;
 		
 	/* A Login Provider whose datasource are XML files on the local filesystem. */
 	public class LocalLoginProvider implements ILoginProvider

@@ -1,6 +1,6 @@
 package org.antigone.business
 {
-	import org.antigone.models.User;
+	import org.antigone.vos.User;
 	
 	/* Interface to be used by concrete login providers. */
 	public interface ILoginProvider

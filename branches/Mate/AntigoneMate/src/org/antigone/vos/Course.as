@@ -1,4 +1,4 @@
-package org.antigone.models
+package org.antigone.vos
 {
 	import flash.filesystem.File;
 	

@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
-	 xmlns:models="org.antigone.models.*"
+	 xmlns:vos="org.antigone.vos.*"
 	 title="Nouvel utilisateur" horizontalAlign="center">
     
     <mx:Script>
     	<![CDATA[
     		import mx.validators.Validator;
+    		import mx.controls.Alert;
 	    	import org.antigone.events.*;  
 	    	import org.antigone.helpers.FormHelper;
-	    	import mx.controls.Alert;
+	    	import org.antigone.vos.User;
 			
 			private function CreateNewUser() : void 
 			{
@@ -45,7 +46,7 @@
     </mx:Script>
 	
 	<!-- User model, bound to the Form fields -->
-    <models:User id="userModel"
+    <vos:User id="userModel"
     	username="{username.text}"
     	password="{password.text}"
     	email="{email.text}"

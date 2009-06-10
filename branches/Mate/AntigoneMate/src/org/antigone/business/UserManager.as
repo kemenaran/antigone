@@ -1,7 +1,7 @@
 package org.antigone.business
 {
 	import org.antigone.events.*;
-	import org.antigone.models.User;
+	import org.antigone.vos.User;
 	
 	public class UserManager extends Manager
 	{

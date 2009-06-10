@@ -5,7 +5,7 @@ package org.antigone.business
 	import flash.filesystem.*;
 	import flash.utils.Dictionary;
 	
-	import org.antigone.models.Lesson;
+	import org.antigone.vos.Lesson;
 	
 	/* Manage multiple lessons stored in XML files. */
 	public class LessonManager extends Manager
