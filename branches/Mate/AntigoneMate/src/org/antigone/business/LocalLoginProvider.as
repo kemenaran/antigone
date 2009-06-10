@@ -93,9 +93,10 @@ package org.antigone.business
 			var userType:XML = describeType(User);
 			
 			// Enumerate properties, and update fields for non-null values
-			for each(var property:String in userType.factory.accessor.@name) {
-				if (user[property] != null && userType.factory.accessor.@access == "readwrite")
-					newUser[property] = user[property];
+			for each(var property:XML in userType.factory.accessor) {
+				trace(property.@access);
+				if (user[property.@name] != null && property.@access == "readwrite")
+					newUser[property.@name] = user[property.@name];
 			}
 			
 			// Write the updated User Profile
