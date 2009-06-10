@@ -5,6 +5,8 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import mx.controls.Alert;
+			import mx.events.CloseEvent;
 			import org.antigone.events.UserEvent;
 			import org.antigone.adapters.UserToolboxAdapter;
 			
@@ -13,7 +15,19 @@
 			
 			private function DisconnectUser():void
 			{
-				dispatchEvent(new UserEvent(UserEvent.LOGOUT));
+				var a:Alert = Alert.show("Êtes-vous sûr de vouloir vous déconnecter ?",
+			                         "Confirmation",
+			                         Alert.YES | Alert.NO,
+			                         null,
+			                         DisconnectConfirmHandler,
+			                         null,
+			                         Alert.NO);
+			}
+			
+			private function DisconnectConfirmHandler(event:CloseEvent):void
+			{
+				if (event.detail == Alert.YES)
+					dispatchEvent(new UserEvent(UserEvent.LOGOUT));
 			}
 		]]>
 	</mx:Script>
