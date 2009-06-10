@@ -12,4 +12,8 @@
 		<PropertyInjector targetKey="lessons" source="{LessonManager}" sourceKey="lessons" />
 	</Injectors>
 	
+	<Injectors target="{UserToolbox}">
+		<PropertyInjector targetKey="username" source="{UserManager}" sourceKey="currentUser.username" />
+	</Injectors>
+	
 </EventMap>

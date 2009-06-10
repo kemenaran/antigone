@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml">
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:views="org.antigone.views.*">
 	
 	<mx:Script>
 		<![CDATA[
@@ -9,6 +10,8 @@
 			public var lessons:Array;
 		]]>
 	</mx:Script>
+	
+	<views:UserToolbox />
 	
 	<mx:HBox width="100%" height="100%">
 		

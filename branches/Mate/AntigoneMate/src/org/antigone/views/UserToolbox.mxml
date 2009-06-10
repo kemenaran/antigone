@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"
+	width="100%" horizontalAlign="right" verticalAlign="middle">
+	
+	<mx:Script>
+		<![CDATA[
+			import org.antigone.events.UserEvent;
+			
+			[Bindable]
+			public var username:String;
+			
+			private function DisconnectUser():void
+			{
+				dispatchEvent(new UserEvent(UserEvent.LOGOUT));
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:Label text="Bienvenue, {username} !" textAlign="left"/>
+	<mx:Button label="Déconnexion" fontWeight="normal" click="DisconnectUser()" height="18"/>
+	
+</mx:HBox>
