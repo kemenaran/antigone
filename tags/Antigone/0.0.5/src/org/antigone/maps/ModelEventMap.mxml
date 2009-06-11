@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EventMap xmlns:mx="http://www.adobe.com/2006/mxml" xmlns="http://mate.asfusion.com/">
+	
+	<mx:Script>
+		<![CDATA[
+			import org.antigone.business.*;
+			import org.antigone.views.*;
+			import org.antigone.adapters.*;
+		]]>
+	</mx:Script>
+	
+	<!-- Inject lessons into the Dashboard -->
+	<Injectors target="{Dashboard}">
+		<PropertyInjector targetKey="lessons" source="{LessonManager}" sourceKey="lessons" />
+	</Injectors>
+	
+	<!-- Inject the adapter into the UserToolbox view -->
+	<Injectors target="{UserToolbox}">
+		<ObjectBuilder generator="{UserToolboxAdapter}" registerTarget="true" />
+		<PropertyInjector targetKey="adapter" source="{lastReturn}" />
+	</Injectors>
+	
+	<!-- Inject the data into the Adapter -->
+	<Injectors target="{UserToolboxAdapter}">
+		<PropertyInjector targetKey="currentUser" source="{UserManager}" sourceKey="currentUser" />
+	</Injectors>	
+	
+</EventMap>
