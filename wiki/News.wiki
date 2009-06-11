@@ -1,0 +1,20 @@
+#labels Featured
+= Introduction =
+
+Here are the latest news about the project development. You will find general considerations and descriptions of the releases.
+
+
+= Details =
+
+== Version 0.0.5 released ==
+_(11/06/2009)_
+
+The 0.0.5 release is the first version build against the [http://mate.asfusion.com Mate framework].
+
+As the code base grew, I realized that my custom code architecture wouldn't do it. Views became interdependants, controllers were a mess, and decoupling business logic from presentation became more and more difficult. I had to use a framework.
+
+Introducing Mate, the best thing that happened to this project yet. This Flex framework achieve a high level of decoupling using _Event Maps_ : an MXML file that map all the events to their target, and binds all the models to their data consumer. Really nice.
+
+So I ported the project to this framework, and for now the results are quite good. The code base is much cleaner, and I was able to add a few small features (like the auto-hiding User Toolbox) quite easily, without a full mess of event-wiring.
+
+There are not any new feature or visible progress this time — almost all the changes are under the hood. The program is just cleaner, more polished and more robust.
