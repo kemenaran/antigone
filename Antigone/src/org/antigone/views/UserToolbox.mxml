@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"
+	width="100%" horizontalAlign="right" verticalAlign="middle"
+	visible="{adapter.isUserConnected}" includeInLayout="{adapter.isUserConnected}">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.events.CloseEvent;
+			import org.antigone.events.UserEvent;
+			import org.antigone.adapters.UserToolboxAdapter;
+			
+			[Bindable]
+			public var adapter:UserToolboxAdapter;
+			
+			private function DisconnectUser():void
+			{
+				var a:Alert = Alert.show("Êtes-vous sûr de vouloir vous déconnecter ?",
+			                         "Confirmation",
+			                         Alert.YES | Alert.NO,
+			                         null,
+			                         DisconnectConfirmHandler,
+			                         null,
+			                         Alert.NO);
+			}
+			
+			private function DisconnectConfirmHandler(event:CloseEvent):void
+			{
+				if (event.detail == Alert.YES)
+					dispatchEvent(new UserEvent(UserEvent.LOGOUT));
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:Label text="Bienvenue, {adapter.displayName} !" textAlign="left"/>
+	<mx:Button label="Déconnexion" fontWeight="normal" click="DisconnectUser()" height="18"/>
+	
+</mx:HBox>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EventMap xmlns:mx="http://www.adobe.com/2006/mxml" xmlns="http://mate.asfusion.com/">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.events.*;
+			import org.antigone.events.*;
+			import org.antigone.business.*;
+		]]>
+	</mx:Script>
+	
+	<!-- FlexEvent.PREINITIALIZE -->
+	
+	<EventHandlers type="{FlexEvent.PREINITIALIZE}">
+		<ObjectBuilder generator="{UserManager}" constructorArguments="{scope.dispatcher}" />
+		<ObjectBuilder generator="{LessonManager}" constructorArguments="{scope.dispatcher}" />
+	</EventHandlers>
+	
+	
+	<!-- UserEvents coming from the views _________________________________________________________ -->
+	
+	<!-- Loging in -->
+	<EventHandlers type="{UserEvent.LOGIN}">
+		<MethodInvoker generator="{UserManager}" method="ConnectUser" arguments="{[event.user]}" />
+		<CallBack method="CheckLoginResult" arguments="{lastReturn}" />
+	</EventHandlers>
+	
+	<!-- Creating a new User  -->
+	<EventHandlers type="{UserEvent.NEW_USER}">
+		<MethodInvoker generator="{UserManager}" method="CreateUser" arguments="{[event.user]}" />
+		<CallBack method="CheckUserCreationResponse" arguments="{lastReturn}" />
+	</EventHandlers>
+	
+	<!-- Loging out -->
+	<EventHandlers type="{UserEvent.LOGOUT}">
+		<MethodInvoker generator="{UserManager}" method="DisconnectUser" />
+	</EventHandlers>
+	
+	
+	<!-- Application-wide UserEvents _______________________________________________________________-->
+	
+	<!-- User successfully logged in -->
+	<EventHandlers type="{UserEvent.LOGIN_SUCCESSFUL}">
+		<EventAnnouncer generator="{NavigationEvent}" type="{NavigationEvent.DASHBOARD}" />
+		<MethodInvoker generator="{LessonManager}" method="LoadLessons" />
+	</EventHandlers>
+	
+	<!-- User successfully logged out -->
+	<EventHandlers type="{UserEvent.LOGOUT_SUCCESSFUL}">
+		<EventAnnouncer generator="{NavigationEvent}" type="{NavigationEvent.LOGIN}" />
+	</EventHandlers>
+	
+	<!-- New User successfully created -->
+	<EventHandlers type="{UserEvent.NEW_USER_SUCCESSFUL}">
+		<MethodInvoker generator="{UserManager}" method="ConnectUser" arguments="{[event.user]}" />
+	</EventHandlers>
+		
+</EventMap>
