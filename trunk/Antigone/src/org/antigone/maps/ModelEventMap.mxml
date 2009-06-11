@@ -9,20 +9,33 @@
 		]]>
 	</mx:Script>
 	
+	
+	<!-- Dashboard _______________________________________________________________________ -->
+	
 	<!-- Inject lessons into the Dashboard -->
 	<Injectors target="{Dashboard}">
 		<PropertyInjector targetKey="lessons" source="{LessonManager}" sourceKey="lessons" />
 	</Injectors>
 	
-	<!-- Inject the adapter into the UserToolbox view -->
+	
+	<!-- UserToolbox _____________________________________________________________________ -->
+	
+	<!-- Inject the UserToolboxAdapter into the UserToolbox view -->
 	<Injectors target="{UserToolbox}">
 		<ObjectBuilder generator="{UserToolboxAdapter}" registerTarget="true" />
 		<PropertyInjector targetKey="adapter" source="{lastReturn}" />
 	</Injectors>
 	
-	<!-- Inject the data into the Adapter -->
+	<!-- Inject the UserManager data into the UserToolboxAdapter -->
 	<Injectors target="{UserToolboxAdapter}">
 		<PropertyInjector targetKey="currentUser" source="{UserManager}" sourceKey="currentUser" />
+	</Injectors>	
+	
+	<!-- Lessons _________________________________________________________________________ -->
+	
+	<!-- Course -->
+	<Injectors target="{CourseView}">
+		<PropertyInjector targetKey="course" source="{LessonManager}" sourceKey="selectedLesson.firstCourse" />
 	</Injectors>	
 	
 </EventMap>

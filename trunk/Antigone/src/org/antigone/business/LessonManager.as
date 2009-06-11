@@ -5,18 +5,35 @@ package org.antigone.business
 	import flash.filesystem.*;
 	import flash.utils.Dictionary;
 	
+	import org.antigone.events.LessonEvent;
 	import org.antigone.vos.Lesson;
 	
 	/* Manage multiple lessons stored in XML files. */
+	[Bindable]
 	public class LessonManager extends Manager
 	{
+		/* The lesson currently selected (read-only). */
+		protected var _selectedLesson:Lesson = new Lesson();
+		
+		[Bindable(event="selectedLessonChanged")]
+		public function get selectedLesson():Lesson
+		{
+			return _selectedLesson;
+		}
+		
+		protected function setSelectedLesson(lesson:Lesson):void
+		{
+			this._selectedLesson = lesson;
+			dispatcher.dispatchEvent(new Event("selectedLessonChanged"));
+		}
+		
 		/* Simple (and data-providable) lesson array.
 		 * Updated by LoadAllLessons(). */
 		protected var _lessons:Array = new Array();
 		
 		/* Lessons indexed by id - faster for searches and duplicate checks.
 		 * Updated by LoadAllLessons(). */
-		protected var lessonDict:Dictionary = new Dictionary();
+		protected var _lessonDict:Dictionary = new Dictionary();
 		
 		/* Allow elements to bind to "lessons".
 		 * The property is read-only - change notifications are triggered
@@ -65,7 +82,7 @@ package org.antigone.business
 			
 			// Clear previous lessons
 			this._lessons = new Array();
-			this.lessonDict = new Dictionary();
+			this._lessonDict = new Dictionary();
 			
 			// Enumerate the files in the lessons directory
 			lessonsFiles = lessonsPath.getDirectoryListing();
@@ -78,14 +95,14 @@ package org.antigone.business
 					lesson = LessonManager.ReadLessonXML(lessonFile);
 					
 					// Check for id duplicates
-					if (this.lessonDict[lesson.id] != null) {
+					if (this._lessonDict[lesson.id] != null) {
 						// We've got an id duplicate !
 						throw new Error("The lesson '" + lesson.title + "' has the same id than "
-								+ "the lesson '" + (this.lessonDict[lesson.id] as Lesson).title + "'.");
+								+ "the lesson '" + (this._lessonDict[lesson.id] as Lesson).title + "'.");
 					}
 					
 					// Add the lesson to the lesson dictionary
-					this.lessonDict[lesson.id] = lesson;
+					this._lessonDict[lesson.id] = lesson;
 					
 					// Append the lesson to the newLessons array
 					newLessons.push(lesson);
@@ -98,7 +115,17 @@ package org.antigone.business
 		/* Retrieve a given lesson, specified by its index. */
 		public function GetLessonById(lessonId:String):Lesson
 		{
-			return this.lessonDict[lessonId] as Lesson;
+			return this._lessonDict[lessonId] as Lesson;
+		}
+		
+		public function SelectLesson(lesson:Lesson):void
+		{
+			this.setSelectedLesson(lesson);
+			
+			// Dispatch a LESSON_SELECTED event
+			var event:LessonEvent = new LessonEvent(LessonEvent.LESSON_SELECTED);
+			event.lesson = lesson;
+			dispatcher.dispatchEvent(event);
 		}
 		
 		/* Return the lessons' folder. */

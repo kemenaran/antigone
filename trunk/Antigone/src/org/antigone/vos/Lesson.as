@@ -15,6 +15,11 @@ package org.antigone.vos
 		
 		/* Several exercises associated with the lesson. */
 		public var exercises:Array = new Array();
+		
+		public function get firstCourse():Course
+		{
+			return courses[0];
+		}
 				
 		/* Create a new Lesson object from an XML coder. */
 		public static function DecodeFromXML(coder:XML):Lesson

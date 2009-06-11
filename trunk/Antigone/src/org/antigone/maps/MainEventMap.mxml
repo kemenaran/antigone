@@ -54,5 +54,17 @@
 	<EventHandlers type="{UserEvent.NEW_USER_SUCCESSFUL}">
 		<MethodInvoker generator="{UserManager}" method="ConnectUser" arguments="{[event.user]}" />
 	</EventHandlers>
+	
+	
+	<!-- Lessons events __________________________________________________________________________ -->
+	
+	<!-- A LessonItem was clicked -->
+	<EventHandlers type="{LessonEvent.LESSON_CLICKED}">
+		<MethodInvoker generator="{LessonManager}" method="SelectLesson" arguments="{[event.lesson]}" />
+	</EventHandlers>
+	
+	<EventHandlers type="{LessonEvent.LESSON_SELECTED}">
+		<EventAnnouncer generator="{NavigationEvent}" type="{NavigationEvent.LESSON}" />
+	</EventHandlers>
 		
 </EventMap>
