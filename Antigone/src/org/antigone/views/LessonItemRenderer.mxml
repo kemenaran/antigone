@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml">
-	<mx:Label width="100%" text="{data.title}" />
+
+	<mx:Script>
+		<![CDATA[
+			import org.antigone.events.LessonEvent;
+			import org.antigone.vos.Lesson;
+			public function LessonSelected(data:Object):void
+			{
+				var event:LessonEvent = new LessonEvent(LessonEvent.LESSON_CLICKED);
+				event.lesson = data as Lesson;
+				dispatchEvent(event);
+			}
+		]]>
+	</mx:Script>
+	<mx:Label width="100%" text="{data.title}" click="LessonSelected(data)" />
 </mx:HBox>

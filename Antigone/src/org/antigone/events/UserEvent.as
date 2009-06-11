@@ -1,7 +1,6 @@
 package org.antigone.events
 {
 	import flash.events.Event;
-	
 	import org.antigone.vos.User;
 
 	public class UserEvent extends Event

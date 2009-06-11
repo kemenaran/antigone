@@ -9,11 +9,13 @@
 			
 			private const LOGIN:uint = 0;
 			private const DASHBOARD:uint = 1;
+			private const LESSON:uint = 2;
 		]]>
 	</mx:Script>
 	
 	<mate:Listener type="{NavigationEvent.LOGIN}"     receive="viewStack.selectedIndex = LOGIN" />
 	<mate:Listener type="{NavigationEvent.DASHBOARD}" receive="viewStack.selectedIndex = DASHBOARD" />
+	<mate:Listener type="{NavigationEvent.LESSON}"    receive="viewStack.selectedIndex = LESSON" />
 
 	<views:UserToolbox />
 	
@@ -22,6 +24,7 @@
 				<views:UserForms  />
 			</mx:HBox>
 			<views:Dashboard width="100%" height="100%" />
+			<views:LessonView width="100%" height="100%" />
 	</mx:ViewStack>
 	
 </mx:VBox>
