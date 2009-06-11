@@ -5,6 +5,8 @@
 		<![CDATA[
 			import org.antigone.events.LessonEvent;
 			import org.antigone.vos.Lesson;
+			
+			/* Dispatch a LESSON_CLICKED event when a lesson item  is clicked */
 			public function LessonSelected(data:Object):void
 			{
 				var event:LessonEvent = new LessonEvent(LessonEvent.LESSON_CLICKED);
