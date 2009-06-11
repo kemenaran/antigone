@@ -24,7 +24,7 @@ package org.antigone.business
 		protected function setSelectedLesson(lesson:Lesson):void
 		{
 			this._selectedLesson = lesson;
-			dispatcher.dispatchEvent(new Event("selectedLessonChanged"));
+			dispatchEvent(new Event("selectedLessonChanged"));
 		}
 		
 		/* Simple (and data-providable) lesson array.
@@ -50,7 +50,7 @@ package org.antigone.business
 		protected function setLessons(newLessons:Array):void
 		{
 			this._lessons = newLessons;
-			dispatcher.dispatchEvent(new Event("lessonsArrayUpdated"));
+			dispatchEvent(new Event("lessonsArrayUpdated"));
 		}
 		
 		/* Constructor */
