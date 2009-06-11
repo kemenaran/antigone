@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml">
-	<mx:Label id="lessonId" text="{data.id}" visible="false" includeInLayout="false" />
-	<mx:Label width="100%" text="{data.title}" />
-</mx:HBox>
