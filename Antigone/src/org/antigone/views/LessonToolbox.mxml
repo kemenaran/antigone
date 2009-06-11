@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"
+	verticalAlign="middle" borderStyle="outset">
+	
+	<mx:Script>
+		<![CDATA[
+			import org.antigone.events.NavigationEvent;
+			
+			private function ReturnToDashboard():void
+			{
+				dispatchEvent(new NavigationEvent(NavigationEvent.DASHBOARD));
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:Button label="« Tableau de bord" fontWeight="normal" click="ReturnToDashboard()" />
+		
+</mx:HBox>
