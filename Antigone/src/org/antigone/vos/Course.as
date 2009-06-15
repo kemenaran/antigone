@@ -6,6 +6,8 @@ package org.antigone.vos
 	[Bindable]
 	public class Course
 	{
+		/* Position of this lesson item in the lesson. */
+		public var lessonIndex:uint;
 		public var title:String;
 		public var text:String;
 		public var audioFile:File;
