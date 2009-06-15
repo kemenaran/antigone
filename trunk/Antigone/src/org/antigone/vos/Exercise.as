@@ -3,6 +3,9 @@ package org.antigone.vos
 	[Bindable]
 	public class Exercise
 	{
+		/* Position of this lesson item in the lesson. */
+		public var lessonIndex:uint;
+		
 		/* The title of the exercise. */
 		public var title:String;
 		

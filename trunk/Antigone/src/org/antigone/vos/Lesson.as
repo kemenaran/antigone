@@ -15,11 +15,6 @@ package org.antigone.vos
 		
 		/* Several exercises associated with the lesson. */
 		public var exercises:Array = new Array();
-		
-		public function get firstCourse():Course
-		{
-			return courses[0];
-		}
 				
 		/* Create a new Lesson object from an XML coder. */
 		public static function DecodeFromXML(coder:XML):Lesson
@@ -37,13 +32,24 @@ package org.antigone.vos
 			lesson.id    = coder.@id;
 			lesson.title = coder.@title;
 			
-			// Decode courses
-			for each(var courseCoder:XML in coder.course)
-				lesson.courses.push(Course.DecodeFromXML(courseCoder));
-			
-			// Decode exercices
-			for each(var exerciceCoder:XML in coder.exercice)
-				lesson.exercises.push(Exercise.DecodeFromXML(exerciceCoder));
+			// Decode courses and exercises, and assing a lesson index to them
+			var lessonIndex:uint = 0;
+			for each (var child:XML in coder.children()) {
+				// We have a course !
+				if (child.name() == "course") {
+					// Decode it, and add it to the courses array
+					var course:Course = Course.DecodeFromXML(child);
+					course.lessonIndex = lessonIndex++;
+					lesson.courses.push(course);
+				} else
+				// We have an exercise !
+				if (child.name() == "exercise") {
+					// Decode it, and add it to the courses array
+					var exercise:Exercise = Exercise.DecodeFromXML(child);
+					exercise.lessonIndex = lessonIndex++;
+					lesson.exercises.push(exercise);	
+				}									
+			}
 			
 			return lesson;
 		}
