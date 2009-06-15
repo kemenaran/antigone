@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lesson id="lesson-1" title="Première lesson">
+	
 	<course title="Voici le premier cours" id="lesson-1">
 		<text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi venenatis venenatis blandit. Nam ultrices consectetur sagittis. Maecenas pretium hendrerit venenatis. Donec scelerisque facilisis massa eget consequat. Integer nisl lectus, sagittis consectetur malesuada vel, dignissim quis magna. Ut pretium lectus a lorem malesuada venenatis. Quisque commodo purus nec nibh viverra egestas. </text>
 		<audioFile>lesson-1-audio.mp3</audioFile>
 	</course>
-	<exercice title="Exercice 1">
-	</exercice>
+	
+	<exercise title="Exercice 1">
+	</exercise>
+	
 </lesson>
