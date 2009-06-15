@@ -34,8 +34,9 @@
 	<!-- Lessons _________________________________________________________________________ -->
 	
 	<!-- Course -->
-	<Injectors target="{CourseView}">
-		<PropertyInjector targetKey="course" source="{LessonManager}" sourceKey="selectedLesson.firstCourse" />
+	<Injectors target="{LessonView}">
+		<PropertyInjector targetKey="courses" source="{LessonManager}" sourceKey="selectedLesson.courses" />
+		<PropertyInjector targetKey="exercises" source="{LessonManager}" sourceKey="selectedLesson.exercises" />
 	</Injectors>	
 	
 </EventMap>

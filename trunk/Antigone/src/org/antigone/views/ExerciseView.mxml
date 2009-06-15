@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml">
+	<mx:Script>
+		<![CDATA[
+			import org.antigone.vos.Exercise;
+			
+			[Bindable]
+			public var exercise:Exercise;
+		]]>
+	</mx:Script>
 	<mx:Label text="Exercices" />
 </mx:VBox>
