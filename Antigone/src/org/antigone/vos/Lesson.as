@@ -39,14 +39,14 @@ package org.antigone.vos
 				if (child.name() == "course") {
 					// Decode it, and add it to the courses array
 					var course:Course = Course.DecodeFromXML(child);
-					course.lessonIndex = lessonIndex++;
+					course.position = lessonIndex++;
 					lesson.courses.push(course);
 				} else
 				// We have an exercise !
 				if (child.name() == "exercise") {
 					// Decode it, and add it to the courses array
 					var exercise:Exercise = Exercise.DecodeFromXML(child);
-					exercise.lessonIndex = lessonIndex++;
+					exercise.position = lessonIndex++;
 					lesson.exercises.push(exercise);	
 				}									
 			}

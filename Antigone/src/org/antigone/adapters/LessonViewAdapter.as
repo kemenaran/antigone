@@ -24,7 +24,7 @@ package org.antigone.adapters
 			sortArray = sortArray.concat(newLesson.courses, newLesson.exercises);
 			
 			// … and sort them by lessonIndex
-			sortArray.sortOn("lessonIndex");
+			sortArray.sortOn("position");
 			lessonContents.source = sortArray;
 		}
 	}
