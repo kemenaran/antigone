@@ -15,7 +15,7 @@
 		]]>
 	</mx:Script>
 	
-	<mate:Listener type="{NavigationEvent.LOGIN}" receive="this.selectedIndex = LOGIN" />
+	<mate:Listener type="{NavigationEvent.LOGIN}"    receive="this.selectedIndex = LOGIN" />
 	<mate:Listener type="{NavigationEvent.NEW_USER}" receive="this.selectedIndex = NEW_USER" />
 	
     <views:Login id="loginView"/>
