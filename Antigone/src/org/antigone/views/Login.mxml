@@ -12,11 +12,8 @@
 			
 			private function PerformLogin() : void 
 			{
-				// if everything validates, broadcast an event containing the user data
 				if (Validator.validateAll(validators).length == 0 ) {
-					var event:UserEvent = new UserEvent(UserEvent.LOGIN);
-					event.user = userModel;
-					dispatchEvent(event);
+					dispatchEvent(new UserEvent(UserEvent.LOGIN, userModel));
 				}
 			}
 			

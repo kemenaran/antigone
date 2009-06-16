@@ -15,9 +15,7 @@
 			{
 				// if everything validates, broadcast an event containing the username & password		
 				if (Validator.validateAll(validators).length == 0 ) {
-					var event:UserEvent = new UserEvent(UserEvent.NEW_USER);
-					event.user = userModel;
-					dispatchEvent(event);
+					dispatchEvent(new UserEvent(UserEvent.NEW_USER, userModel));
 				}
 			}
 			
@@ -31,7 +29,6 @@
 			{
 				if (newUser == null) {
 					//show invalid user creation message
-					//currentState = 'messageState';
 					createButton.errorString = "Identifiants incorrects ; veuillez réessayer.";
 				} else {
 					// Display a welcome message				

@@ -20,6 +20,5 @@ package org.antigone.events
 		{
 			super(type, bubbles, cancelable);
 		}
-		
 	}
 }

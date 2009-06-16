@@ -1,6 +1,7 @@
 package org.antigone.events
 {
 	import flash.events.Event;
+	
 	import org.antigone.vos.User;
 
 	public class UserEvent extends Event
@@ -17,9 +18,10 @@ package org.antigone.events
 		public var user:User;
 
 		/* Constructor */
-		public function UserEvent(type:String, bubbles:Boolean=true, cancelable:Boolean=false)
+		public function UserEvent(type:String, user:User=null, bubbles:Boolean=true, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);
+			this.user = user;
 		}
 		
 	}
