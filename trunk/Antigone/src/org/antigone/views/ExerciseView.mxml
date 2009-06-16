@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
-	title="{exercise.title}">
+	title="{content.title}">
 	
 	<mx:Script>
 		<![CDATA[
 			import org.antigone.vos.Exercise;
 			
 			[Bindable]
-			public var exercise:Exercise;
+			public var content:Exercise;
 		]]>
 	</mx:Script>
 	
-	<mx:Label text="Ici se trouve l'exercice '{exercise.title}'" />
+	<mx:Label text="Ici se trouve l'exercice '{content.title}'" />
 </mx:Panel>

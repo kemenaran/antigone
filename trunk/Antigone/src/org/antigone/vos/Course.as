@@ -4,10 +4,8 @@ package org.antigone.vos
 	
 	/* Modelize the course included in a Lesson. */
 	[Bindable]
-	public class Course
+	public class Course extends LessonContent
 	{
-		/* Position of this lesson item in the lesson. */
-		public var lessonIndex:uint;
 		public var title:String;
 		public var text:String;
 		public var audioFile:File;
