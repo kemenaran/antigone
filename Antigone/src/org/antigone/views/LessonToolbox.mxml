@@ -4,15 +4,31 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import mx.events.ItemClickEvent;
+			import org.antigone.adapters.LessonToolboxAdapter;
 			import org.antigone.events.NavigationEvent;
+			
+			[Bindable]
+			public var adapter:LessonToolboxAdapter;
 			
 			private function ReturnToDashboard():void
 			{
 				dispatchEvent(new NavigationEvent(NavigationEvent.DASHBOARD));
 			}
+			
+			private function ToggleButtonClicked(e:ItemClickEvent):void
+			{
+				var event:NavigationEvent = new NavigationEvent(NavigationEvent.LESSON_CONTENT);
+				event.index = e.index;
+				dispatchEvent(event);
+			}
 		]]>
 	</mx:Script>
 	
 	<mx:Button label="« Tableau de bord" fontWeight="normal" click="ReturnToDashboard()" />
+	
+	<mx:ToggleButtonBar dataProvider="{adapter.lessonContentSummary}" selectedIndex="{adapter.selectedContent}"
+		itemClick="ToggleButtonClicked(event)">
+	</mx:ToggleButtonBar>	
 		
 </mx:HBox>

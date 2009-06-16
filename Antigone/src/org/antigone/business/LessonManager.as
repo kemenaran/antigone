@@ -27,6 +27,9 @@ package org.antigone.business
 			dispatchEvent(new Event("selectedLessonChanged"));
 		}
 		
+		/* The selected content in the selected lesson */
+		public var selectedContent:uint;
+		
 		/* Simple (and data-providable) lesson array.
 		 * Updated by LoadAllLessons(). */
 		protected var _lessons:Array = new Array();

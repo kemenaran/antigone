@@ -3,9 +3,6 @@ package org.antigone.vos
 	[Bindable]
 	public class Exercise extends LessonContent
 	{		
-		/* The title of the exercise. */
-		public var title:String;
-		
 		public static function DecodeFromXML(coder:XML):Exercise
 		{
 			var exercice:Exercise = new Exercise();
