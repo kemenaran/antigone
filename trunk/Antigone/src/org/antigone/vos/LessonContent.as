@@ -4,6 +4,6 @@ package org.antigone.vos
 	public class LessonContent
 	{
 		/* Position of this lesson item in the lesson. */
-		public var lessonIndex:uint;
+		public var position:uint;
 	}
 }
