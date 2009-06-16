@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
-	title="{course.title}"
+	title="{content.title}"
 	xmlns:models="org.antigone.models.*">
 	
 	<mx:Script>
@@ -8,10 +8,10 @@
 			import org.antigone.vos.Course;
 			
 			[Bindable]
-			public var course:Course;
+			public var content:Course;
 		]]>
 	</mx:Script>
 	
-	<mx:TextArea text="{course.text}" editable="false" wordWrap="true" width="100%" height="100%" />
+	<mx:TextArea text="{content.text}" editable="false" wordWrap="true" width="100%" height="100%" />
 	
 </mx:Panel>

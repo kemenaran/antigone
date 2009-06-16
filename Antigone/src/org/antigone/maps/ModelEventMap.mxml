@@ -9,7 +9,6 @@
 		]]>
 	</mx:Script>
 	
-	
 	<!-- Dashboard _______________________________________________________________________ -->
 	
 	<!-- Inject lessons into the Dashboard -->
@@ -33,10 +32,15 @@
 	
 	<!-- Lessons _________________________________________________________________________ -->
 	
-	<!-- Course -->
+	<!-- Inject the LessonViewAdapter into the LessonView -->
 	<Injectors target="{LessonView}">
-		<PropertyInjector targetKey="courses" source="{LessonManager}" sourceKey="selectedLesson.courses" />
-		<PropertyInjector targetKey="exercises" source="{LessonManager}" sourceKey="selectedLesson.exercises" />
+		<ObjectBuilder generator="{LessonViewAdapter}" registerTarget="true" />
+		<PropertyInjector targetKey="adapter" source="{lastReturn}" />
 	</Injectors>	
+	
+	<!-- Inject the LessonManager data in the LessonViewAdapter -->
+	<Injectors target="{LessonViewAdapter}">
+		<PropertyInjector targetKey="lesson" source="{LessonManager}" sourceKey="selectedLesson" />
+	</Injectors>
 	
 </EventMap>
