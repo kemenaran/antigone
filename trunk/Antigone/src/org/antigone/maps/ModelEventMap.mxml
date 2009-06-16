@@ -41,6 +41,21 @@
 	<!-- Inject the LessonManager data in the LessonViewAdapter -->
 	<Injectors target="{LessonViewAdapter}">
 		<PropertyInjector targetKey="lesson" source="{LessonManager}" sourceKey="selectedLesson" />
+		<PropertyInjector targetKey="selectedContent" source="{LessonManager}" sourceKey="selectedContent" />
+	</Injectors>
+	
+	<!-- Lesson Toolbox ___________________________________________________________________ -->
+	
+	<!-- Inject the LessonToolboxAdapter into the LessonToolbox -->
+	<Injectors target="{LessonToolbox}">
+		<ObjectBuilder generator="{LessonToolboxAdapter}" registerTarget="true" />
+		<PropertyInjector targetKey="adapter" source="{lastReturn}" />
+	</Injectors>	
+	
+	<!-- Inject the LessonManager data in the LessonToolboxAdapter -->
+	<Injectors target="{LessonToolboxAdapter}">
+		<PropertyInjector targetKey="lesson" source="{LessonManager}" sourceKey="selectedLesson" />
+		<PropertyInjector targetKey="selectedContent" source="{LessonManager}" sourceKey="selectedContent" />
 	</Injectors>
 	
 </EventMap>

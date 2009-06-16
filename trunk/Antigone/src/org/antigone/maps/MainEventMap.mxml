@@ -6,6 +6,7 @@
 			import mx.events.*;
 			import org.antigone.events.*;
 			import org.antigone.business.*;
+			import org.antigone.adapters.*;
 		]]>
 	</mx:Script>
 	
@@ -63,8 +64,14 @@
 		<MethodInvoker generator="{LessonManager}" method="SelectLesson" arguments="{[event.lesson]}" />
 	</EventHandlers>
 	
+	<!-- A new Lesson has been selected -->
 	<EventHandlers type="{LessonEvent.LESSON_SELECTED}">
 		<EventAnnouncer generator="{NavigationEvent}" type="{NavigationEvent.LESSON}" />
 	</EventHandlers>
-		
+	
+	<!-- Navigate in a lesson's content -->
+	<EventHandlers type="{NavigationEvent.LESSON_CONTENT}">
+		<PropertySetter generator="{LessonManager}" targetKey="selectedContent" source="{event.index}" />
+	</EventHandlers>
+	
 </EventMap>

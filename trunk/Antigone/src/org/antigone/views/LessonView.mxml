@@ -49,9 +49,6 @@
 		</mx:Repeater>
 	</mx:ViewStack>
 	
-	<mx:Button label="Next step"
-		click="viewStack.selectedIndex = (viewStack.selectedIndex + 1) % viewStack.numChildren" />
-	
 	<views:LessonToolbox width="100%" />
 	
 </mx:VBox>

@@ -6,7 +6,6 @@ package org.antigone.vos
 	[Bindable]
 	public class Course extends LessonContent
 	{
-		public var title:String;
 		public var text:String;
 		public var audioFile:File;
 		
