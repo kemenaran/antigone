@@ -5,7 +5,6 @@
 	<mx:Script>
 		<![CDATA[
 			import org.antigone.events.LessonEvent;
-			import org.antigone.views.LessonItemRenderer;
 			import org.antigone.vos.Lesson;
 			
 			[Bindable]
