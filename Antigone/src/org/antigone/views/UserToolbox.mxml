@@ -15,7 +15,7 @@
 			
 			private function DisconnectUser():void
 			{
-				var a:Alert = Alert.show("Êtes-vous sûr de vouloir vous déconnecter ?",
+				Alert.show("Êtes-vous sûr de vouloir vous déconnecter ?",
 			                         "Confirmation",
 			                         Alert.YES | Alert.NO,
 			                         null,
@@ -29,10 +29,20 @@
 				if (event.detail == Alert.YES)
 					dispatchEvent(new UserEvent(UserEvent.LOGOUT));
 			}
+			
+			private function ShowHelp():void
+			{
+				Alert.show("Le système d'aide n'est pas encore disponible",
+			                         "Information");
+			}
 		]]>
 	</mx:Script>
 	
-	<mx:Label text="Bienvenue, {adapter.displayName} !" textAlign="left"/>
-	<mx:Button label="Déconnexion" fontWeight="normal" click="DisconnectUser()" height="18"/>
+	<mx:Button label="Aide" click="ShowHelp()"/>
+
+	<mx:HBox width="100%" horizontalAlign="right">
+		<mx:Label text="Bienvenue, {adapter.displayName} !" textAlign="left"/>
+		<mx:Button label="Déconnexion" fontWeight="normal" click="DisconnectUser()" height="18"/>
+	</mx:HBox>
 	
 </mx:HBox>
