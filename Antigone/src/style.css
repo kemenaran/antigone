@@ -1,0 +1,16 @@
+/* Main Stylesheet for Antigone */
+
+Application {
+	themeColor: haloOrange;
+}
+
+MainUI {
+	paddingTop: 5px;
+	paddingLeft: 5px;	
+	paddingRight: 5px;	
+	paddingBottom: 5px;
+}
+
+.smallButton {
+	 fontWeight: normal;
+}

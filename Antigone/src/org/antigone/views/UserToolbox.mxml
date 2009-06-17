@@ -38,11 +38,11 @@
 		]]>
 	</mx:Script>
 	
-	<mx:Button label="Aide" click="ShowHelp()"/>
+	<mx:Button label="Aide" click="ShowHelp()" styleName="smallButton" height="18" />
 
 	<mx:HBox width="100%" horizontalAlign="right">
 		<mx:Label text="Bienvenue, {adapter.displayName} !" textAlign="left"/>
-		<mx:Button label="Déconnexion" fontWeight="normal" click="DisconnectUser()" height="18"/>
+		<mx:Button label="Déconnexion" click="DisconnectUser()" styleName="smallButton" height="18"/>
 	</mx:HBox>
 	
 </mx:HBox>

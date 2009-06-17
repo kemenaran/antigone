@@ -3,6 +3,9 @@
 	xmlns:views="org.antigone.views.*"
 	xmlns:maps="org.antigone.maps.*">
 	
+	<!-- Stylesheet -->
+	<mx:Style source="style.css" />
+	
 	<!-- Event maps -->
 	<maps:MainEventMap />
 	<maps:ModelEventMap />
