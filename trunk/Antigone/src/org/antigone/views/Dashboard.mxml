@@ -6,18 +6,15 @@
 		<![CDATA[
 			import org.antigone.events.LessonEvent;
 			import org.antigone.views.LessonItemRenderer;
+			import org.antigone.vos.Lesson;
 			
 			[Bindable]
 			public var lessons:Array;
 			
-			/*
-			private function SelectLesson(e:MouseEvent):void
+			public function SelectLesson(data:Object):void
 			{
-				var event:LessonEvent = new LessonEvent(LessonEvent.LESSON_CLICKED);
-				event.lesson = null;
-				dispatchEvent(event);
+				dispatchEvent(new LessonEvent(LessonEvent.LESSON_CLICKED, data as Lesson));
 			}
-			*/
 		]]>
 	</mx:Script>
 	
@@ -26,9 +23,15 @@
 		<mx:Panel width="222" height="100%" layout="vertical" title="Résumé">
 		</mx:Panel>
 		
+		<!-- Lessons' list -->
 		<mx:Panel width="100%" height="100%" layout="vertical" title="Mes leçons">
-			<mx:List dataProvider="{lessons}" itemRenderer="org.antigone.views.LessonItemRenderer"
-				width="100%" height="100%" />
+			<mx:List dataProvider="{lessons}" width="100%" height="100%">
+				<mx:itemRenderer>
+					<mx:Component>
+							<mx:Label width="100%" text="{data.title}." click="outerDocument.SelectLesson(data)" />
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:List>
 		</mx:Panel>
 		
 	</mx:HBox>
