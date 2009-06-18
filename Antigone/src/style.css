@@ -14,3 +14,7 @@ MainUI {
 .smallButton {
 	 fontWeight: normal;
 }
+
+.header {
+	fontWeight: bold;
+}

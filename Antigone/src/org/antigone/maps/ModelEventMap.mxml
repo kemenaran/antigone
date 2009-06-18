@@ -44,6 +44,10 @@
 		<PropertyInjector targetKey="selectedContent" source="{LessonManager}" sourceKey="selectedContent" />
 	</Injectors>
 	
+	<Injectors target="{CourseView}">
+		<PropertyInjector targetKey="styleSheet" source="{LessonManager}" sourceKey="styleSheet" />
+	</Injectors>
+	
 	<!-- Lesson Toolbox ___________________________________________________________________ -->
 	
 	<!-- Inject the LessonToolboxAdapter into the LessonToolbox -->

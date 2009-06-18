@@ -44,6 +44,7 @@
 	<EventHandlers type="{UserEvent.LOGIN_SUCCESSFUL}">
 		<EventAnnouncer generator="{NavigationEvent}" type="{NavigationEvent.DASHBOARD}" />
 		<MethodInvoker generator="{LessonManager}" method="LoadLessons" />
+		<MethodInvoker generator="{LessonManager}" method="LoadStyleSheet" />
 	</EventHandlers>
 	
 	<!-- User successfully logged out -->
