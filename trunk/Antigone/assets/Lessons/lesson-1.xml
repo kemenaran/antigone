@@ -2,10 +2,30 @@
 <lesson id="lesson-1" title="Première leçon">
 	
 	<course title="Premier cours">
-		<text>Voici le premier cours.
+		<text>
+			<p>Ceci est le premier cours.</p>
+			
+			<p>Comme vous pouvez le constater, les éléments
+			du cours peuvent inclure certaines balises de formatage HTML, permettant de mettre
+			le texte en <b>gras</b>, en <i>italique</i> ou de <u>souligner</u> des portions de texte.
+			</p>
 		
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi venenatis venenatis blandit. Nam ultrices consectetur sagittis. Maecenas pretium hendrerit venenatis. Donec scelerisque facilisis massa eget consequat. Integer nisl lectus, sagittis consectetur malesuada vel, dignissim quis magna. Ut pretium lectus a lorem malesuada venenatis. Quisque commodo purus nec nibh viverra egestas. </text>
+			<p>De la même façon, les sauts de lignes, tabulations et espaces supplémentaires sont ignorés. Pour
+			forcer un saut de ligne, utilisez la balise br,<br /> et le texte reviendra à la ligne quoi qu'il arrive.</p>
+			
+			<p>Vous pouvez également créer des paragraphes, permettant de structurer le contenu d'un cours.</p>
+			
+			<p>Enfin, il est possible de modifier le style du contenu à l'aide d'une feuille de style CSS. Il suffit pour
+			cela d'éditer le fichier "courses.css".</p>
+			
+			<p>Suivez ces liens pour plus de renseignement sur les
+			<a href="http://tinyurl.com/flash-htmlText">balises HTML supportées</a>
+			et sur les <a href="http://tinyurl.com/flash-stylesheets">feuilles de style</a>.</p>
+			
+		</text>
+		
 		<audioFile>lesson-1-audio.mp3</audioFile>
+		
 	</course>
 	
 	<exercise title="Exercice 1">

@@ -3,6 +3,7 @@ package org.antigone.business
 	import flash.events.Event;
 	import flash.events.IEventDispatcher;
 	import flash.filesystem.*;
+	import flash.text.StyleSheet;
 	import flash.utils.Dictionary;
 	
 	import org.antigone.events.LessonEvent;
@@ -27,8 +28,11 @@ package org.antigone.business
 			dispatchEvent(new Event("selectedLessonChanged"));
 		}
 		
-		/* The selected content in the selected lesson */
+		/* The currently selected content in the selected lesson */
 		public var selectedContent:uint;
+		
+		/* StyleSheet object for the lesson */
+		public var styleSheet:StyleSheet;
 		
 		/* Simple (and data-providable) lesson array.
 		 * Updated by LoadAllLessons(). */
@@ -115,6 +119,36 @@ package org.antigone.business
 			this.setLessons(newLessons);
 		}
 		
+		/* Load the lessons' stylesheet defined by GetStyleSheetPath() and parse
+		 * it into the stylesheet property. */
+		public function LoadStyleSheet(forceRefresh:Boolean=false):void
+		{
+			var styleSheetFile:File;
+			var newStyleSheet:StyleSheet;
+			var stream:FileStream = new FileStream();
+			
+			if (this.styleSheet != null && !forceRefresh)
+				return;
+			
+			// Retrieve the file
+			styleSheetFile = this.GetStyleSheetFile();
+			
+			try {
+				stream.open(styleSheetFile, FileMode.READ);
+			
+				newStyleSheet = new StyleSheet();
+				newStyleSheet.parseCSS(stream.readUTFBytes(stream.bytesAvailable));
+				
+			} catch (e:Error) {
+				throw new Error("Cannot load the CSS Stylesheet for lessons : " + e.message);
+			} finally {
+				stream.close();
+			}
+			
+			// Set the new stylesheet
+			this.styleSheet = newStyleSheet;
+		}
+		
 		/* Retrieve a given lesson, specified by its index. */
 		public function GetLessonById(lessonId:String):Lesson
 		{
@@ -135,6 +169,12 @@ package org.antigone.business
 		protected function GetLessonsPath():File
 		{
 			return File.applicationDirectory.resolvePath("Lessons/");
+		}
+		
+		/* Return the lessons' stylesheet file */
+		protected function GetStyleSheetFile():File
+		{
+			return File.applicationDirectory.resolvePath("courses.css");
 		}
 		
 		/* Create a Lesson object from an XML file. */
