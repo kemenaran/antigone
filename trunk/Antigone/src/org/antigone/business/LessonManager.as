@@ -13,52 +13,73 @@ package org.antigone.business
 	[Bindable]
 	public class LessonManager extends Manager
 	{
-		/* The lesson currently selected (read-only). */
-		protected var _selectedLesson:Lesson = new Lesson();
 		
-		[Bindable(event="selectedLessonChanged")]
-		public function get selectedLesson():Lesson
-		{
-			return _selectedLesson;
-		}
+		/* Properties --------------------------------------------*/
 		
-		protected function setSelectedLesson(lesson:Lesson):void
-		{
-			this._selectedLesson = lesson;
-			dispatchEvent(new Event("selectedLessonChanged"));
-		}
-		
-		/* The currently selected content in the selected lesson */
-		public var selectedContent:uint;
-		
-		/* StyleSheet object for the lesson */
-		public var styleSheet:StyleSheet;
-		
-		/* Simple (and data-providable) lesson array.
+		/* Simple and data-providable lesson array (read-only).
 		 * Updated by LoadAllLessons(). */
 		protected var _lessons:Array = new Array();
 		
-		/* Lessons indexed by id - faster for searches and duplicate checks.
-		 * Updated by LoadAllLessons(). */
-		protected var _lessonDict:Dictionary = new Dictionary();
+		/* The lesson currently selected (read-only). */
+		protected var _selectedLesson:Lesson = new Lesson();
 		
-		/* Allow elements to bind to "lessons".
-		 * The property is read-only - change notifications are triggered
-		 * by the protected setter (setLessons).
-		 */
+		/* The currently selected content in the selected lesson (read-only) */
+		public var selectedContent:uint;
+		
+		/* StyleSheet object for the lesson (read-only) */
+		protected var _styleSheet:StyleSheet;
+		
+		
+		/* Accessors ---------------------------------------------*/
+		
+		/* Getter for lessons */
 		[Bindable(event="lessonsArrayUpdated")]
 		public function get lessons():Array
 		{
 			return _lessons;
 		}
 		
-		/* Protected setter for the "lesson" property.
-		 * Dispatch the event required for data-binding. */
+		/* Setter for lessons */
 		protected function setLessons(newLessons:Array):void
 		{
 			this._lessons = newLessons;
 			dispatchEvent(new Event("lessonsArrayUpdated"));
 		}
+		
+		/* Getter for selectedLesson */
+		[Bindable(event="selectedLessonChanged")]
+		public function get selectedLesson():Lesson
+		{
+			return _selectedLesson;
+		}
+		
+		/* Setter for selectedLesson */
+		protected function setSelectedLesson(lesson:Lesson):void
+		{
+			this._selectedLesson = lesson;
+			dispatchEvent(new Event("selectedLessonChanged"));
+		}
+		
+		/* Getter for styleSheet */
+		[Bindable(event="lessonStyleSheetChanged")]
+		public function get styleSheet():StyleSheet
+		{
+			return _styleSheet;
+		}
+		
+		/* Setter for styleSheet */
+		protected function setStyleSheet(styleSheet:StyleSheet):void
+		{
+			this._styleSheet = styleSheet;
+			dispatchEvent(new Event("lessonStyleSheetChanged"));
+		}
+		
+		/* Lessons indexed by id - faster for searches and duplicate checks.
+		 * Updated by LoadLessons(). */
+		private var _lessonDict:Dictionary = new Dictionary();
+		
+		
+		/* Public methods ---------------------------------------------*/
 		
 		/* Constructor */
 		public function LessonManager(dispatcher:IEventDispatcher)
@@ -146,7 +167,7 @@ package org.antigone.business
 			}
 			
 			// Set the new stylesheet
-			this.styleSheet = newStyleSheet;
+			this.setStyleSheet(newStyleSheet);
 		}
 		
 		/* Retrieve a given lesson, specified by its index. */
@@ -155,14 +176,14 @@ package org.antigone.business
 			return this._lessonDict[lessonId] as Lesson;
 		}
 		
+		/* Mark a lesson as the selected lesson. */
 		public function SelectLesson(lesson:Lesson):void
 		{
 			this.setSelectedLesson(lesson);
+			this.selectedContent = 0;
 			
 			// Dispatch a LESSON_SELECTED event
-			var event:LessonEvent = new LessonEvent(LessonEvent.LESSON_SELECTED);
-			event.lesson = lesson;
-			dispatcher.dispatchEvent(event);
+			dispatcher.dispatchEvent(new LessonEvent(LessonEvent.LESSON_SELECTED, lesson));
 		}
 		
 		/* Return the lessons' folder. */
