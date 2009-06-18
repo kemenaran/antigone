@@ -6,6 +6,14 @@ Here are the latest news about the project development. You will find general co
 
 = Details =
 
+== Version 0.0.6 released ==
+_(18/06/2009)_
+
+First support for individual lesson in this release. Lesson content can now be displayed and browsed through — that includes courses and exercises. And you can format courses text using HTML and CSS (or at least the Flash-supported subset of it).
+
+For the next release, I'll get the audio player working, and hopefully more content for exercises.
+
+
 == Version 0.0.5 released ==
 _(11/06/2009)_
 
