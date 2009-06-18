@@ -3,7 +3,7 @@
 	
 	<course title="Premier cours">
 		<text>
-			<p>Ceci est le premier cours.</p>
+			<p class="heading">Ceci est le premier cours.</p>
 			
 			<p>Comme vous pouvez le constater, les éléments
 			du cours peuvent inclure certaines balises de formatage HTML, permettant de mettre
