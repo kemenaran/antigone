@@ -12,12 +12,19 @@
 	
 	<!-- FlexEvent.PREINITIALIZE -->
 	
+	<!-- Create the Managers (we need to specificaly instanciate them to pass the dispatcher
+	     constructor argument) -->
 	<EventHandlers type="{FlexEvent.PREINITIALIZE}">
 		<ObjectBuilder generator="{UserManager}" constructorArguments="{scope.dispatcher}" />
 		<ObjectBuilder generator="{LessonManager}" constructorArguments="{scope.dispatcher}" />
+		<!-- ObjectBuilder generator="{DebugManager}" constructorArguments="{scope.dispatcher}"/ -->
 	</EventHandlers>
 	
-	
+	<!-- Debugger code - remove for release -->
+	<EventHandlers type="{FlexEvent.APPLICATION_COMPLETE}">
+		<!-- MethodInvoker generator="{DebugManager}" method="ConnectUser" arguments="{['testuser', 'testuser']}" / -->
+	</EventHandlers> 
+		
 	<!-- UserEvents coming from the views _________________________________________________________ -->
 	
 	<!-- Loging in -->
