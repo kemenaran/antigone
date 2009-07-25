@@ -9,6 +9,7 @@
 	<!-- Event maps -->
 	<maps:MainEventMap />
 	<maps:ModelEventMap />
+	<maps:DebugEventMap />
 	
 	<!-- Views -->
 	<views:MainUI width="100%" height="100%" />
