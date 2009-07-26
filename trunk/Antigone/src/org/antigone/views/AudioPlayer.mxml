@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:rj="com.rojored.view.controls.*">
+	
+	<mx:Script>
+		<![CDATA[
+			[Bindable]
+			public var sourceURL:String;
+		]]>
+	</mx:Script>
+	
+	<!-- The headless audio player -->
+	<rj:Audio id="audio" source="{sourceURL}" autoPlay="true" playheadTime="{progress.value}" />
+	
+	<!-- The audio player interface -->
+	<mx:Button id="play" click="audio.play()" label=">"
+		visible="{!audio.playing}" includeInLayout="{!audio.playing}" />
+	<mx:Button id="pause" click="audio.pause()" label="||"
+		visible="{!audio.isPaused}" includeInLayout="{!audio.isPaused}"  />
+	
+	<mx:HSlider id="progress" value="{audio.playheadTime}" maximum="{audio.totalTime}"
+		width="100%" allowTrackClick="true" liveDragging="false"/>
+		
+	<mx:Label id="timeplayed" text="{audio.playheadTime}" />
+	<mx:Label id="fulltime" text="{audio.totalTime}" />
+	
+</mx:HBox>

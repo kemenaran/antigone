@@ -6,6 +6,7 @@
 			import org.antigone.business.*;
 			import org.antigone.views.*;
 			import org.antigone.adapters.*;
+			import org.antigone.events.*;
 		]]>
 	</mx:Script>
 	
@@ -44,6 +45,13 @@
 		<PropertyInjector targetKey="selectedContent" source="{LessonManager}" sourceKey="selectedContent" />
 	</Injectors>
 	
+	<!-- Inject the lessonsPath into any instance of a CourseAdapter -->
+	<EventHandlers type="{CourseAdapterEvent.COURSE_ADAPTER_CREATED}" debug="true">
+		<DataCopier source="{LessonManager}" sourceKey="lessonsPath"
+			destination="{event.courseAdapter}" destinationKey="lessonsPath" />
+	</EventHandlers>
+	
+	<!-- Inject the courses textfield Stylesheet into the view -->
 	<Injectors target="{CourseView}">
 		<PropertyInjector targetKey="styleSheet" source="{LessonManager}" sourceKey="styleSheet" />
 	</Injectors>

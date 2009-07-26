@@ -93,7 +93,7 @@ package org.antigone.business
 		 * using forceRefresh. */
 		public function LoadLessons(forceRefresh:Boolean=false):void
 		{
-			var lessonsPath:File = this.GetLessonsPath();
+			var lessonsPath:File = this.lessonsPath;
 			var lessonsFiles:Array;
 			var lessonFile:File;
 			var lesson:Lesson;
@@ -152,7 +152,7 @@ package org.antigone.business
 				return;
 			
 			// Retrieve the file
-			styleSheetFile = this.GetStyleSheetFile();
+			styleSheetFile = this.styleSheetFile;
 			
 			try {
 				stream.open(styleSheetFile, FileMode.READ);
@@ -187,13 +187,13 @@ package org.antigone.business
 		}
 		
 		/* Return the lessons' folder. */
-		protected function GetLessonsPath():File
+		public function get lessonsPath():File
 		{
 			return File.applicationDirectory.resolvePath("Lessons/");
 		}
 		
 		/* Return the lessons' stylesheet file */
-		protected function GetStyleSheetFile():File
+		public function get styleSheetFile():File
 		{
 			return File.applicationDirectory.resolvePath("courses.css");
 		}

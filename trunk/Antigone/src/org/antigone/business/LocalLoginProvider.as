@@ -94,7 +94,6 @@ package org.antigone.business
 			
 			// Enumerate properties, and update fields for non-null values
 			for each(var property:XML in userType.factory.accessor) {
-				trace(property.@access);
 				if (user[property.@name] != null && property.@access == "readwrite")
 					newUser[property.@name] = user[property.@name];
 			}

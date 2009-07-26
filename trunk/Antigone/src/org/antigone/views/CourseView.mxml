@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
 	title="{content.title}"
-	xmlns:models="org.antigone.models.*">
+	width="100%" height="100%"
+	xmlns:models="org.antigone.models.*" xmlns:business="org.antigone.business.*" xmlns:views="org.antigone.views.*">
 	
 	<mx:Script>
 		<![CDATA[
+			import org.antigone.adapters.CourseAdapter;
 			import org.antigone.vos.Course;
 			
 			[Bindable]
-			public var content:Course;
+			public var content:CourseAdapter;
 			
 			[Bindable]
 			public var styleSheet:StyleSheet;
@@ -20,6 +22,6 @@
 		htmlText="{content.text}" editable="false" wordWrap="true" condenseWhite="true" styleSheet="{styleSheet}" />
 	
 	<mx:Text text="Version audio" styleName="header" />
-	<mx:Canvas  width="200" height="18" backgroundColor="#FDAF09" backgroundAlpha="0.36" borderStyle="solid" cornerRadius="5"/>
-	
+	<views:AudioPlayer sourceURL="{content.audioFileURL}"/>
+		
 </mx:Panel>
