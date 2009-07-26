@@ -1,8 +1,12 @@
 package org.antigone.adapters
 {
-	import mx.collections.ArrayCollection;
+	import flash.utils.getQualifiedClassName;
 	
-	import org.antigone.vos.Lesson;
+	import mx.collections.ArrayCollection;
+	import mx.core.Application;
+	
+	import org.antigone.events.CourseAdapterEvent;
+	import org.antigone.vos.*;
 	
 	[Bindable]
 	public class LessonViewAdapter
@@ -25,6 +29,15 @@ package org.antigone.adapters
 			
 			// … and sort them by lessonIndex
 			sortArray.sortOn("position");
+			
+			// Replace Courses in the content by the matching adapter
+			for (var i:String in sortArray) {
+				if (sortArray[i] is Course) {
+					sortArray[i] = CourseAdapter.InitFromCourse(sortArray[i]);
+				}
+			}
+			
+			// Inject the sorted array into the Adapter property
 			lessonContents.source = sortArray;
 		}
 	}

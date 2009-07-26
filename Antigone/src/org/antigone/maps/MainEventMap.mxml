@@ -17,16 +17,10 @@
 	<EventHandlers type="{FlexEvent.PREINITIALIZE}">
 		<ObjectBuilder generator="{UserManager}" constructorArguments="{scope.dispatcher}" />
 		<ObjectBuilder generator="{LessonManager}" constructorArguments="{scope.dispatcher}" />
-		<!-- ObjectBuilder generator="{DebugManager}" constructorArguments="{scope.dispatcher}"/ -->
 	</EventHandlers>
-	
-	<!-- Debugger code - remove for release -->
-	<EventHandlers type="{FlexEvent.APPLICATION_COMPLETE}">
-		<!-- MethodInvoker generator="{DebugManager}" method="ConnectUser" arguments="{['testuser', 'testuser']}" / -->
-	</EventHandlers> 
 		
 	<!-- UserEvents coming from the views _________________________________________________________ -->
-	
+
 	<!-- Loging in -->
 	<EventHandlers type="{UserEvent.LOGIN}">
 		<MethodInvoker generator="{UserManager}" method="ConnectUser" arguments="{[event.user]}" />
@@ -36,14 +30,13 @@
 	<!-- Creating a new User  -->
 	<EventHandlers type="{UserEvent.NEW_USER}">
 		<MethodInvoker generator="{UserManager}" method="CreateUser" arguments="{[event.user]}" />
-		<CallBack method="CheckUserCreationResponse" arguments="{lastReturn}" />
+		<CallBack method="CheckUserCreationResponse" arguments="{lastReturn}"/>
 	</EventHandlers>
 	
 	<!-- Loging out -->
 	<EventHandlers type="{UserEvent.LOGOUT}">
 		<MethodInvoker generator="{UserManager}" method="DisconnectUser" />
 	</EventHandlers>
-	
 	
 	<!-- Application-wide UserEvents _______________________________________________________________-->
 	

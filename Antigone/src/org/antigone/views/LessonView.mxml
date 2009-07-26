@@ -4,48 +4,17 @@
 	
 	<mx:Script>
 		<![CDATA[
-			import mx.core.UIComponent;
-			import mx.core.Repeater;
-			import mx.events.FlexEvent;
 			import org.antigone.adapters.LessonViewAdapter;
 
 			[Bindable]
 			public var adapter:LessonViewAdapter;
-			
-			/* In the Repeater, create items dynamically according to their type */
-			public function CreateLessonContentItem(event:FlexEvent):void
-			{
-				var repeater:Repeater = event.target as Repeater;
-				var viewName:String;
-				var viewRenderer:UIComponent;
-				var rendererAssoc:Object = {"org.antigone.vos::Exercise" : "ExerciseView",
-				                            "org.antigone.vos::Course"   : "CourseView"};
-				                            
-				// Reference to dynamic classes that would be excluded from the swf otherwise
-				CourseView;
-				ExerciseView;
-				                     
-				// What Lesson Content view should we use for this item ?
-				viewName = rendererAssoc[getQualifiedClassName(repeater.currentItem)];
-				if (viewName == null)
-					throw new Error("Unknow view renderer for item of type '"
-						+ getQualifiedClassName(repeater.currentItem) + "'.");
-						
-				// Create the view...
-				viewRenderer = new (getDefinitionByName("org.antigone.views::" + viewName) as Class)();
-				viewRenderer["content"] = repeater.currentItem;
-				
-				// ...then add it to the parent container			
-				repeater.container.addChild(viewRenderer);
-			}
 		]]>
 	</mx:Script>
 	
 	<!-- Loop on Lesson content -->
 	<mx:ViewStack id="viewStack" width="100%" height="100%" selectedIndex="{adapter.selectedContent}">
-		<mx:Repeater dataProvider="{adapter.lessonContents}"
-			repeatStart="viewStack.removeAllChildren()"
-			repeat="CreateLessonContentItem(event)">
+		<mx:Repeater id="contentRepeater" dataProvider="{adapter.lessonContents}">
+			<views:ContentFactory width="100%" height="100%" content="{contentRepeater.currentItem}" />
 		</mx:Repeater>
 	</mx:ViewStack>
 	
