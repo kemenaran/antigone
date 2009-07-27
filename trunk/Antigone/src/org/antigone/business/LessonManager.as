@@ -17,78 +17,69 @@ package org.antigone.business
 		
 		/* Properties --------------------------------------------*/
 		
-		/* Simple and data-providable lesson array (read-only).
+		/** Simple and data-providable lesson array (read-only).
 		 * Updated by LoadAllLessons(). */
 		protected var _lessons:Array = new Array();
 		
-		/* The lesson currently selected (read-only). */
+		/** The lesson currently selected (read-only). */
 		protected var _selectedLesson:Lesson = new Lesson();
 		
-		/* Index of the currently selected content in the selected lesson */
+		/** Index of the currently selected content in the selected lesson */
 		public var selectedContentIndex:uint;
 		
-		/* StyleSheet object for the lesson (read-only) */
+		/** StyleSheet object for the lesson (read-only) */
 		protected var _styleSheet:StyleSheet;
 		
 		
 		/* Accessors ---------------------------------------------*/
 		
-		/* Getter for lessons */
+		/** Getter for lessons */
 		[Bindable(event="lessonsArrayUpdated")]
-		public function get lessons():Array
-		{
-			return _lessons;
-		}
+		public function get lessons():Array { return _lessons; }
 		
-		/* Setter for lessons */
+		/** Setter for lessons */
 		protected function setLessons(newLessons:Array):void
 		{
 			this._lessons = newLessons;
 			dispatchEvent(new Event("lessonsArrayUpdated"));
 		}
 		
-		/* Getter for selectedLesson */
+		/** Getter for selectedLesson */
 		[Bindable(event="selectedLessonChanged")]
-		public function get selectedLesson():Lesson
-		{
-			return _selectedLesson;
-		}
+		public function get selectedLesson():Lesson { return _selectedLesson; }
 		
-		/* Setter for selectedLesson */
+		/** Setter for selectedLesson */
 		protected function setSelectedLesson(lesson:Lesson):void
 		{
 			this._selectedLesson = lesson;
 			dispatchEvent(new Event("selectedLessonChanged"));
 		}
 		
-		/* Getter for styleSheet */
+		/** Getter for styleSheet */
 		[Bindable(event="lessonStyleSheetChanged")]
-		public function get styleSheet():StyleSheet
-		{
-			return _styleSheet;
-		}
+		public function get styleSheet():StyleSheet { return _styleSheet; }
 		
-		/* Setter for styleSheet */
+		/** Setter for styleSheet */
 		protected function setStyleSheet(styleSheet:StyleSheet):void
 		{
 			this._styleSheet = styleSheet;
 			dispatchEvent(new Event("lessonStyleSheetChanged"));
 		}
 		
-		/* Lessons indexed by id - faster for searches and duplicate checks.
+		/** Lessons indexed by id - faster for searches and duplicate checks.
 		 * Updated by LoadLessons(). */
 		private var _lessonDict:Dictionary = new Dictionary();
 		
 		
 		/* Public methods ---------------------------------------------*/
 		
-		/* Constructor */
+		/** Constructor */
 		public function LessonManager(dispatcher:IEventDispatcher)
 		{
 			super(dispatcher);
 		}
 		
-		/* Load all lessons in the Lessons Array.
+		/** Load all lessons in the Lessons Array.
 		 * If a non-empty lesson array already exists, LoadLesson will not attempt
 		 * to reconstruct the lesson tree from the disk - unless you force it to
 		 * using forceRefresh. */
@@ -141,7 +132,7 @@ package org.antigone.business
 			this.setLessons(newLessons);
 		}
 		
-		/* Load the lessons' stylesheet defined by GetStyleSheetPath() and parse
+		/** Load the lessons' stylesheet defined by GetStyleSheetPath() and parse
 		 * it into the stylesheet property. */
 		public function LoadStyleSheet(forceRefresh:Boolean=false):void
 		{
@@ -171,13 +162,13 @@ package org.antigone.business
 			this.setStyleSheet(newStyleSheet);
 		}
 		
-		/* Retrieve a given lesson, specified by its index. */
+		/** Retrieve a given lesson, specified by its index. */
 		public function GetLessonById(lessonId:String):Lesson
 		{
 			return this._lessonDict[lessonId] as Lesson;
 		}
 		
-		/* Mark a lesson as the selected lesson. */
+		/** Mark a lesson as the selected lesson. */
 		public function SelectLesson(lesson:Lesson):void
 		{
 			this.setSelectedLesson(lesson);
@@ -187,19 +178,19 @@ package org.antigone.business
 			dispatcher.dispatchEvent(new LessonEvent(LessonEvent.LESSON_SELECTED, lesson));
 		}
 		
-		/* Return the lessons' folder. */
+		/** Return the lessons' folder. */
 		public function get lessonsPath():File
 		{
 			return File.applicationDirectory.resolvePath("Lessons/");
 		}
 		
-		/* Return the lessons' stylesheet file */
+		/** Return the lessons' stylesheet file */
 		public function get styleSheetFile():File
 		{
 			return File.applicationDirectory.resolvePath("courses.css");
 		}
 		
-		/* Create a Lesson object from an XML file. */
+		/** Create a Lesson object from an XML file. */
 		protected static function ReadLessonXML(lessonFile:File):Lesson
 		{
 			var lessonXML:XML = null;

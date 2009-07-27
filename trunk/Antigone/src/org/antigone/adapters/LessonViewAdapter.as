@@ -10,22 +10,23 @@ package org.antigone.adapters
 	[Bindable]
 	public class LessonViewAdapter
 	{
-		/* Content items for the lesson (Courses, Exercises, etc) sorted by lessonIndex */
+		/** Content items for the lesson (Courses, Exercises, etc) sorted by lessonIndex */
 		public var lessonContents:ArrayCollection = new ArrayCollection();
 		
-		/* The index of the currently selected content */
+		/** The index of the currently selected content */
 		public var selectedContentIndex:uint;
 		
 		[Bindable(event="selectedContentChanged")]
-		/* A direct reference to the currently selected content (read-only) */
+		/** A direct reference to the currently selected content (read-only) */
 		public function get selectedContent():LessonContent
 		{
 			return lessonContents[selectedContentIndex];
 		}
 		
-		/* Constructor */
+		/** Constructor */
 		public function LessonViewAdapter():void
 		{
+			// Monitor changes that invalidate the "selectedContent" value
 			ChangeWatcher.watch(
 				this,
 				"selectedContentIndex",
@@ -33,7 +34,7 @@ package org.antigone.adapters
 			);	
 		}
 		
-		/* Populate the adapter content with data */
+		/** Populate the adapter content with data */
 		public function set lesson(newLesson:Lesson):void
 		{
 			// populate lessonContent
