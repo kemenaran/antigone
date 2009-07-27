@@ -17,11 +17,15 @@
 		]]>
 	</mx:Script>
 	
+	<!-- Course text -->
 	<mx:Text text="Texte du cours" styleName="header" />
 	<mx:TextArea width="100%" height="70%"
 		htmlText="{content.text}" editable="false" wordWrap="true" condenseWhite="true" styleSheet="{styleSheet}" />
 	
-	<mx:Text text="Version audio" styleName="header" />
-	<views:AudioPlayer sourceURL="{content.audioFileURL}"/>
-		
+	<!-- Audio player -->
+	<mx:VBox visible="{content.hasAudio}" includeInLayout="{content.hasAudio}">
+		<mx:Text text="Version audio" styleName="header" />
+		<views:AudioPlayer sourceURL="{content.audioFileURL}" />
+	</mx:VBox>
+	
 </mx:Panel>
