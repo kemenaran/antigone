@@ -6,11 +6,14 @@
 		<![CDATA[
 			[Bindable]
 			public var sourceURL:String;
+			
+			[Bindable]
+			public var autoPlay:Boolean;
 		]]>
 	</mx:Script>
 	
 	<!-- The headless audio player -->
-	<rj:Audio id="audio" source="{sourceURL}" autoPlay="true" playheadTime="{progress.value}" />
+	<rj:Audio id="audio" source="{sourceURL}" autoPlay="{autoPlay}" playheadTime="{progress.value}" />
 	
 	<!-- The audio player interface -->
 	<mx:Button id="play" click="audio.play()" label=">"
