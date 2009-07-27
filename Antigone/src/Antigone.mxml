@@ -9,6 +9,8 @@
 	<!-- Event maps -->
 	<maps:MainEventMap />
 	<maps:ModelEventMap />
+	<!-- If this line doesn't compile, you need to rename "org/antigone/maps/DebugEventMap.mxml.default"
+		to "DebugEventMap.mxml" -->
 	<maps:DebugEventMap />
 	
 	<!-- Views -->
