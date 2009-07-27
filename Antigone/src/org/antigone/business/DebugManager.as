@@ -2,6 +2,8 @@ package org.antigone.business
 {
 	import flash.events.IEventDispatcher;
 	
+	import mx.core.Application;
+	
 	import org.antigone.events.UserEvent;
 	import org.antigone.vos.User;
 	
@@ -9,8 +11,9 @@ package org.antigone.business
 	 * Helpfull to manage debug tasks from the EventMap. */
 	public class DebugManager extends Manager
 	{
-		public function DebugManager(dispatcher:IEventDispatcher):void
+		public function DebugManager(dispatcher:IEventDispatcher=null):void
 		{
+			if (dispatcher == null) dispatcher = Application.application as IEventDispatcher;
 			super(dispatcher);
 		}
 		
