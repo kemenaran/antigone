@@ -11,7 +11,7 @@ package org.antigone.adapters
 		public var lessonContentSummary:ArrayCollection = new ArrayCollection();
 		
 		[Bindable]
-		public var selectedContent:uint;
+		public var selectedContentIndex:uint;
 		
 		public function set lesson(newLesson:Lesson):void
 		{

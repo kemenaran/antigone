@@ -72,7 +72,7 @@
 	
 	<!-- Navigate in a lesson's content -->
 	<EventHandlers type="{NavigationEvent.LESSON_CONTENT}">
-		<PropertySetter generator="{LessonManager}" targetKey="selectedContent" source="{event.index}" />
+		<PropertySetter generator="{LessonManager}" targetKey="selectedContentIndex" source="{event.index}" />
 	</EventHandlers>
 	
 </EventMap>

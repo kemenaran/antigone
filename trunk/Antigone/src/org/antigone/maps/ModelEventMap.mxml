@@ -31,6 +31,7 @@
 		<PropertyInjector targetKey="currentUser" source="{UserManager}" sourceKey="currentUser" />
 	</Injectors>	
 	
+	
 	<!-- Lessons _________________________________________________________________________ -->
 	
 	<!-- Inject the LessonViewAdapter into the LessonView -->
@@ -42,7 +43,7 @@
 	<!-- Inject the LessonManager data in the LessonViewAdapter -->
 	<Injectors target="{LessonViewAdapter}">
 		<PropertyInjector targetKey="lesson" source="{LessonManager}" sourceKey="selectedLesson" />
-		<PropertyInjector targetKey="selectedContent" source="{LessonManager}" sourceKey="selectedContent" />
+		<PropertyInjector targetKey="selectedContentIndex" source="{LessonManager}" sourceKey="selectedContentIndex" />
 	</Injectors>
 	
 	<!-- Inject the lessonsPath into any instance of a CourseAdapter -->
@@ -67,7 +68,7 @@
 	<!-- Inject the LessonManager data in the LessonToolboxAdapter -->
 	<Injectors target="{LessonToolboxAdapter}">
 		<PropertyInjector targetKey="lesson" source="{LessonManager}" sourceKey="selectedLesson" />
-		<PropertyInjector targetKey="selectedContent" source="{LessonManager}" sourceKey="selectedContent" />
+		<PropertyInjector targetKey="selectedContentIndex" source="{LessonManager}" sourceKey="selectedContentIndex" />
 	</Injectors>
 	
 </EventMap>

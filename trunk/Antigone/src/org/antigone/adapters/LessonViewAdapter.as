@@ -1,11 +1,10 @@
 package org.antigone.adapters
 {
-	import flash.utils.getQualifiedClassName;
+	import flash.events.Event;
 	
+	import mx.binding.utils.ChangeWatcher;
 	import mx.collections.ArrayCollection;
-	import mx.core.Application;
 	
-	import org.antigone.events.CourseAdapterEvent;
 	import org.antigone.vos.*;
 	
 	[Bindable]
@@ -15,7 +14,24 @@ package org.antigone.adapters
 		public var lessonContents:ArrayCollection = new ArrayCollection();
 		
 		/* The index of the currently selected content */
-		public var selectedContent:uint;
+		public var selectedContentIndex:uint;
+		
+		[Bindable(event="selectedContentChanged")]
+		/* A direct reference to the currently selected content (read-only) */
+		public function get selectedContent():LessonContent
+		{
+			return lessonContents[selectedContentIndex];
+		}
+		
+		/* Constructor */
+		public function LessonViewAdapter():void
+		{
+			ChangeWatcher.watch(
+				this,
+				"selectedContentIndex",
+				function():void { dispatchEvent(new Event("selectedContentChanged"))}
+			);	
+		}
 		
 		/* Populate the adapter content with data */
 		public function set lesson(newLesson:Lesson):void

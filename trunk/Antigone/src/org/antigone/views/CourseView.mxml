@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
-	title="{content.title}"
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
 	width="100%" height="100%"
 	xmlns:models="org.antigone.models.*" xmlns:business="org.antigone.business.*" xmlns:views="org.antigone.views.*">
 	
@@ -28,4 +27,4 @@
 		<views:AudioPlayer sourceURL="{content.audioFileURL}" />
 	</mx:VBox>
 	
-</mx:Panel>
+</mx:VBox>
