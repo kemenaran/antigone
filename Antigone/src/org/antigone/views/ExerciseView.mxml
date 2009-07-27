@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
-	title="{content.title}"
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
 	width="100%" height="100%">
 	
 	<mx:Script>
@@ -13,4 +12,4 @@
 	</mx:Script>
 	
 	<mx:Label text="Ici se trouve l'exercice '{content.title}'" />
-</mx:Panel>
+</mx:VBox>

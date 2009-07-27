@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"
-	verticalAlign="middle" borderStyle="outset">
+	verticalAlign="middle">
 	
 	<mx:Script>
 		<![CDATA[
@@ -27,7 +27,7 @@
 	
 	<mx:Button label="« Tableau de bord" fontWeight="normal" click="ReturnToDashboard()" />
 	
-	<mx:ToggleButtonBar dataProvider="{adapter.lessonContentSummary}" selectedIndex="{adapter.selectedContent}"
+	<mx:ToggleButtonBar dataProvider="{adapter.lessonContentSummary}" selectedIndex="{adapter.selectedContentIndex}"
 		itemClick="ToggleButtonClicked(event)">
 	</mx:ToggleButtonBar>	
 		

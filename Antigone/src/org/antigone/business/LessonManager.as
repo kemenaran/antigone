@@ -8,6 +8,7 @@ package org.antigone.business
 	
 	import org.antigone.events.LessonEvent;
 	import org.antigone.vos.Lesson;
+	import org.antigone.vos.LessonContent;
 	
 	/* Manage multiple lessons stored in XML files. */
 	[Bindable]
@@ -23,8 +24,8 @@ package org.antigone.business
 		/* The lesson currently selected (read-only). */
 		protected var _selectedLesson:Lesson = new Lesson();
 		
-		/* The currently selected content in the selected lesson (read-only) */
-		public var selectedContent:uint;
+		/* Index of the currently selected content in the selected lesson */
+		public var selectedContentIndex:uint;
 		
 		/* StyleSheet object for the lesson (read-only) */
 		protected var _styleSheet:StyleSheet;
@@ -180,7 +181,7 @@ package org.antigone.business
 		public function SelectLesson(lesson:Lesson):void
 		{
 			this.setSelectedLesson(lesson);
-			this.selectedContent = 0;
+			this.selectedContentIndex = 0;
 			
 			// Dispatch a LESSON_SELECTED event
 			dispatcher.dispatchEvent(new LessonEvent(LessonEvent.LESSON_SELECTED, lesson));
