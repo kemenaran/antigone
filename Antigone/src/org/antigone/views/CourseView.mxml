@@ -24,7 +24,7 @@
 	<!-- Audio player -->
 	<mx:VBox visible="{content.hasAudio}" includeInLayout="{content.hasAudio}">
 		<mx:Text text="Version audio" styleName="header" />
-		<views:AudioPlayer sourceURL="{content.audioFileURL}" autoPlay="true" />
+		<views:AudioPlayer sourceURL="{content.audioFileURL}" />
 	</mx:VBox>
 	
 </mx:VBox>
