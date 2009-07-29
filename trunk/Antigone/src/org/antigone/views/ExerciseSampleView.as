@@ -2,7 +2,7 @@ package org.antigone.views {
 
 import flexlib.containers.FlowBox;
 	
-public class ExerciceSampleView extends FlowBox
+public class ExerciseSampleView extends FlowBox
 {
 	import flash.display.DisplayObject
 	import mx.binding.utils.ChangeWatcher;
@@ -15,7 +15,7 @@ public class ExerciceSampleView extends FlowBox
 	public var sample:ExerciseSample;
 	
 	/** Observe changes to the "sample" property. */
-	public function ExerciceSampleView():void
+	public function ExerciseSampleView():void
 	{
 		ChangeWatcher.watch(this, "sample", BuildSampleElements);
 	}
