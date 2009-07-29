@@ -12,7 +12,7 @@
 	</mx:Script>
 	
 	<mx:Repeater id="exRpt" dataProvider="{content.samples}">
-		<views:ExerciceSampleView sample="{exRpt.currentItem}" width="100%" horizontalGap="0" />
+		<views:ExerciseSampleView sample="{exRpt.currentItem}" width="100%" horizontalGap="0" />
 	</mx:Repeater>
 
 </mx:VBox>
