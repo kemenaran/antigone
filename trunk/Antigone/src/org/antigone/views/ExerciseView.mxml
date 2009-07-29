@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
-	width="100%" height="100%">
+	width="100%" height="100%" xmlns:views="org.antigone.views.*">
 	
 	<mx:Script>
 		<![CDATA[
@@ -12,7 +12,7 @@
 	</mx:Script>
 	
 	<mx:Repeater id="exRpt" dataProvider="{content.samples}">
-		<mx:Label text="{exRpt.currentItem.sentence}" />
+		<views:ExerciceSampleView sample="{exRpt.currentItem}" width="100%" horizontalGap="0" />
 	</mx:Repeater>
 
 </mx:VBox>
