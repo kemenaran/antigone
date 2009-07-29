@@ -11,5 +11,8 @@
 		]]>
 	</mx:Script>
 	
-	<mx:Label text="Ici se trouve l'exercice '{content.title}'" />
+	<mx:Repeater id="exRpt" dataProvider="{content.samples}">
+		<mx:Label text="{exRpt.currentItem.sentence}" />
+	</mx:Repeater>
+
 </mx:VBox>
