@@ -20,9 +20,14 @@ package org.antigone.vos
 			
 			// Construct the sentence as a string
 			for each(var sentencePart:XML in coder.children()) {
-				sample.sentence += sentencePart.toXMLString() + " ";
+				if (sentencePart.attribute("value").length() != 0)
+					sample.sentence += "%answer%";
+				else
+					sample.sentence += sentencePart.toXMLString();
+				sample.sentence += " ";
 			}
 			
+			// Sort the answers of the sentence in an array
 			for each(var answer:XML in coder.answer) {
 				sample.answers.push(answer.@value.toString());
 			}
