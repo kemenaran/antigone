@@ -29,6 +29,8 @@
 	</course>
 	
 	<exercise title="Exercice 1">
+		<sample>The quick brown fox jumps over the <answer value="lazy" /> dog.</sample>
+		<sample>Lorem ipsum <answer value="dolor" /> sit amet.</sample>
 	</exercise>
 	
 </lesson>
