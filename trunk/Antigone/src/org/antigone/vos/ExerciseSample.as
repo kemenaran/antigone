@@ -1,5 +1,7 @@
 package org.antigone.vos
 {
+	import mx.collections.ArrayCollection;
+	
 	[Bindable]
 	/** A sample sentence in a exercice. Contains a sentence text, including a placeholder
 	 * for inserting the answer, and a valid answer. */
@@ -9,7 +11,7 @@ package org.antigone.vos
 		public var sentence:String = "";
 		
 		/** An array of all the answers of the sample. */
-		public var answers:Array = new Array();
+		public var answers:ArrayCollection = new ArrayCollection();
 		
 		public static function DecodeFromXML(coder:XML):ExerciseSample
 		{
@@ -26,10 +28,14 @@ package org.antigone.vos
 					sample.sentence += sentencePart.toXMLString();
 				sample.sentence += " ";
 			}
+			// Remove last extra-space
+			sample.sentence = sample.sentence.slice(0, -1);
 			
-			// Sort the answers of the sentence in an array
+			// Populate the answers of the sentence in an array
 			for each(var answer:XML in coder.answer) {
-				sample.answers.push(answer.@value.toString());
+				var newAnswer:ExerciseAnswer = new ExerciseAnswer();
+				newAnswer.expected = answer.@value.toString();
+				sample.answers.addItem(newAnswer);
 			}
 			
 			return sample;

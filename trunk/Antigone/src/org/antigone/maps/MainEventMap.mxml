@@ -17,6 +17,7 @@
 	<EventHandlers type="{FlexEvent.PREINITIALIZE}">
 		<ObjectBuilder generator="{UserManager}" constructorArguments="{scope.dispatcher}" />
 		<ObjectBuilder generator="{LessonManager}" constructorArguments="{scope.dispatcher}" />
+		<ObjectBuilder generator="{ExerciseManager}" constructorArguments="{scope.dispatcher}" />
 	</EventHandlers>
 		
 	<!-- UserEvents coming from the views _________________________________________________________ -->
@@ -73,6 +74,15 @@
 	<!-- Navigate in a lesson's content -->
 	<EventHandlers type="{NavigationEvent.LESSON_CONTENT}">
 		<PropertySetter generator="{LessonManager}" targetKey="selectedContentIndex" source="{event.index}" />
+	</EventHandlers>
+	
+	
+	<!-- Exercise events ________________________________________________________________________ -->
+	
+	<!-- The validation of an Exercise has been requested -->
+	<EventHandlers type="{ExerciseEvent.EXERCISE_VALIDATED}">
+		<MethodInvoker generator="{ExerciseManager}" method="Rate" arguments="{event.exercise}" />
+		<CallBack method="OnValidated" arguments="{lastReturn}" />
 	</EventHandlers>
 	
 </EventMap>
