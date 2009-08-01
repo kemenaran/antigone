@@ -1,6 +1,10 @@
 package org.antigone.views {
 
+import flash.utils.Dictionary;
+
 import flexlib.containers.FlowBox;
+
+import org.antigone.vos.ExerciseAnswer;
 	
 public class ExerciseSampleView extends FlowBox
 {
@@ -11,13 +15,21 @@ public class ExerciseSampleView extends FlowBox
 	import org.antigone.vos.ExerciseSample;
 	
 	[Bindable]
-	/** A sentence from an Exercise. */
+	/** The sample that must be displayed. */
 	public var sample:ExerciseSample;
+	
+	[Bindable]
+	/** Wheather to show the error messages and halos around the controls. */
+	public var showValidation:Boolean = false;
+	
+	/** A list of all the editable controls of the sample. */
+	protected var answerElements:Dictionary = new Dictionary();
 	
 	/** Observe changes to the "sample" property. */
 	public function ExerciseSampleView():void
 	{
 		ChangeWatcher.watch(this, "sample", BuildSampleElements);
+		ChangeWatcher.watch(this, "showValidation", ApplyValidation);
 	}
 	
 	/** Auto-adjust the line height. */
@@ -30,7 +42,7 @@ public class ExerciseSampleView extends FlowBox
 		for each(var child:DisplayObject in this.getChildren()) {
 			maxHeight = Math.max(maxHeight, child.y + child.height);
 		}
-		this.height = maxHeight;
+		this.height = maxHeight + getStyle("paddingBottom");
 	}
 	
 	/** When the sample changes, rebuild the elements tree. */
@@ -43,10 +55,12 @@ public class ExerciseSampleView extends FlowBox
 		for each(var word:String in sampleWords) {
 			
 			var newElement:DisplayObject;
-			
+			var answersIndex:Number = 0;
+						
 			switch (word) {
 				case "%answer%":
 					newElement = new TextInput();
+					ChangeWatcher.watch(newElement, "text", AnswerChanged);
 					break;
 				default:
 					newElement = new Label();
@@ -54,6 +68,32 @@ public class ExerciseSampleView extends FlowBox
 			}
 			
 			this.addChild(newElement);
+			
+			if (!(newElement is Label)) {
+				 answerElements[newElement] = sample.answers[answersIndex];
+				 answersIndex++;
+			}
+		}
+	}
+	
+	protected function AnswerChanged(e:Event):void
+	{
+		var source:TextInput = (e.target as TextInput);
+		
+		var answer:ExerciseAnswer = answerElements[source];
+		answer.given = source.text;
+	}
+	
+	/** Changes the visual status of answers, based on the validation result. */
+	protected function ApplyValidation(e:Event):void
+	{
+		var error:String;
+		var answer:ExerciseAnswer;
+		
+		for(var answerElement:* in answerElements) {
+			answer = answerElements[answerElement];
+			error = (this.showValidation && !answer.isAnswerCorrect) ? "Mauvaise réponse" : "";
+			(answerElement as TextInput).errorString = error;
 		}
 	}
 }
