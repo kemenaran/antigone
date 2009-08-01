@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
 	width="100%" height="100%"
-	xmlns:models="org.antigone.models.*" xmlns:business="org.antigone.business.*" xmlns:views="org.antigone.views.*">
+	xmlns:models="org.antigone.models.*"
+	xmlns:views="org.antigone.views.*"
+	xmlns:support="org.antigone.views.support.*">
 	
 	<mx:Script>
 		<![CDATA[
@@ -24,7 +26,7 @@
 	<!-- Audio player -->
 	<mx:VBox visible="{content.hasAudio}" includeInLayout="{content.hasAudio}">
 		<mx:Text text="Version audio" styleName="header" />
-		<views:AudioPlayer sourceURL="{content.audioFileURL}" />
+		<support:AudioPlayer sourceURL="{content.audioFileURL}" />
 	</mx:VBox>
 	
 </mx:VBox>

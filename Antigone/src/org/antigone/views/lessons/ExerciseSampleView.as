@@ -1,4 +1,4 @@
-package org.antigone.views {
+package org.antigone.views.lessons {
 
 import flash.utils.Dictionary;
 import flexlib.containers.FlowBox;
