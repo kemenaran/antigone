@@ -10,8 +10,8 @@ package org.antigone.business
 	import org.antigone.vos.Lesson;
 	import org.antigone.vos.LessonContent;
 	
-	/* Manage multiple lessons stored in XML files. */
 	[Bindable]
+	/** Manage multiple lessons stored in XML files. */
 	public class LessonManager extends Manager
 	{
 		

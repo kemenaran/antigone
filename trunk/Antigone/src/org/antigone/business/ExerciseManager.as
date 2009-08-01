@@ -7,21 +7,28 @@ package org.antigone.business
 	import org.antigone.vos.ExerciseAnswer;
 	import org.antigone.vos.ExerciseSample;
 
+	/** Manage the exercises of a lesson. */
 	public class ExerciseManager extends Manager
 	{
-		[Bindable]
-		public var currentExercise:Exercise;
+		/** Dispatched when an exercise has been successfully validated. */
+		[Event(ExerciseEvent.EXERCISE_SUCCEEDED, "org.antigone.events.ExerciseEvent")]
 		
+		/** Dispatched when an exercise has not been successfully validated. */
+		[Event(ExerciseEvent.EXERCISE_FAILED, "org.antigone.events.ExerciseEvent")]
+		
+		/** Constructor. */
 		public function ExerciseManager(dispatcher:IEventDispatcher)
 		{
 			super(dispatcher);
 		}
 		
+		/** Set the rating of an exercise by checking the given answers. */
 		public function Rate(exercise:Exercise):Exercise
 		{
 			var correctAnswers:Array = new Array();
 			var wrongAnswers:Array = new Array();
 			
+			// For each answer, check if it is correct of not
 			for each(var answer:ExerciseAnswer in GetAnswers(exercise)) {
 				if (answer.isAnswerCorrect)
 					correctAnswers.push(answer);
@@ -34,9 +41,9 @@ package org.antigone.business
 			
 			// Dispatch events
 			if (exercise.rating == exercise.samplesBySession)
-				dispatchEvent(new ExerciseEvent(ExerciseEvent.EXERCISE_SUCCEEDED, exercise));
+				dispatcher.dispatchEvent(new ExerciseEvent(ExerciseEvent.EXERCISE_SUCCEEDED, exercise));
 			else
-				dispatchEvent(new ExerciseEvent(ExerciseEvent.EXERCISE_FAILED, exercise));
+				dispatcher.dispatchEvent(new ExerciseEvent(ExerciseEvent.EXERCISE_FAILED, exercise));
 				
 			return exercise;
 		}

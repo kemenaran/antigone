@@ -1,11 +1,10 @@
 package org.antigone.views {
 
 import flash.utils.Dictionary;
-
 import flexlib.containers.FlowBox;
-
 import org.antigone.vos.ExerciseAnswer;
-	
+
+/** Display a sample from a Exercise in a flow-resizable box. */
 public class ExerciseSampleView extends FlowBox
 {
 	import flash.display.DisplayObject
@@ -76,6 +75,7 @@ public class ExerciseSampleView extends FlowBox
 		}
 	}
 	
+	/** Update the given answer with the value of an UI item. */
 	protected function AnswerChanged(e:Event):void
 	{
 		var source:TextInput = (e.target as TextInput);

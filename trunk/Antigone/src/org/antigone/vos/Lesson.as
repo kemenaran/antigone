@@ -1,22 +1,22 @@
 package org.antigone.vos
 {
-	/* Model class representing a lesson. */
+	/** Model class representing a lesson. */
 	[Bindable]
 	public class Lesson
 	{
-		/* An unique identifier for the lesson.*/
+		/** An unique identifier for the lesson.*/
 		public var id:String;
 		
-		/* The title of the lesson. */
+		/** The title of the lesson. */
 		public var title:String;
 		
-		/* One or several courses associated with the lesson. */
+		/** One or several courses associated with the lesson. */
 		public var courses:Array = new Array();
 		
-		/* Several exercises associated with the lesson. */
+		/** Several exercises associated with the lesson. */
 		public var exercises:Array = new Array();
 				
-		/* Create a new Lesson object from an XML coder. */
+		/** Create a new Lesson object from an XML coder. */
 		public static function DecodeFromXML(coder:XML):Lesson
 		{
 			var lesson:Lesson = new Lesson();

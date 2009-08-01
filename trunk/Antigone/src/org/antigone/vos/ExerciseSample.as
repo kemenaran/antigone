@@ -10,9 +10,11 @@ package org.antigone.vos
 		/** The sample as a String, including the XML for formatting or answers. */
 		public var sentence:String = "";
 		
-		/** An array of all the answers of the sample. */
+		/** An array of all the answers of the sample.
+		 * @see ExerciseAnswer */
 		public var answers:ArrayCollection = new ArrayCollection();
 		
+		/** Create a new Sample object from an XML coder. */
 		public static function DecodeFromXML(coder:XML):ExerciseSample
 		{
 			var sample:ExerciseSample = new ExerciseSample();
