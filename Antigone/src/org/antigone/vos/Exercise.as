@@ -3,6 +3,7 @@ package org.antigone.vos
 	import org.antigone.vos.ExerciseSample;
 	
 	[Bindable]
+	/** Model class for an Exercise data. */
 	public class Exercise extends LessonContent
 	{	
 		/** A collection of all the samples in the exercice */
@@ -14,6 +15,7 @@ package org.antigone.vos
 		/** The number of proposed samples by session (5 by default). */
 		public var samplesBySession:Number = 5;
 		
+		/** Create a new Exercise object from an XML coder. */
 		public static function DecodeFromXML(coder:XML):Exercise
 		{
 			var exercise:Exercise = new Exercise();

@@ -18,6 +18,7 @@
 			public var content:Exercise;
 			
 			[Bindable]
+			/** Wheather to show the error messages and halos around the controls of the answer UI fields. */
 			public var showValidation:Boolean = false;
 			
 			public function Validate():void
