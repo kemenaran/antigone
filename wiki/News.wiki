@@ -6,6 +6,18 @@ Here are the latest news about the project development. You will find general co
 
 = Details =
 
+== Some news ==
+_(31/07/2009)_
+
+This project lacked of activity in the last month, but I'm back !
+
+I had some design issues to solve. In my attempts to get a working audio player, I realized that at some point, I would have to resolve the path of the audio file. A quick kludge would have been very fast to implement - but designing a clean and bindings-compatible way to do this required the creation of a whole bunch of data-adapter classes.
+
+The good news is that the audio player is now working - and I made some efforts toward fully functional exercises. The exercise component by itself is already working ; I must now integrate it in the global application event flow. For instance, I would like a locked linear progression in a lesson : you can't get to the next lesson item until you completed all the exercises before.
+
+Anyway, you can expect a new test release in a few days.
+
+
 == Version 0.0.6 released ==
 _(18/06/2009)_
 
