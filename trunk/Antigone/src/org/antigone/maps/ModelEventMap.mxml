@@ -5,6 +5,8 @@
 		<![CDATA[
 			import org.antigone.business.*;
 			import org.antigone.views.*;
+			import org.antigone.views.login.*;
+			import org.antigone.views.lessons.*;
 			import org.antigone.adapters.*;
 			import org.antigone.events.*;
 		]]>
