@@ -17,10 +17,6 @@ public class ExerciseSampleView extends FlowBox
 	/** The sample that must be displayed. */
 	public var sample:ExerciseSample;
 	
-	[Bindable]
-	/** Wheather to show the error messages and halos around the controls. */
-	public var showValidation:Boolean = false;
-	
 	/** A list of all the editable controls of the sample. */
 	protected var answerElements:Dictionary = new Dictionary();
 	
@@ -28,7 +24,6 @@ public class ExerciseSampleView extends FlowBox
 	public function ExerciseSampleView():void
 	{
 		ChangeWatcher.watch(this, "sample", BuildSampleElements);
-		ChangeWatcher.watch(this, "showValidation", ApplyValidation);
 	}
 	
 	/** Auto-adjust the line height. */
@@ -85,14 +80,14 @@ public class ExerciseSampleView extends FlowBox
 	}
 	
 	/** Changes the visual status of answers, based on the validation result. */
-	protected function ApplyValidation(e:Event):void
+	public function ApplyValidation():void
 	{
 		var error:String;
 		var answer:ExerciseAnswer;
 		
 		for(var answerElement:* in answerElements) {
 			answer = answerElements[answerElement];
-			error = (this.showValidation && !answer.isAnswerCorrect) ? "Mauvaise réponse" : "";
+			error = (!answer.isAnswerCorrect) ? "Mauvaise réponse" : "";
 			(answerElement as TextInput).errorString = error;
 		}
 	}

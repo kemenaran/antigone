@@ -17,10 +17,6 @@
 			/** The exercises for the content. */
 			public var content:Exercise;
 			
-			[Bindable]
-			/** Wheather to show the error messages and halos around the controls of the answer UI fields. */
-			public var showValidation:Boolean = false;
-			
 			public function Validate():void
 			{
 				dispatchEvent(new ExerciseEvent(ExerciseEvent.EXERCISE_VALIDATED, content));
@@ -28,15 +24,17 @@
 			
 			public function OnValidated(validatedExercise:Exercise):void
 			{
-				showValidation = true;
+				// Show validation halos around answers fields
+				for each(var child:ExerciseSampleView in sample)
+					child.ApplyValidation();
 			}
 		]]>
 	</mx:Script>
 	
 	<mx:Repeater id="exRpt" dataProvider="{content.samples}">
 		<lessons:ExerciseSampleView
+			id="sample"
 			sample="{exRpt.currentItem}"
-			showValidation="{showValidation}"
 			width="100%" horizontalGap="0" />
 	</mx:Repeater>
 	
