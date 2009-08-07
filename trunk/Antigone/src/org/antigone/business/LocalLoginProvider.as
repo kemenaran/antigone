@@ -4,17 +4,17 @@ package org.antigone.business
 	import flash.utils.*;
 	import org.antigone.vos.User;
 		
-	/* A Login Provider whose datasource are XML files on the local filesystem. */
+	/** A Login Provider whose datasource are XML files on the local filesystem. */
 	public class LocalLoginProvider implements ILoginProvider
 	{	
-		/* Check whether an user file already exists. */
+		/** Check whether an user file already exists. */
 		public function UserExists(username:String):Boolean
 		{
 			var userFile:File = GetFileForUser(username);
 			return userFile.exists;	
 		}
 		
-		/* Check wether user credentials are valid. */
+		/** Check wether user credentials are valid. */
 		public function ValidateUser(username:String, password:String):Boolean
 		{
 			// Attempt to retrieve the User object from the XML file
@@ -26,7 +26,7 @@ package org.antigone.business
 			    && user.password == password);
 		}	
 		
-		/* Read an user's XML file and return the matching User object.
+		/** Read an user's XML file and return the matching User object.
 		 * Returns null if the file doesn't exist or if there is an error.
 		 */
 		public function GetUser(username:String):User
@@ -41,7 +41,7 @@ package org.antigone.business
 			return ReadUserXML(username);		
 		}
 		
-		/* Create a new user.
+		/** Create a new user.
 		 * Returns true in case of success, and false else (for instance if the
 		 * user already exists). */
 		public function CreateUser(username:String, password:String):Boolean
@@ -64,7 +64,7 @@ package org.antigone.business
 			return LocalLoginProvider.WriteUserXML(user);
 		}
 		
-		/* Update the data of an User.
+		/** Update the data of an User.
 		 * All non-null fields will be updated. The User object must be valid.
 		 *
 		 * WARNING : this method will read the user profile from the file system
@@ -105,7 +105,7 @@ package org.antigone.business
 				return null;
 		}
 		
-		/* Delete a user profile XML file from the file system. */
+		/** Delete a user profile XML file from the file system. */
 		public function DeleteUser(username:String):Boolean
 		{
 			var userProfilePath:File = GetFileForUser(username);
@@ -124,7 +124,7 @@ package org.antigone.business
 		  -------------------------------------------------------------------------
 		 */
 		 
-		 /* Return a File poiting to the location of the user XML file 
+		/** Return a File poiting to the location of the user XML file 
 		 * for a given user.
 		 * The file itself is not guaranteed to exist.
 		 */
@@ -137,7 +137,7 @@ package org.antigone.business
 			return userFile.resolvePath(path);
 		}
 		
-		/* Read the XML fragment that contains user data.
+		/** Read the XML fragment that contains user data.
 		 * Returns null if the file doesn't exist or if there is an error.
 		 */
 		protected static function ReadUserXML(username:String):User
@@ -164,7 +164,7 @@ package org.antigone.business
 			return User.DecodeFromXML(userFile);
 		}
 		
-		/* Build an XML fragment from the User object, and write it
+		/** Build an XML fragment from the User object, and write it
 		 * to the file specified by GetFileForUser.
 		 * The file is created if it does not exists. */
 		protected static function WriteUserXML(user:User):Boolean
