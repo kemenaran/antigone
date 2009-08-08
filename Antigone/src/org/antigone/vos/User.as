@@ -11,8 +11,6 @@ package org.antigone.vos
 		public var surname:String;
 		public var school:String;
 		
-		public var progression:ProgressionStore = new ProgressionStore();
-		
 		/* Encode the current user into an XML fragment.
 		 * Returns the XML fragment, with an added <user> node containing
 		 * the user data. */
