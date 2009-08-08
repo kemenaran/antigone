@@ -18,6 +18,9 @@
 		<ObjectBuilder generator="{UserManager}" constructorArguments="{scope.dispatcher}" />
 		<ObjectBuilder generator="{LessonManager}" constructorArguments="{scope.dispatcher}" />
 		<ObjectBuilder generator="{ExerciseManager}" constructorArguments="{scope.dispatcher}" />
+		
+		<ObjectBuilder generator="{ProgressManager}" registerTarget="true" constructorArguments="{scope.dispatcher}" />
+		<PropertySetter generator="{ProgressManager}" targetKey="autosave" source="{true}" />
 	</EventHandlers>
 		
 	<!-- UserEvents coming from the views _________________________________________________________ -->
@@ -61,6 +64,11 @@
 	
 	<!-- Lessons events __________________________________________________________________________ -->
 	
+	<!-- A lesson was loaded -->
+	<EventHandlers type="{LessonEvent.LESSON_LOADED}">
+		<MethodInvoker generator="{ProgressManager}" method="RestoreProgression" arguments="{event.lesson}" />
+	</EventHandlers>
+	
 	<!-- A LessonItem was clicked -->
 	<EventHandlers type="{LessonEvent.LESSON_CLICKED}">
 		<MethodInvoker generator="{LessonManager}" method="SelectLesson" arguments="{[event.lesson]}" />
@@ -83,6 +91,11 @@
 	<EventHandlers type="{ExerciseEvent.EXERCISE_VALIDATED}">
 		<MethodInvoker generator="{ExerciseManager}" method="Rate" arguments="{event.exercise}" />
 		<CallBack method="OnValidated" arguments="{lastReturn}" />
+		<MethodInvoker generator="{ProgressManager}" method="SaveExerciseRating" arguments="{event.exercise}"/>
+	</EventHandlers>
+	
+	<!-- An exercise has been sucessfully completed -->
+	<EventHandlers type="{ExerciseEvent.EXERCISE_SUCCEEDED}">
 	</EventHandlers>
 	
 </EventMap>

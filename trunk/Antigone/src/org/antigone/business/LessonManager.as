@@ -8,9 +8,9 @@ package org.antigone.business
 	
 	import org.antigone.events.LessonEvent;
 	import org.antigone.vos.Lesson;
-	import org.antigone.vos.LessonContent;
 	
 	[Bindable]
+	[Event(LessonEvent.LESSON_WILL_LOAD)]
 	/** Manage multiple lessons stored in XML files. */
 	public class LessonManager extends Manager
 	{
@@ -124,11 +124,15 @@ package org.antigone.business
 					// Add the lesson to the lesson dictionary
 					this._lessonDict[lesson.id] = lesson;
 					
+					// Give a chance to other modules to filter or modify data
+					dispatcher.dispatchEvent(new LessonEvent(LessonEvent.LESSON_LOADED, lesson));
+					
 					// Append the lesson to the newLessons array
 					newLessons.push(lesson);
 				}
-			}
+			}						
 			
+			// Trigger the bindings change
 			this.setLessons(newLessons);
 		}
 		

@@ -7,6 +7,7 @@ package org.antigone.events
 	public class LessonEvent extends Event
 	{
 		/* Constants */
+		public static const LESSON_LOADED:String = "lessonLoadedEvent";
 		public static const LESSON_CLICKED:String = "lessonClickedEvent";
 		public static const LESSON_SELECTED:String = "lessonSelectedEvent";
 		
