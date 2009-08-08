@@ -34,11 +34,12 @@ package org.antigone.business
 		/** Load the progression data, and inject them into the lesson. */
 		public function RestoreProgression(lesson:Lesson):void
 		{
-			//if (!progressionLoaded)
-			//	LoadProgression();
+			if (!progressionLoaded)
+				LoadProgression();
 			
 			trace("Not implemented !");
 		}
+
 		
 		/** Saves an exercise rating in the ProgressManager.
 		 * @throw Exercise.parent n'est pas défini. */
@@ -62,15 +63,6 @@ package org.antigone.business
 			
 			// If needed, autosave the progression
 			AutoSave();
-		}
-		
-		/** If 'autosave' is activated, save the data.
-		 * Returns weather the data were saved of not. */
-		protected function AutoSave():void
-		{
-			if (autosave) {
-				SaveProgression();
-			}
 		}
 		
 		/** Load all the progression data from the correct file.
@@ -100,6 +92,11 @@ package org.antigone.business
 				
 			return SaveProgressionToXML();
 		}
+		
+		
+		/**
+		 * Internal methods
+		 */
 		
 		/** Return the file of the progression settings for the given user. */ 
 		protected static function GetProgressionFile(username:String):File
@@ -154,6 +151,15 @@ package org.antigone.business
 			}
 			
 			return true;
+		}
+		
+		/** If 'autosave' is activated, save the data.
+		 * Returns weather the data were saved of not. */
+		protected function AutoSave():void
+		{
+			if (autosave) {
+				SaveProgression();
+			}
 		}
 	}
 }
