@@ -34,21 +34,24 @@ package org.antigone.vos
 			
 			// Decode courses and exercises, and assing a lesson index to them
 			var lessonIndex:uint = 0;
+			var content:LessonContent;
 			for each (var child:XML in coder.children()) {
 				// We have a course !
 				if (child.name() == "course") {
 					// Decode it, and add it to the courses array
-					var course:Course = Course.DecodeFromXML(child);
-					course.position = lessonIndex++;
-					lesson.courses.push(course);
+					content = Course.DecodeFromXML(child);
+					
 				} else
 				// We have an exercise !
 				if (child.name() == "exercise") {
 					// Decode it, and add it to the courses array
-					var exercise:Exercise = Exercise.DecodeFromXML(child);
-					exercise.position = lessonIndex++;
-					lesson.exercises.push(exercise);	
-				}									
+					content = Exercise.DecodeFromXML(child);
+				}
+				
+				// Set common content properties
+				content.position = lessonIndex++;
+				content.parent = lesson;
+				lesson.courses.push(content);							
 			}
 			
 			return lesson;
