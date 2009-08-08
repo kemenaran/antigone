@@ -12,6 +12,14 @@
 		]]>
 	</mx:Script>
 	
+	<!-- ProgressManager _________________________________________________________________ -->
+	
+	<!-- Inject UserManager.currentUser into ProgressManager.user -->
+	<Injectors target="{ProgressManager}">
+		<PropertyInjector targetKey="user" source="{UserManager}" sourceKey="currentUser" />
+	</Injectors>
+	
+	
 	<!-- Dashboard _______________________________________________________________________ -->
 	
 	<!-- Inject lessons into the Dashboard -->
@@ -49,7 +57,7 @@
 	</Injectors>
 	
 	<!-- Inject the lessonsPath into any instance of a CourseAdapter -->
-	<EventHandlers type="{CourseAdapterEvent.COURSE_ADAPTER_CREATED}" debug="true">
+	<EventHandlers type="{CourseAdapterEvent.COURSE_ADAPTER_CREATED}">
 		<DataCopier source="{LessonManager}" sourceKey="lessonsPath"
 			destination="{event.courseAdapter}" destinationKey="lessonsPath" />
 	</EventHandlers>
