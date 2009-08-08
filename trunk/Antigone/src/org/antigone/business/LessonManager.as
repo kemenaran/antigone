@@ -7,6 +7,7 @@ package org.antigone.business
 	import flash.utils.Dictionary;
 	
 	import org.antigone.events.LessonEvent;
+	import org.antigone.helpers.XMLHelper;
 	import org.antigone.vos.Lesson;
 	
 	[Bindable]
@@ -198,21 +199,13 @@ package org.antigone.business
 		protected static function ReadLessonXML(lessonFile:File):Lesson
 		{
 			var lessonXML:XML = null;
-			var stream:FileStream = new FileStream();
-			
-			// if the file doesn't exist, you failed
-			if (!lessonFile.exists)
-				return null;
 			
 			// Read the file	
 			try {
-				stream.open(lessonFile, FileMode.READ);
-		    	lessonXML = XML(stream.readUTFBytes(stream.bytesAvailable));
+				lessonXML = XMLHelper.ReadXMLFromFile(lessonFile);
 			} catch (error:Error) {
 				return null;
-			} finally {
-				stream.close();
-			}
+			} 
 		
 			// Decode the XML into a new User object
 			return Lesson.DecodeFromXML(lessonXML);
