@@ -2,6 +2,8 @@ package org.antigone.business
 {
 	import flash.filesystem.*;
 	import flash.utils.*;
+	
+	import org.antigone.helpers.XMLHelper;
 	import org.antigone.vos.User;
 		
 	/** A Login Provider whose datasource are XML files on the local filesystem. */
@@ -99,7 +101,7 @@ package org.antigone.business
 			}
 			
 			// Write the updated User Profile
-			if (LocalLoginProvider.WriteUserXML(newUser))
+			if (WriteUserXML(newUser))
 				return newUser;
 			else
 				return null;
@@ -142,26 +144,17 @@ package org.antigone.business
 		 */
 		protected static function ReadUserXML(username:String):User
 		{
-			var userFile:XML = null;
-			var userFilePath:File = GetFileForUser(username);
-			var stream:FileStream = new FileStream();
+			var userData:XML;
+			var user:User;
 			
-			// if the file doesn't exist, you failed
-			if (!userFilePath.exists)
-				return null;
-			
-			// Read the file	
 			try {
-				stream.open(userFilePath, FileMode.READ);
-		    	userFile = XML(stream.readUTFBytes(stream.bytesAvailable));
-			} catch (error:Error) {
+				userData = XMLHelper.ReadXMLFromFile(GetFileForUser(username));
+				user = User.DecodeFromXML(userData);
+			} catch (e:Error) {
 				return null;
-			} finally {
-				stream.close();
 			}
-		
-			// Decode the XML into a new User object
-			return User.DecodeFromXML(userFile);
+			
+			return user;
 		}
 		
 		/** Build an XML fragment from the User object, and write it
@@ -170,26 +163,16 @@ package org.antigone.business
 		protected static function WriteUserXML(user:User):Boolean
 		{
 			var coder:XML;
-			var userFile:File = GetFileForUser(user.username);
 			
 			// Add user infos to the XML file
 			coder = new XML("<userProfile></userProfile>");
 			coder = user.EncodeToXML(coder);
 			
-			// Build up the full XML data as a string
-			var newXMLStr:String = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-				+ File.lineEnding
-				+ coder.toXMLString();
-				
 			// Write XML to the file
-			var fs:FileStream = new FileStream();
 			try {
-				fs.open(userFile, FileMode.WRITE);
-				fs.writeUTFBytes(newXMLStr);
+				XMLHelper.WriteXMLToFile(coder, GetFileForUser(user.username));
 			} catch(error:Error) {
 				return false;
-			} finally {
-				fs.close();
 			}
 			
 			return true;
