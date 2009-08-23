@@ -2,8 +2,8 @@ package org.antigone.business
 {
 	import flash.events.IEventDispatcher;
 	import flash.filesystem.File;
-	import flash.filesystem.FileMode;
-	import flash.filesystem.FileStream;
+	
+	import mx.binding.utils.BindingUtils;
 	
 	import org.antigone.helpers.XMLHelper;
 	import org.antigone.vos.*;
@@ -15,7 +15,7 @@ package org.antigone.business
 		public var user:User;
 		
 		/** Store settings for lessons and exercises. */
-		public var lessons:Object = new Object();
+		public var lessonsRecord:Object = new Object();
 		
 		/** Wheather any change to the progression shoudl trigger a save to the disk. */
 		public var autosave:Boolean = false;
@@ -28,7 +28,11 @@ package org.antigone.business
 		{
 			super(dispatcher);
 			
-			// FIXME : when "user" changes, update "progressionloaded"
+			// Set progressionLoaded to false when the user changes
+			BindingUtils.bindSetter(
+				function (value:*):void { progressionLoaded = false },
+				this,
+				"user");
 		}
 		
 		/** Load the progression data, and inject them into the lesson. */
@@ -37,29 +41,52 @@ package org.antigone.business
 			if (!progressionLoaded)
 				LoadProgression();
 			
-			trace("Not implemented !");
+			// Check if we have a matching lesson in our records
+			if (this.lessonsRecord.hasOwnProperty(lesson.id)) {
+				var lessonRecord:Object = lessonsRecord[lesson.id];
+				
+				// Enumerate all contents in the lesson…
+				for each(var content:LessonContent in lesson.contents) {
+					var contentName:String = "content-" + content.position;
+				
+					// Check if we have a matching content in our records
+					if (lessonRecord.hasOwnProperty(contentName)) {
+						var contentRecord:Object = lessonRecord[contentName];
+						
+						// Copy stored properties into the content
+						for (var key:String in contentRecord) {
+							content[key] = contentRecord[key];
+						}
+					}
+				}
+			}
 		}
-
 		
 		/** Saves an exercise rating in the ProgressManager.
 		 * @throw Exercise.parent n'est pas défini. */
-		public function SaveExerciseRating(exercise:Exercise):void
+		public function SaveLessonProgression(lesson:Lesson):void
 		{
-			if (!exercise.parent)
-				throw new Error("Exercise.parent n'est pas défini.");
+			var lessonId:String = lesson.id;
 			
-			var lessonId:String = exercise.parent.id;
+			// If needed, create a string-indexed object for storing content objects
+			if (!lessonsRecord[lessonId])
+				lessonsRecord[lessonId] = new Object();
 			
-			// If needed, create a string-indexed object for storing exercises
-			if (!lessons[lessonId])
-				lessons[lessonId] = new Object();
-			
-			// If needed, create a string-indexed object for storing exercise properties
-			if (!lessons[lessonId]["content-" + exercise.position])
-				lessons[lessonId]["content-" + exercise.position] = new Object();
+			// Enumerate lessons' content…
+			for each(var content:LessonContent in lesson.contents){
 				
-			// Store exercise rating
-			lessons[lessonId]["content-" + exercise.position]["rating"] = exercise.rating;
+				// If needed, create a string-indexed object for storing content properties
+				if (!lessonsRecord[lessonId]["content-" + content.position])
+					lessonsRecord[lessonId]["content-" + content.position] = new Object();
+				
+				// Store common properties
+				lessonsRecord[lessonId]["content-" + content.position]["isSucceeded"] = content.isSucceeded;
+				
+				if (content is Exercise) {
+					// Store exercise rating
+					lessonsRecord[lessonId]["content-" + content.position]["rating"] = (content as Exercise).rating;
+				}
+			}
 			
 			// If needed, autosave the progression
 			AutoSave();
@@ -74,27 +101,43 @@ package org.antigone.business
 			if (!user)
 				throw new Error("The 'user' property is not defined.");
 				
+			// Ensure that the progression file exists for the current user
 			var file:File = GetProgressionFile(user.username);
-			
 			if (!file.exists)
 				return;
-				
-			ReadProgressionFromXML(file);
+			
+			// Read the XML from the file
+			var userProgress:XML = XMLHelper.ReadXMLFromFile(file);
+			
+			// Parse the XML and inject it in the object
+			DecodeProgressFromXML(userProgress);
 		}
 		
 		/** Save all the progression data to the correct file.
 		 * 
 		 * @throw Error if the user is not defined. */
-		public function SaveProgression():Boolean
+		public function SaveProgression():void
 		{
+			var coder:XML;
+			var file:File;
+			
+			// Ensure that the current user is defined
 			if (!user)
 				throw new Error("The 'user' property is not defined.");
 				
-			return SaveProgressionToXML();
+			// Retrieve the progress filename
+			file = GetProgressionFile(user.username);
+			
+			// Add user infos to the XML file
+			coder = new XML("<userProgress></userProgress>");
+			coder = EncodeProgressToXML(coder);
+			
+			// Write XML to file
+			XMLHelper.WriteXMLToFile(coder, file);
 		}
 		
 		
-		/**
+		/*
 		 * Internal methods
 		 */
 		
@@ -107,50 +150,19 @@ package org.antigone.business
 		/** Decode the progression state from an XML object. */
 		protected function DecodeProgressFromXML(coder:XML):void
 		{
+			// Decode XML values in a Object-based array
+			var progress:Object = XMLHelper.DecodeObjectFromXML(coder);
 			
+			// Restore own properties with decoded data
+			this.lessonsRecord = progress["lessons"];
 		}
 		
 		/** Encode the progression state to an XML object. */
 		protected function EncodeProgressToXML(coder:XML):XML
 		{			
-			XMLHelper.EncodeObjectToXML(lessons, coder, "lessons");
+			XMLHelper.EncodeObjectToXML(lessonsRecord, coder, "lessons");
 			
 			return coder;
-		}
-		
-		/** Read the progression from an XML file. */
-		protected function ReadProgressionFromXML(xml:File):void
-		{
-			throw new Error("Not implemented !");
-		}
-		
-		/** Save the progression to an XML file. */
-		protected function SaveProgressionToXML():Boolean
-		{
-			var coder:XML;
-			var file:File = GetProgressionFile(user.username);
-			
-			// Add user infos to the XML file
-			coder = new XML("<userProgress></userProgress>");
-			coder = EncodeProgressToXML(coder);
-			
-			// Build up the full XML data as a string
-			var newXMLStr:String = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-				+ File.lineEnding
-				+ coder.toXMLString();
-				
-			// Write XML to the file
-			var fs:FileStream = new FileStream();
-			try {
-				fs.open(file, FileMode.WRITE);
-				fs.writeUTFBytes(newXMLStr);
-			} catch(error:Error) {
-				return false;
-			} finally {
-				fs.close();
-			}
-			
-			return true;
 		}
 		
 		/** If 'autosave' is activated, save the data.
