@@ -8,24 +8,30 @@ package org.antigone.adapters
 	import org.antigone.vos.*;
 	
 	[Bindable]
-	public class LessonViewAdapter
+	public class LessonViewAdapter extends Adapter
 	{
+		[Bindable("representedObjectChanged")]
+		/** Typped getter for representedObject. */
+		public function get representedLesson():Lesson { return representedObject as Lesson; }
+		
 		/** Content items for the lesson (Courses, Exercises, etc) sorted by lessonIndex */
-		public var lessonContents:ArrayCollection = new ArrayCollection();
+		public var contentAdapters:ArrayCollection = new ArrayCollection();
 		
 		/** The index of the currently selected content */
 		public var selectedContentIndex:uint;
 		
 		[Bindable(event="selectedContentChanged")]
 		/** A direct reference to the currently selected content (read-only) */
-		public function get selectedContent():LessonContent
+		public function get selectedContent():ContentAdapter
 		{
-			return lessonContents[selectedContentIndex];
+			return contentAdapters[selectedContentIndex];
 		}
 		
 		/** Constructor */
-		public function LessonViewAdapter():void
+		public function LessonViewAdapter(representedObject:Lesson=null):void
 		{
+			super(representedObject);
+			
 			// Monitor changes that invalidate the "selectedContent" value
 			ChangeWatcher.watch(
 				this,
@@ -34,28 +40,18 @@ package org.antigone.adapters
 			);	
 		}
 		
-		/** Populate the adapter content with data */
-		public function set lesson(newLesson:Lesson):void
+		/** Called when the representedObject changes ; update represented data. */
+		override protected function PopulateData(object:*):void
 		{
-			// populate lessonContent
-			lessonContents.removeAll();
+			var adapters:Array = new Array;
 			
-			// Merge LessonContent (Courses and Exercises)…
-			var sortArray:Array = new Array();
-			sortArray = sortArray.concat(newLesson.courses, newLesson.exercises);
-			
-			// … and sort them by lessonIndex
-			sortArray.sortOn("position");
-			
-			// Replace Courses in the content by the matching adapter
-			for (var i:String in sortArray) {
-				if (sortArray[i] is Course) {
-					sortArray[i] = CourseAdapter.InitFromCourse(sortArray[i]);
-				}
+			// Replace Content objects in the array by the matching adapters
+			for each(var content:LessonContent in representedLesson.contents) {
+				adapters.push(ContentAdapter.InitFromContent(content));
 			}
 			
 			// Inject the sorted array into the Adapter property
-			lessonContents.source = sortArray;
+			contentAdapters.source = adapters;
 		}
 	}
 }

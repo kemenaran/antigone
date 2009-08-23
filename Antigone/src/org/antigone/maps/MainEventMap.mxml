@@ -17,12 +17,14 @@
 	<EventHandlers type="{FlexEvent.PREINITIALIZE}">
 		<ObjectBuilder generator="{UserManager}" constructorArguments="{scope.dispatcher}" />
 		<ObjectBuilder generator="{LessonManager}" constructorArguments="{scope.dispatcher}" />
+		<ObjectBuilder generator="{CourseManager}" constructorArguments="{scope.dispatcher}" />
 		<ObjectBuilder generator="{ExerciseManager}" constructorArguments="{scope.dispatcher}" />
 		
 		<ObjectBuilder generator="{ProgressManager}" registerTarget="true" constructorArguments="{scope.dispatcher}" />
 		<PropertySetter generator="{ProgressManager}" targetKey="autosave" source="{true}" />
 	</EventHandlers>
-		
+	
+	
 	<!-- UserEvents coming from the views _________________________________________________________ -->
 
 	<!-- Loging in -->
@@ -42,12 +44,14 @@
 		<MethodInvoker generator="{UserManager}" method="DisconnectUser" />
 	</EventHandlers>
 	
+	
 	<!-- Application-wide UserEvents _______________________________________________________________-->
 	
 	<!-- User successfully logged in -->
 	<EventHandlers type="{UserEvent.LOGIN_SUCCESSFUL}">
 		<EventAnnouncer generator="{NavigationEvent}" type="{NavigationEvent.DASHBOARD}" />
-		<MethodInvoker generator="{LessonManager}" method="LoadLessons" />
+		<!-- We force lesson refresh to force the dispatch of the LESSON_LOADED event. Could be improved. -->
+		<MethodInvoker generator="{LessonManager}" method="LoadLessons" arguments="{true}"/>
 		<MethodInvoker generator="{LessonManager}" method="LoadStyleSheet" />
 	</EventHandlers>
 	
@@ -85,17 +89,31 @@
 	</EventHandlers>
 	
 	
+	<!-- Course events ________________________________________________________________________ -->
+	
+	<EventHandlers type="{ContentEvent.COURSE_VALIDATED}">
+		<MethodInvoker generator="{CourseManager}" method="Validate" arguments="{event.content}" />
+		<MethodInvoker generator="{ProgressManager}" method="SaveLessonProgression" arguments="{event.content.parent}"/>
+	</EventHandlers>
+	
+	<!-- An course has been sucessfully completed -->
+	<EventHandlers type="{ContentEvent.COURSE_SUCCEEDED}">
+			<!-- Nothing happens for now -->
+	</EventHandlers>
+	
+	
 	<!-- Exercise events ________________________________________________________________________ -->
 	
 	<!-- The validation of an Exercise has been requested -->
-	<EventHandlers type="{ExerciseEvent.EXERCISE_VALIDATED}">
-		<MethodInvoker generator="{ExerciseManager}" method="Rate" arguments="{event.exercise}" />
+	<EventHandlers type="{ContentEvent.EXERCISE_VALIDATED}">
+		<MethodInvoker generator="{ExerciseManager}" method="Validate" arguments="{event.content}" />
 		<CallBack method="OnValidated" arguments="{lastReturn}" />
-		<MethodInvoker generator="{ProgressManager}" method="SaveExerciseRating" arguments="{event.exercise}"/>
+		<MethodInvoker generator="{ProgressManager}" method="SaveLessonProgression" arguments="{event.content.parent}"/>
 	</EventHandlers>
 	
 	<!-- An exercise has been sucessfully completed -->
-	<EventHandlers type="{ExerciseEvent.EXERCISE_SUCCEEDED}">
+	<EventHandlers type="{ContentEvent.EXERCISE_SUCCEEDED}">
+		<!-- Nothing happens for now -->
 	</EventHandlers>
 	
 </EventMap>

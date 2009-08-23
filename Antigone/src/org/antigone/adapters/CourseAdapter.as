@@ -12,76 +12,68 @@ package org.antigone.adapters
 
 	/** Adapter class for Courses */
 	[Bindable]
-	public class CourseAdapter extends Course
+	public class CourseAdapter extends ContentAdapter
 	{
+		[Bindable("representedObjectChanged")]
+		/** Typped getter for representedObject. */
+		public function get representedCourse():Course { return representedObject as Course; }
+		
 		/** The directory in which lessons are stored.
-		 * (needed to resolve the audioFilePath)
-		 * By default, this is set to the Application Directory. */
+		 * (needed to resolve the audioFilePath). */
 		public var lessonsPath:File;
 		
 		/** The resolved path to the audioFile, as a file URL. */
 		[Bindable(event="audioFileURLChanged")]
 		public function get audioFileURL():String
 		{
-			if (this.audioFile == null || this.audioFile == "")
+			var audioFile:String = this.representedCourse.audioFile;
+			if (audioFile == null || audioFile == "")
 				return "";
 			
-			return "file://" + lessonsPath.resolvePath(this.audioFile).nativePath;
+			return "file://" + lessonsPath.resolvePath(audioFile).nativePath;
 		}
 		
 		[Bindable(event="hasAudioChanged")]
 		/** Weather the lesson has an existing audio file associated */
 		public function get hasAudio():Boolean
 		{
-			if (this.audioFile == null || this.audioFile == "")
+			var audioFile:String = this.representedCourse.audioFile;
+			if (audioFile == null || audioFile == "")
 				return false;
 			
-			return lessonsPath.resolvePath(this.audioFile).exists;
+			return lessonsPath.resolvePath(audioFile).exists;
 		}
 		
-		/** Constructor */
-		public function CourseAdapter():void
+		/** Constructor. */
+		public function CourseAdapter(representedObject:Course=null):void
 		{
-			this.lessonsPath = File.applicationDirectory;
-			
+			super(representedObject);			
+		}
+		
+		/** Called when the representedObject changes ; update represented data. */
+		override protected function PopulateData(object:*):void
+		{			
 			// Monitor changes that invalidates the "audioFileURL" value
 			ChangeWatcher.watch(
-				this,
+				this.representedCourse,
 				"audioFile",
 				function():void { dispatchEvent(new Event("audioFileURLChanged")); }
 			);
 			ChangeWatcher.watch(
-				this,
+				this.representedCourse,
 				"lessonsPath",
 				function():void { dispatchEvent(new Event("audioFileURLChanged")); }
 			);
 			
 			// Monitor changes that invalidates the "hasAudio" value
 			ChangeWatcher.watch(
-				this,
+				this.representedCourse,
 				"audioFile",
 				function():void { dispatchEvent(new Event("hasAudioChanged")); }
 			);
 			
 			// Inform that we just created a new instance of the CourseAdapter
 			Application.application.dispatchEvent(new CourseAdapterEvent(CourseAdapterEvent.COURSE_ADAPTER_CREATED, this));
-		}
-		
-		/** Create a new CourseAdapter, populated with data from an existing Course */
-		public static function InitFromCourse(course:Course):CourseAdapter
-		{
-			// Create a new CourseAdapter
-			var adapter:CourseAdapter = new CourseAdapter();
-			
-			// Describe User type
-			var courseType:XML = describeType(Course);
-			
-			// Populate the inherited properties of the adapter from the course
-			for each(var property:XML in courseType.factory.accessor) {
-				adapter[property.@name] = course[property.@name];
-			}
-						
-			return adapter;
 		}
 	}
 }

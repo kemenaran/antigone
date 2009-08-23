@@ -38,7 +38,7 @@
 	
 	<!-- Inject the UserManager data into the UserToolboxAdapter -->
 	<Injectors target="{UserToolboxAdapter}">
-		<PropertyInjector targetKey="currentUser" source="{UserManager}" sourceKey="currentUser" />
+		<PropertyInjector targetKey="representedObject" source="{UserManager}" sourceKey="currentUser" />
 	</Injectors>	
 	
 	
@@ -52,7 +52,7 @@
 	
 	<!-- Inject the LessonManager data in the LessonViewAdapter -->
 	<Injectors target="{LessonViewAdapter}">
-		<PropertyInjector targetKey="lesson" source="{LessonManager}" sourceKey="selectedLesson" />
+		<PropertyInjector targetKey="representedObject" source="{LessonManager}" sourceKey="selectedLesson" />
 		<PropertyInjector targetKey="selectedContentIndex" source="{LessonManager}" sourceKey="selectedContentIndex" />
 	</Injectors>
 	
@@ -77,7 +77,7 @@
 	
 	<!-- Inject the LessonManager data in the LessonToolboxAdapter -->
 	<Injectors target="{LessonToolboxAdapter}">
-		<PropertyInjector targetKey="lesson" source="{LessonManager}" sourceKey="selectedLesson" />
+		<PropertyInjector targetKey="representedObject" source="{LessonManager}" sourceKey="selectedLesson" />
 		<PropertyInjector targetKey="selectedContentIndex" source="{LessonManager}" sourceKey="selectedContentIndex" />
 	</Injectors>
 	

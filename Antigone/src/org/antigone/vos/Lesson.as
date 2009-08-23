@@ -1,5 +1,7 @@
 package org.antigone.vos
 {
+	import mx.collections.ArrayCollection;
+	
 	/** Model class representing a lesson. */
 	[Bindable]
 	public class Lesson
@@ -9,12 +11,9 @@ package org.antigone.vos
 		
 		/** The title of the lesson. */
 		public var title:String;
-		
-		/** One or several courses associated with the lesson. */
-		public var courses:Array = new Array();
-		
-		/** Several exercises associated with the lesson. */
-		public var exercises:Array = new Array();
+	
+		/** The LessonContent (courses, exercises, etc) contained in the lesson. */
+		public var contents:ArrayCollection = new ArrayCollection();
 				
 		/** Create a new Lesson object from an XML coder. */
 		public static function DecodeFromXML(coder:XML):Lesson
@@ -51,7 +50,7 @@ package org.antigone.vos
 				// Set common content properties
 				content.position = lessonIndex++;
 				content.parent = lesson;
-				lesson.courses.push(content);							
+				lesson.contents.addItem(content);							
 			}
 			
 			return lesson;

@@ -4,8 +4,9 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import org.antigone.adapters.ExerciseAdapter;
 			import org.antigone.vos.Exercise;
-			import org.antigone.events.ExerciseEvent;
+			import org.antigone.events.ContentEvent;
 			
 			/** Dispatched when an exercise is successfully conducted. */
 			[Event(ExerciseEvent.EXERCISE_SUCCEEDED)]
@@ -15,11 +16,11 @@
 			
 			[Bindable]
 			/** The exercises for the content. */
-			public var content:Exercise;
+			public var content:ExerciseAdapter;
 			
 			public function Validate():void
 			{
-				dispatchEvent(new ExerciseEvent(ExerciseEvent.EXERCISE_VALIDATED, content));
+				dispatchEvent(new ContentEvent(ContentEvent.EXERCISE_VALIDATED, content.representedExercise));
 			}
 			
 			public function OnValidated(validatedExercise:Exercise):void
@@ -31,7 +32,7 @@
 		]]>
 	</mx:Script>
 	
-	<mx:Repeater id="exRpt" dataProvider="{content.samples}">
+	<mx:Repeater id="exRpt" dataProvider="{content.representedExercise.samples}">
 		<lessons:ExerciseSampleView
 			id="sample"
 			sample="{exRpt.currentItem}"
@@ -40,6 +41,6 @@
 	
 	<mx:Button label="Valider" click="Validate()" />
 	
-	<mx:Label text="{content.rating}/{content.samplesBySession}" />
+	<mx:Label text="{content.representedExercise.rating}/{content.representedExercise.samplesBySession}" />
 	
 </mx:VBox>

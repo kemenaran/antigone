@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"
-	verticalAlign="middle">
+	verticalAlign="middle" xmlns:support="org.antigone.views.support.*">
 	
 	<mx:Script>
 		<![CDATA[
+			import org.antigone.views.support.EnabledToggleButtonBar;
+			import mx.events.ChildExistenceChangedEvent;
 			import mx.events.ItemClickEvent;
 			import org.antigone.adapters.LessonToolboxAdapter;
 			import org.antigone.events.NavigationEvent;
@@ -27,8 +29,8 @@
 	
 	<mx:Button label="« Tableau de bord" fontWeight="normal" click="ReturnToDashboard()" />
 	
-	<mx:ToggleButtonBar dataProvider="{adapter.lessonContentSummary}" selectedIndex="{adapter.selectedContentIndex}"
+	<support:EnabledToggleButtonBar dataProvider="{adapter.lessonContentSummary}" selectedIndex="{adapter.selectedContentIndex}"
 		itemClick="ToggleButtonClicked(event)">
-	</mx:ToggleButtonBar>	
+	</support:EnabledToggleButtonBar>
 		
 </mx:HBox>

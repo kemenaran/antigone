@@ -3,19 +3,29 @@ package org.antigone.adapters
 	import org.antigone.vos.User;
 	
 	[Bindable]
-	public class UserToolboxAdapter
+	/** Adapter for the UserToolbox view. */
+	public class UserToolboxAdapter extends Adapter
 	{
 		public var isUserConnected:Boolean;
 		public var displayName:String;
 		
-		private var _currentUser:User;
+		[Bindable("representedObjectChanged")]
+		/** Typed getter. */
+		public function get representedUser():User { return representedObject as User; }
 		
-		public function set currentUser(newUser:User):void
+		/** Constructor. */
+		public function UserToolboxAdapter(user:User=null):void
 		{
-			isUserConnected = !(newUser == null);
+			super(user);
+		}
+		
+		/** Called when the representedObject changes ; update represented data. */
+		override protected function PopulateData(object:*):void
+		{
+			isUserConnected = !(representedUser == null);
 			
 			if (isUserConnected) {
-				displayName = newUser.GetDisplayName();
+				displayName = representedUser.GetDisplayName();
 			} else {
 				// The represented user data are not valid : reset all fields
 				displayName = "";

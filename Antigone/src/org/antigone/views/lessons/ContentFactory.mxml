@@ -13,27 +13,25 @@
 			 * When some new LessonContent is bound to lessonContent, the correct
 			 * matching subview for the content type is dynamically created.
 			 */
-			 
-			import org.antigone.vos.LessonContent;
 			
-			protected var _content:LessonContent;
+			protected var _content:ContentAdapter;
 			
 			/** Any type of lesson content */
 			[Bindable(event="factoryLessonContentChanged")]
-			public function get content():LessonContent
+			public function get content():ContentAdapter
 			{
 				return this._content;
 			}
 			
-			public function set content(newLessonContent:LessonContent):void
+			public function set content(newLessonContent:ContentAdapter):void
 			{
-				CreateViewForContent(newLessonContent);
-
 				this._content = newLessonContent;
+				CreateViewForContent(newLessonContent);
+				
 				dispatchEvent(new Event("factoryLessonContentChanged"));												
 			}
 			
-			protected function CreateViewForContent(newLessonContent:LessonContent):void
+			protected function CreateViewForContent(newLessonContent:ContentAdapter):void
 			{
 				// Remove any previously created subview
 				this.removeAllChildren();
@@ -42,13 +40,13 @@
 				var viewRenderer:UIComponent;
 				
 				// Create the view and set the associated data
-				if (newLessonContent is Course) {
+				if (newLessonContent is CourseAdapter) {
 						viewRenderer = new CourseView();
 						(viewRenderer as CourseView).content = (newLessonContent as CourseAdapter);
 				}
-				else if (newLessonContent is Exercise) {
+				else if (newLessonContent is ExerciseAdapter) {
 						viewRenderer = new ExerciseView();
-						(viewRenderer as ExerciseView).content = (newLessonContent as Exercise);
+						(viewRenderer as ExerciseView).content = (newLessonContent as ExerciseAdapter);
 				}
 				else {
 					throw new Error("Unknow view renderer for item of type '" + getQualifiedClassName(newLessonContent) + "'.");
