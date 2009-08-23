@@ -57,15 +57,57 @@ package org.antigone.helpers
 			
 			for(var key:* in object) {
 				var value:* = object[key];
+				
 				if (value is String || value is Number)
 					element.@[key.toString()] = value;
-				else if (value is Object)
+				
+				else if (value is Boolean)
+					element.@[key.toString()] = (value) ? "true" : "false";
+				
+				else if (object.propertyIsEnumerable(key as String))
 					EncodeObjectToXML(value, element, key);
+				
 				else
 					throw new Error("Unsupported type.");
 			}
 			
 			return coder;
+		}
+		
+		/** Recursively deserialize an XML structure into a string-indexed array (i.e. an Object).
+		 * Basic types (String, Number) are stored in properties, nested elements in nested arrays. */
+		public static function DecodeObjectFromXML(coder:XML):Object
+		{
+			var object:Object = new Object();
+			
+			// Decode element attributes (if any) 
+			var attributes:XMLList = coder.attributes();
+			for each(var attribute:XML in attributes){
+				
+					// Set the value as a String
+					var key:String = attribute.name();
+					var value:String = attribute.toString();
+					object[key] = value;
+					
+					// Attempt to coerce values to specific types instead of String
+					if (value == "true")
+						object[key] = true;
+					
+					else if (value == "false")
+						object[key] = false;
+					
+					else {
+						try { object[key] = new Number(value) }
+						catch (e:Error) { object[key] = value }
+					}
+			}
+			
+			// Decode child elements (if any)
+			for each(var child:XML in coder.children()) {
+				object[child.name()] = DecodeObjectFromXML(child);
+			}
+			
+			return object;
 		}
 	}
 }
