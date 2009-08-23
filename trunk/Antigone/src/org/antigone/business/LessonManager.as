@@ -11,12 +11,12 @@ package org.antigone.business
 	import org.antigone.vos.Lesson;
 	
 	[Bindable]
-	[Event(LessonEvent.LESSON_WILL_LOAD)]
+	[Event(LessonEvent.LESSON_LOADED)]
 	/** Manage multiple lessons stored in XML files. */
 	public class LessonManager extends Manager
 	{
-		
-		/* Properties --------------------------------------------*/
+		/** Index of the currently selected content in the selected lesson */
+		public var selectedContentIndex:uint;
 		
 		/** Simple and data-providable lesson array (read-only).
 		 * Updated by LoadAllLessons(). */
@@ -25,14 +25,8 @@ package org.antigone.business
 		/** The lesson currently selected (read-only). */
 		protected var _selectedLesson:Lesson = new Lesson();
 		
-		/** Index of the currently selected content in the selected lesson */
-		public var selectedContentIndex:uint;
-		
 		/** StyleSheet object for the lesson (read-only) */
 		protected var _styleSheet:StyleSheet;
-		
-		
-		/* Accessors ---------------------------------------------*/
 		
 		/** Getter for lessons */
 		[Bindable(event="lessonsArrayUpdated")]

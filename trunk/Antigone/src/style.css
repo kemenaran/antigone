@@ -25,3 +25,10 @@ CourseView, ExerciseView {
 	paddingRight: 10px;	
 	paddingBottom: 10px;
 }
+
+.notSucceeded {
+	color: #141FAB;
+}
+.succeeded {
+	color: #015013;
+}

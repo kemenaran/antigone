@@ -13,5 +13,8 @@ package org.antigone.vos
 		/** A reference to the lesson object containing this content.
 		 * May be null. */
 		public var parent:Lesson;
+		
+		/** Wheather this content unit has been successfully completed. */
+		public var isSucceeded:Boolean = false;
 	}
 }

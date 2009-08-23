@@ -2,7 +2,7 @@ package org.antigone.business
 {
 	import flash.events.IEventDispatcher;
 	
-	import org.antigone.events.ExerciseEvent;
+	import org.antigone.events.ContentEvent;
 	import org.antigone.vos.Exercise;
 	import org.antigone.vos.ExerciseAnswer;
 	import org.antigone.vos.ExerciseSample;
@@ -11,15 +11,34 @@ package org.antigone.business
 	public class ExerciseManager extends Manager
 	{
 		/** Dispatched when an exercise has been successfully validated. */
-		[Event(ExerciseEvent.EXERCISE_SUCCEEDED, "org.antigone.events.ExerciseEvent")]
+		[Event("exerciseSucceededEvent", "org.antigone.events.ContentEvent")]
 		
 		/** Dispatched when an exercise has not been successfully validated. */
-		[Event(ExerciseEvent.EXERCISE_FAILED, "org.antigone.events.ExerciseEvent")]
+		[Event("exerciseFailedEvent", "org.antigone.events.ContentEvent")]
 		
 		/** Constructor. */
 		public function ExerciseManager(dispatcher:IEventDispatcher)
 		{
 			super(dispatcher);
+		}
+		
+		/** Compute the Rate of an exercise, set the isSucceeded property,
+		 * then fire appropriate events. */
+		public function Validate(exercise:Exercise):Exercise
+		{
+			exercise = Rate(exercise);
+			
+			// Dispatch events
+			if (exercise.rating == exercise.samplesBySession) {
+				exercise.isSucceeded = true;
+				dispatcher.dispatchEvent(new ContentEvent(ContentEvent.EXERCISE_SUCCEEDED, exercise));
+			} else {
+				// We don't touch 'isSucceeded' here : once an exercise has been successfully completed,
+				// it is flagged as 'succeeded', whatever may happend after. 
+				dispatcher.dispatchEvent(new ContentEvent(ContentEvent.EXERCISE_FAILED, exercise));
+			}
+			
+			return exercise;
 		}
 		
 		/** Set the rating of an exercise by checking the given answers. */
@@ -39,12 +58,6 @@ package org.antigone.business
 			// Update rating
 			exercise.rating = correctAnswers.length;
 			
-			// Dispatch events
-			if (exercise.rating == exercise.samplesBySession)
-				dispatcher.dispatchEvent(new ExerciseEvent(ExerciseEvent.EXERCISE_SUCCEEDED, exercise));
-			else
-				dispatcher.dispatchEvent(new ExerciseEvent(ExerciseEvent.EXERCISE_FAILED, exercise));
-				
 			return exercise;
 		}
 		

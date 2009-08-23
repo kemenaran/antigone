@@ -2,6 +2,12 @@
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"
 	xmlns:rj="com.rojored.view.controls.*">
 	
+	<mx:Metadata>
+		<![CDATA[
+			[Event(name="soundComplete")]
+		]]>
+	</mx:Metadata>
+	
 	<mx:Script>
 		<![CDATA[
 			[Bindable]
@@ -12,8 +18,10 @@
 		]]>
 	</mx:Script>
 	
+	
 	<!-- The headless audio player -->
-	<rj:Audio id="audio" source="{sourceURL}" autoPlay="{autoPlay}" playheadTime="{progress.value}" />
+	<rj:Audio id="audio" source="{sourceURL}" autoPlay="{autoPlay}" playheadTime="{progress.value}"
+		soundComplete="dispatchEvent(event);" />
 	
 	<!-- The audio player interface -->
 	<mx:Button id="play" click="audio.play()" label=">"
