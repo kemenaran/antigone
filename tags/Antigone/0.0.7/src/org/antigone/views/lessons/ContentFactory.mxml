@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml">
+	<mx:Script>
+		<![CDATA[
+			import mx.core.UIComponent;
+			import org.antigone.vos.*;
+			import org.antigone.views.*;
+			import org.antigone.adapters.*;
+			
+			/** This class serves as a Factory for the different views of
+			 * lessons content.
+			 * 
+			 * When some new LessonContent is bound to lessonContent, the correct
+			 * matching subview for the content type is dynamically created.
+			 */
+			
+			protected var _content:ContentAdapter;
+			
+			/** Any type of lesson content */
+			[Bindable(event="factoryLessonContentChanged")]
+			public function get content():ContentAdapter
+			{
+				return this._content;
+			}
+			
+			public function set content(newLessonContent:ContentAdapter):void
+			{
+				this._content = newLessonContent;
+				CreateViewForContent(newLessonContent);
+				
+				dispatchEvent(new Event("factoryLessonContentChanged"));												
+			}
+			
+			protected function CreateViewForContent(newLessonContent:ContentAdapter):void
+			{
+				// Remove any previously created subview
+				this.removeAllChildren();
+				
+				// Add a new subview based on lessonContent type
+				var viewRenderer:UIComponent;
+				
+				// Create the view and set the associated data
+				if (newLessonContent is CourseAdapter) {
+						viewRenderer = new CourseView();
+						(viewRenderer as CourseView).content = (newLessonContent as CourseAdapter);
+				}
+				else if (newLessonContent is ExerciseAdapter) {
+						viewRenderer = new ExerciseView();
+						(viewRenderer as ExerciseView).content = (newLessonContent as ExerciseAdapter);
+				}
+				else {
+					throw new Error("Unknow view renderer for item of type '" + getQualifiedClassName(newLessonContent) + "'.");
+				}
+				
+				// Add view to the container			
+				this.addChild(viewRenderer);
+			}
+		]]>
+	</mx:Script>
+</mx:Canvas>

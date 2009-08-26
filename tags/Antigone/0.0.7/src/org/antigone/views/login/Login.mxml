@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:vos="org.antigone.vos.*"
+	title="Identification">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.validators.Validator;
+			import mx.events.ValidationResultEvent; 
+	    	import org.antigone.events.*;
+	    	import org.antigone.helpers.FormHelper;
+			
+			private function PerformLogin() : void 
+			{
+				if (Validator.validateAll(validators).length == 0 ) {
+					dispatchEvent(new UserEvent(UserEvent.LOGIN, userModel));
+				}
+			}
+			
+			private function NewUserCreation() : void
+			{
+				FormHelper.AutoResetForm(loginForm);
+				dispatchEvent(new NavigationEvent(NavigationEvent.NEW_USER));
+			}
+			
+			public function CheckLoginResult(result:Boolean):void 
+			{
+				if (!result) {
+					//show invalid login message
+					loginButton.errorString = "Identifiants incorrects ; veuillez réessayer.";
+				}
+				else 
+				{
+					//successful login
+					// clear all fields otherwise they'll still be populated whenever the user returns here
+					FormHelper.AutoResetForm(loginForm);
+				}
+			}
+		]]>
+	</mx:Script>
+		
+	<!-- User model, bound to the form fields -->
+	<vos:User id="userModel" username="{username.text}" password="{password.text}" />
+
+	<!-- UI -->
+	<mx:Form id="loginForm" defaultButton="{loginButton}">
+		<mx:FormItem label="Identifiant">
+			<mx:TextInput id="username" />
+		</mx:FormItem>
+		<mx:FormItem label="Mot de passe">
+			<mx:TextInput id="password" displayAsPassword="true"/>
+		</mx:FormItem>
+		<mx:HBox horizontalAlign="center" width="100%">		
+			<mx:Button label="Nouvel utilisateur" click="NewUserCreation()"  fontWeight="normal"/>
+			<mx:Button id="loginButton" label="S'identifier" click="PerformLogin()" />
+		</mx:HBox>
+	</mx:Form>
+	
+	<!-- Validators -->
+	<mx:Array id="validators">
+		<mx:StringValidator source="{username}" property="text" required="true" />
+		<mx:StringValidator source="{password}" property="text" required="true" />
+	</mx:Array>
+	
+</mx:Panel>

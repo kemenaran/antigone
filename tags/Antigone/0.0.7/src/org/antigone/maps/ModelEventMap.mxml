@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EventMap xmlns:mx="http://www.adobe.com/2006/mxml" xmlns="http://mate.asfusion.com/">
+	
+	<mx:Script>
+		<![CDATA[
+			import org.antigone.business.*;
+			import org.antigone.views.*;
+			import org.antigone.views.login.*;
+			import org.antigone.views.lessons.*;
+			import org.antigone.adapters.*;
+			import org.antigone.events.*;
+		]]>
+	</mx:Script>
+	
+	<!-- ProgressManager _________________________________________________________________ -->
+	
+	<!-- Inject UserManager.currentUser into ProgressManager.user -->
+	<Injectors target="{ProgressManager}">
+		<PropertyInjector targetKey="user" source="{UserManager}" sourceKey="currentUser" />
+	</Injectors>
+	
+	
+	<!-- Dashboard _______________________________________________________________________ -->
+	
+	<!-- Inject lessons into the Dashboard -->
+	<Injectors target="{Dashboard}">
+		<PropertyInjector targetKey="lessons" source="{LessonManager}" sourceKey="lessons" />
+	</Injectors>
+	
+	
+	<!-- UserToolbox _____________________________________________________________________ -->
+	
+	<!-- Inject the UserToolboxAdapter into the UserToolbox view -->
+	<Injectors target="{UserToolbox}">
+		<ObjectBuilder generator="{UserToolboxAdapter}" registerTarget="true" />
+		<PropertyInjector targetKey="adapter" source="{lastReturn}" />
+	</Injectors>
+	
+	<!-- Inject the UserManager data into the UserToolboxAdapter -->
+	<Injectors target="{UserToolboxAdapter}">
+		<PropertyInjector targetKey="representedObject" source="{UserManager}" sourceKey="currentUser" />
+	</Injectors>	
+	
+	
+	<!-- Lessons _________________________________________________________________________ -->
+	
+	<!-- Inject the LessonViewAdapter into the LessonView -->
+	<Injectors target="{LessonView}">
+		<ObjectBuilder generator="{LessonViewAdapter}" registerTarget="true" />
+		<PropertyInjector targetKey="adapter" source="{lastReturn}" />
+	</Injectors>	
+	
+	<!-- Inject the LessonManager data in the LessonViewAdapter -->
+	<Injectors target="{LessonViewAdapter}">
+		<PropertyInjector targetKey="representedObject" source="{LessonManager}" sourceKey="selectedLesson" />
+		<PropertyInjector targetKey="selectedContentIndex" source="{LessonManager}" sourceKey="selectedContentIndex" />
+	</Injectors>
+	
+	<!-- Inject the lessonsPath into any instance of a CourseAdapter -->
+	<EventHandlers type="{CourseAdapterEvent.COURSE_ADAPTER_CREATED}">
+		<DataCopier source="{LessonManager}" sourceKey="lessonsPath"
+			destination="{event.courseAdapter}" destinationKey="lessonsPath" />
+	</EventHandlers>
+	
+	<!-- Inject the courses textfield Stylesheet into the view -->
+	<Injectors target="{CourseView}">
+		<PropertyInjector targetKey="styleSheet" source="{LessonManager}" sourceKey="styleSheet" />
+	</Injectors>
+	
+	<!-- Lesson Toolbox ___________________________________________________________________ -->
+	
+	<!-- Inject the LessonToolboxAdapter into the LessonToolbox -->
+	<Injectors target="{LessonToolbox}">
+		<ObjectBuilder generator="{LessonToolboxAdapter}" registerTarget="true" />
+		<PropertyInjector targetKey="adapter" source="{lastReturn}" />
+	</Injectors>	
+	
+	<!-- Inject the LessonManager data in the LessonToolboxAdapter -->
+	<Injectors target="{LessonToolboxAdapter}">
+		<PropertyInjector targetKey="representedObject" source="{LessonManager}" sourceKey="selectedLesson" />
+		<PropertyInjector targetKey="selectedContentIndex" source="{LessonManager}" sourceKey="selectedContentIndex" />
+	</Injectors>
+	
+</EventMap>
