@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
+	 xmlns:vos="org.antigone.vos.*"
+	 title="Nouvel utilisateur" horizontalAlign="center">
+    
+    <mx:Script>
+    	<![CDATA[
+    		import mx.validators.Validator;
+    		import mx.controls.Alert;
+	    	import org.antigone.events.*;  
+	    	import org.antigone.helpers.FormHelper;
+	    	import org.antigone.vos.User;
+			
+			private function CreateNewUser() : void 
+			{
+				// if everything validates, broadcast an event containing the username & password		
+				if (Validator.validateAll(validators).length == 0 ) {
+					dispatchEvent(new UserEvent(UserEvent.NEW_USER, userModel));
+				}
+			}
+			
+			private function Cancel() : void
+			{
+				FormHelper.AutoResetForm(newUserForm);
+				dispatchEvent(new NavigationEvent(NavigationEvent.LOGIN));
+			}
+			
+			public function CheckUserCreationResponse(newUser:User):void 
+			{
+				if (newUser == null) {
+					//show invalid user creation message
+					createButton.errorString = "Identifiants incorrects ; veuillez réessayer.";
+				} else {
+					// Display a welcome message				
+					Alert.show("L'utilisateur a été correctement créé.\n\n" +
+					"Bienvenue, " + newUser.GetDisplayName() + "!");
+				
+					// Clean the form
+					FormHelper.AutoResetForm(newUserForm);
+				}
+			}
+		]]>
+    </mx:Script>
+	
+	<!-- User model, bound to the Form fields -->
+    <vos:User id="userModel"
+    	username="{username.text}"
+    	password="{password.text}"
+    	email="{email.text}"
+    	firstName="{firstName.text}"
+    	surname="{surname.text}"
+    	school="{school.text}" />
+	
+	<!-- The Form starts here -->
+	<mx:Form id="newUserForm" defaultButton="{createButton}">
+	
+		<mx:FormItem label="Identifiant" required="true">
+			<mx:TextInput id="username"/>
+		</mx:FormItem>
+		<mx:FormItem label="Mot de passe" required="true">
+			<mx:TextInput id="password" displayAsPassword="true"/>
+		</mx:FormItem>
+		<mx:FormItem label="Adresse courriel" required="true">
+			<mx:TextInput id="email"/>
+		</mx:FormItem>
+		
+		<mx:HRule width="100%"/>
+		
+		<mx:FormItem label="Prénom">
+			<mx:TextInput id="firstName"/>
+		</mx:FormItem>
+		<mx:FormItem label="Nom">
+			<mx:TextInput id="surname"/>
+		</mx:FormItem>
+		<mx:FormItem label="Etablissement">
+			<mx:TextInput id="school"/>
+		</mx:FormItem>
+		
+		<mx:HBox horizontalAlign="center" width="100%">
+			<mx:Button id="cancelButton" label="Annuler" click="Cancel()" fontWeight="normal"/>
+			<mx:Button id="createButton" label="Créer l'utilisateur" click="CreateNewUser()"/>
+		</mx:HBox>
+	
+	</mx:Form>
+	
+	<!-- Here are the validators -->
+	<mx:Array id="validators">
+		<mx:Validator source="{username}" property="text" required="true" />
+		<mx:Validator source="{password}" property="text" required="true" />
+		<mx:EmailValidator source="{email}" property="text" required="true" />
+	</mx:Array>
+	
+</mx:Panel>

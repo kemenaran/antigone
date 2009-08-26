@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:ViewStack
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:login="org.antigone.views.login.*"
+	xmlns:mate="http://mate.asfusion.com/"
+	resizeToContent="true"
+	clipContent="false">
+	
+	<mx:Script>
+		<![CDATA[
+			import org.antigone.events.NavigationEvent;
+			
+			private const LOGIN: uint = 0;
+			private const NEW_USER : uint = 1;
+		]]>
+	</mx:Script>
+	
+	<mate:Listener type="{NavigationEvent.LOGIN}"    receive="this.selectedIndex = LOGIN" />
+	<mate:Listener type="{NavigationEvent.NEW_USER}" receive="this.selectedIndex = NEW_USER" />
+	
+    <login:Login id="loginView"/>
+	<login:NewUser id="newUserView"/>
+	
+</mx:ViewStack>

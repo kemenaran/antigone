@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"
+	verticalAlign="middle" xmlns:support="org.antigone.views.support.*">
+	
+	<mx:Script>
+		<![CDATA[
+			import org.antigone.views.support.EnabledToggleButtonBar;
+			import mx.events.ChildExistenceChangedEvent;
+			import mx.events.ItemClickEvent;
+			import org.antigone.adapters.LessonToolboxAdapter;
+			import org.antigone.events.NavigationEvent;
+			
+			[Bindable]
+			public var adapter:LessonToolboxAdapter;
+			
+			private function ReturnToDashboard():void
+			{
+				dispatchEvent(new NavigationEvent(NavigationEvent.DASHBOARD));
+			}
+			
+			private function ToggleButtonClicked(e:ItemClickEvent):void
+			{
+				var event:NavigationEvent = new NavigationEvent(NavigationEvent.LESSON_CONTENT);
+				event.index = e.index;
+				dispatchEvent(event);
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:Button label="« Tableau de bord" fontWeight="normal" click="ReturnToDashboard()" />
+	
+	<support:EnabledToggleButtonBar dataProvider="{adapter.lessonContentSummary}" selectedIndex="{adapter.selectedContentIndex}"
+		itemClick="ToggleButtonClicked(event)">
+	</support:EnabledToggleButtonBar>
+		
+</mx:HBox>

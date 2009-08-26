@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:lessons="org.antigone.views.lessons.*" xmlns:mate="http://mate.asfusion.com/">
+	
+	<mx:Script>
+		<![CDATA[
+			import org.antigone.adapters.LessonViewAdapter;
+
+			[Bindable]
+			public var adapter:LessonViewAdapter;
+			
+			/** Force refresh of the main Panel and ControlBar bindings.
+			 * Usefull after an adapter change, if you're not sure that all bound
+			 * properties are different (and thus won't be refreshed automatically. */
+			public function executeRequiredBindings():void
+			{
+				// Execute bindings on the Panel ; do not recurse on child elements.
+				// (as the Repeater already force refresh itself).
+				if(this.lessonPanel)
+					this.lessonPanel.executeBindings();
+				
+				// Execute bindings on the ControlBar ; recurse on child elements.
+				if(this.lessonControlBar)
+					this.lessonControlBar.executeBindings(true);
+			}
+		]]>
+	</mx:Script>
+		
+	<!-- Loop on Lesson content -->
+	<mx:Panel id="lessonPanel" width="100%" height="100%" title="{adapter.selectedContent.representedContent.title}"
+		titleStyleName="{(adapter.selectedContent.representedContent.isSucceeded) ? 'succeeded' : 'notSucceeded'}">
+	
+		<mx:ViewStack id="viewStack" width="100%" height="100%" selectedIndex="{adapter.selectedContentIndex}">
+			<mx:Repeater id="contentRepeater" dataProvider="{adapter.contentAdapters}">
+				<lessons:ContentFactory width="100%" height="100%" content="{contentRepeater.currentItem}" />
+			</mx:Repeater>
+		</mx:ViewStack>
+		
+		<mx:ControlBar id="lessonControlBar">
+			<lessons:LessonToolbox width="100%" />
+		</mx:ControlBar>
+	
+	</mx:Panel>
+	
+</mx:VBox>
