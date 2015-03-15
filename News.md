@@ -1,0 +1,39 @@
+# Introduction #
+
+Here are the latest news about the project development. You will find general considerations and descriptions of the releases.
+
+
+# Details #
+
+## Some news ##
+_(31/07/2009)_
+
+This project lacked of activity in the last month, but I'm back !
+
+I had some design issues to solve. In my attempts to get a working audio player, I realized that at some point, I would have to resolve the path of the audio file. A quick kludge would have been very fast to implement - but designing a clean and bindings-compatible way to do this required the creation of a whole bunch of data-adapter classes.
+
+The good news is that the audio player is now working - and I made some efforts toward fully functional exercises. The exercise component by itself is already working ; I must now integrate it in the global application event flow. For instance, I would like a locked linear progression in a lesson : you can't get to the next lesson item until you completed all the exercises before.
+
+Anyway, you can expect a new test release in a few days.
+
+
+## Version 0.0.6 released ##
+_(18/06/2009)_
+
+First support for individual lesson in this release. Lesson content can now be displayed and browsed through — that includes courses and exercises. And you can format courses text using HTML and CSS (or at least the Flash-supported subset of it).
+
+For the next release, I'll get the audio player working, and hopefully more content for exercises.
+
+
+## Version 0.0.5 released ##
+_(11/06/2009)_
+
+The 0.0.5 release is the first version build against the [Mate framework](http://mate.asfusion.com).
+
+As the code base grew, I realized that my custom code architecture wouldn't do it. Views became interdependants, controllers were a mess, and decoupling business logic from presentation became more and more difficult. I had to use a framework.
+
+Introducing Mate, the best thing that happened to this project yet. This Flex framework achieve a high level of decoupling using _Event Maps_ : an MXML file that map all the events to their target, and binds all the models to their data consumer. Really nice.
+
+So I ported the project to this framework, and for now the results are quite good. The code base is much cleaner, and I was able to add a few small features (like the auto-hiding User Toolbox) quite easily, without a full mess of event-wiring.
+
+There are not any new feature or visible progress this time — almost all the changes are under the hood. The program is just cleaner, more polished and more robust.
